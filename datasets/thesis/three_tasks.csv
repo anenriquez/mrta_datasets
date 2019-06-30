@@ -1,0 +1,4 @@
+pickup_start_time,latest_finish_time,status_status,finish_time,loadType,id,start_time,delivery_pose_name,loadId,latest_start_time,earliest_start_time,priority,pickup_pose_name,earliest_finish_time,team_robot_ids,estimated_duration
+-1,107.0,unallocated,-1,,0616af00-ec3b-4ecd-ae62-c94a3703594c,-1,AMK_TDU-TGR-1_X_15.09_Y_5.69,,102,96,5,AMK_TDU-TGR-1_X_14.03_Y_9.55,96.0,,4.0
+-1,81,unallocated,-1,,207cc8da-2f0e-4538-802b-b8f3954df38d,-1,AMK_TDU-TGR-1_X_6.67_Y_14.52,,76,71,5,AMK_TDU-TGR-1_X_7.15_Y_10.55,71,,4.0
+-1,52.0,unallocated,-1,,0d06fb90-a76d-48b4-b64f-857b7388ab70,-1,AMK_TDU-TGR-1_X_5.82_Y_6.57,,47,41,5,AMK_TDU-TGR-1_X_9.7_Y_5.6,41.0,,4.0
