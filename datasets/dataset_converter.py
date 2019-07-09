@@ -3,7 +3,7 @@ import yaml
 from ropod.structs.task import Task
 import csv
 import sys
-from ropod.utils.to_csv import to_csv
+from ropod.utils.datasets import to_csv
 
 
 def read_dataset(dataset_path):
@@ -21,8 +21,8 @@ def ropod_dataset_to_csv(ropod_dataset_path, cvs_path):
     list_task_dicts = list()
 
     for task_id, task in tasks.items():
-        export_dict = Task.export(task)
-        list_task_dicts.append(export_dict)
+        csv_dict = Task.to_csv(task)
+        list_task_dicts.append(csv_dict)
 
     dataset_name = dataset_path.split('/')[-1].split('.')[0]
     csv_file = csv_path + dataset_name + '.csv'
