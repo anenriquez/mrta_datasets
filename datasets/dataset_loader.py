@@ -1,7 +1,7 @@
 import csv
 from allocation.task import Task
 import os
-from allocation.utils.config_logger import config_logger
+from datasets.utils.config_logger import config_logger
 import logging
 
 
