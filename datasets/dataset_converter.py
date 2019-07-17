@@ -1,8 +1,5 @@
-import os
 import yaml
 from ropod.structs.task import Task
-import csv
-import sys
 from ropod.utils.datasets import to_csv
 
 
