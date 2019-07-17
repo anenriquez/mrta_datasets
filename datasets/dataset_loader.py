@@ -1,5 +1,5 @@
 import csv
-from allocation.task import Task
+from datasets.task import Task
 import os
 from datasets.utils.config_logger import config_logger
 import logging
