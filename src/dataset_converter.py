@@ -28,6 +28,6 @@ def ropod_dataset_to_csv(ropod_dataset_path, cvs_path):
 
 
 if __name__ == '__main__':
-    dataset_path = '../datasets/ropod/three_tasks.yaml'
-    csv_path = '../datasets/thesis/'
+    dataset_path = '../src/ropod/three_tasks.yaml'
+    csv_path = '../src/thesis/'
     ropod_dataset_to_csv(dataset_path, csv_path)

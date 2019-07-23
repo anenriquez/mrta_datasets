@@ -1,7 +1,7 @@
 import csv
-from datasets.task import Task
+from src.task import Task
 import os
-from datasets.utils.config_logger import config_logger
+from src.utils.config_logger import config_logger
 import logging
 
 
@@ -10,7 +10,7 @@ def load_dataset(dataset_name):
     code_dir = os.path.abspath(os.path.dirname(__file__))
     main_dir = os.path.dirname(code_dir)
 
-    config_logger(main_dir + '/config/logging.yaml')
+    config_logger(main_dir + '/poses/logging.yaml')
     logger = logging.getLogger('dataset')
 
     dataset_path = code_dir + '/thesis/' + dataset_name
