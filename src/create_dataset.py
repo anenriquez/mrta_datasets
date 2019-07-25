@@ -1,19 +1,7 @@
 from src.dataset_factory import DatasetCreator
-from src.task_factory import TaskFactory
+from src.task_factory import initialize_task_factory
 import argparse
 from src.utils.datasets import load_yaml, store_as_yaml, store_as_csv
-from ropod.structs.task import Task as RopodTask
-from src.task import Task as GenericTask
-GenericTask.__name__ = 'GenericTask'
-RopodTask.__name__ = 'RopodTask'
-
-
-def get_task_cls(task_cls_name):
-    task_factory = TaskFactory()
-    task_factory.register_task_cls(GenericTask.__name__, GenericTask)
-    task_factory.register_task_cls(RopodTask.__name__, RopodTask)
-
-    return task_factory.get_task_cls(task_cls_name)
 
 
 if __name__ == '__main__':
@@ -28,7 +16,7 @@ if __name__ == '__main__':
     parser.add_argument('dataset_name', type=str, help='Name of the dataset')
 
     parser.add_argument('--task_cls_name', type=str, help='Task class name',
-                        choices=['GenericTask', 'RopodTask'],
+                        choices=['GenericTask', 'RopodTask', 'TaskRequest'],
                         default='GenericTask')
 
     parser.add_argument('--poses_file', type=str, help='Path to the config file',
@@ -47,15 +35,16 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    task_cls = get_task_cls(args.task_cls_name)
+    task_factory = initialize_task_factory()
+    task_cls = task_factory.get_task_cls(args.task_cls_name)
 
     pose_names = load_yaml(args.poses_file).get('pose_names')
 
-    dataset_creator = DatasetCreator(args.dataset_type)
+    dataset_creator = DatasetCreator()
 
-    dataset = dataset_creator.create(task_cls, args.n_tasks, args.dataset_name, pose_names,
+    dataset = dataset_creator.create(task_cls, args.dataset_type, args.n_tasks, args.dataset_name, pose_names,
                                      interval_type=args.interval_type,
-                                     lower_bound= args.lower_bound,
+                                     lower_bound=args.lower_bound,
                                      upper_bound=args.upper_bound)
 
     print(dataset)

@@ -1,7 +1,7 @@
 import csv
 import os
 from src.task_factory import TaskLoader
-from ropod.structs.task import Task as RopodTask
+from ropod.structs.task import Task as RopodTask, TaskRequest
 from src.task import Task as GenericTask
 GenericTask.__name__ = 'GenericTask'
 RopodTask.__name__ = 'RopodTask'
@@ -25,14 +25,14 @@ def load_csv_dataset(dataset_name, task_cls, path):
     print(dataset_path)
     tasks = list()
 
-    task_loader = TaskLoader(task_cls)
+    task_loader = TaskLoader()
 
     try:
         with open(dataset_path, 'r') as file:
             csv_reader = csv.DictReader(file)
             for task_csv in csv_reader:
 
-                task = task_loader.load_csv(task_csv)
+                task = task_loader.load_csv(task_cls, task_csv)
 
                 tasks.append(task)
 
@@ -44,9 +44,9 @@ def load_csv_dataset(dataset_name, task_cls, path):
 
 if __name__ == '__main__':
 
-    path = '/overlapping_tw/generictask/random/'
+    path = '/non_overlapping_tw/taskrequest/random/'
 
-    tasks = load_csv_dataset('overlapping_1', GenericTask, path)
+    tasks = load_csv_dataset('non_overlapping_1', TaskRequest, path)
 
     for task in tasks:
         print(task.id)

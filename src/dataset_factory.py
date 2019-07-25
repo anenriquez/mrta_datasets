@@ -1,12 +1,7 @@
 import numpy as np
 import random
 import math
-from src.task_factory import TaskCreator, generic_task_creator
-from ropod.structs.task import Task as RopodTask
-from src.task import Task as GenericTask
-
-GenericTask.__name__ = 'GenericTask'
-RopodTask.__name__ = 'RopodTask'
+from src.task_factory import TaskCreator
 
 
 class DatasetFactory(object):
@@ -26,7 +21,7 @@ class DatasetFactory(object):
         return dataset_creator
 
 
-def overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
+def overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose_names, **kwargs):
     """ Overlapping time windows dataset generator
 
      The start time interval (time between the earliest start time and the latest
@@ -42,6 +37,8 @@ def overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
 
     The start and finish pose names are randomly chosen from the pose_names
 
+    :param task_creator: instance of class TaskCreator
+    :param task_cls: Class of the task in the dataset
     :param n_tasks: Number of tasks in the dataset
     :param dataset_name: Name of the new dataset
     :param pose_names: dict with pose names (keys) and poses (values)
@@ -61,12 +58,11 @@ def overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
     :return: dataset (a dictionary of n_tasks with overlapping time windows)
     """
 
+    task_type = task_cls.__name__
+
     interval_type = kwargs.get('interval_type', 'random')
     start_time_lower_bound = kwargs.get('lower_bound', 60)
     start_time_upper_bound = kwargs.get('upper_bound', 300)
-    task_creator = kwargs.get('task_creator', generic_task_creator)
-
-    task_type = task_creator.get_task_cls_name()
 
     dataset_dict = get_metadata(dataset_name, 'overlapping_tw',
                                 task_type, interval_type,
@@ -92,7 +88,7 @@ def overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
                       'start_pose_name': start_pose_name,
                       'finish_pose_name': finish_pose_name}
 
-        task = task_creator.create(**_task_args)
+        task = task_creator.create(task_cls=task_cls, **_task_args)
 
         dataset_dict['tasks'][task.id] = task.to_dict()
 
@@ -101,7 +97,7 @@ def overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
     return dataset_dict
 
 
-def non_overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
+def non_overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose_names, **kwargs):
     """ Non-overlapping time windows dataset generator
 
     The time window interval (time between tasks, i.e., the time between
@@ -119,6 +115,8 @@ def non_overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
 
     The start and finish pose names are randomly chosen from the pose_names
 
+    :param task_creator: instance of class TaskCreator
+    :param task_cls: Class of the task in the dataset
     :param n_tasks: Number of tasks in the dataset
     :param dataset_name: Name of the new dataset
     :param pose_names: dict with pose names (keys) and poses (values)
@@ -132,19 +130,16 @@ def non_overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
 
     est_upper_bound (int):  default: 300
 
-    task_generator (function): default: generic_task_generator
-
 
     :return: dataset (a dictionary of n_tasks with overlapping time windows)
 
     """
 
+    task_type = task_cls.__name__
+
     interval_type = kwargs.get('interval_type', 'random')
     time_window_lower_bound = kwargs.get('lower_bound', 60)
     time_window_upper_bound = kwargs.get('upper_bound', 300)
-    task_creator = kwargs.get('task_creator', generic_task_creator)
-
-    task_type = task_creator.get_task_cls_name()
 
     dataset_dict = get_metadata(dataset_name, 'non_overlapping_tw',
                                 task_type, interval_type,
@@ -186,7 +181,7 @@ def non_overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
                       'start_pose_name': start_pose_name,
                       'finish_pose_name': finish_pose_name}
 
-        task = task_creator.create(**_task_args)
+        task = task_creator.create(task_cls=task_cls, **_task_args)
 
         print(task.id)
 
@@ -252,24 +247,28 @@ def get_metadata(dataset_name, dataset_type, task_type,
     return dataset
 
 
+def initialize_dataset_factory():
+    dataset_factory = DatasetFactory()
+    dataset_factory.register_dataset_creator('overlapping_tw',
+                                             overlapping_time_windows)
+
+    dataset_factory.register_dataset_creator('non_overlapping_tw',
+                                             non_overlapping_time_windows)
+
+    return dataset_factory
+
+
 class DatasetCreator(object):
-    def __init__(self, dataset_type):
 
-        dataset_factory = DatasetFactory()
-        dataset_factory.register_dataset_creator('overlapping_tw',
-                                                 overlapping_time_windows)
+    def __init__(self):
+        self.dataset_factory = initialize_dataset_factory()
+        self.task_creator = TaskCreator()
 
-        dataset_factory.register_dataset_creator('non_overlapping_tw',
-                                                 non_overlapping_time_windows)
+    def create(self, task_cls, dataset_type, n_tasks, dataset_name, pose_names, **kwargs):
 
-        self.dataset_creator = dataset_factory.get_dataset_creator(dataset_type)
+        dataset_creator = self.dataset_factory.get_dataset_creator(dataset_type)
 
-    def create(self, task_cls, n_tasks, dataset_name, pose_names, **kwargs):
-
-        task_creator = TaskCreator(task_cls)
-        kwargs.update({'task_creator': task_creator})
-
-        dataset = self.dataset_creator(n_tasks, dataset_name, pose_names, **kwargs)
+        dataset = dataset_creator(self.task_creator, task_cls, n_tasks, dataset_name, pose_names, **kwargs)
 
         return dataset
 
