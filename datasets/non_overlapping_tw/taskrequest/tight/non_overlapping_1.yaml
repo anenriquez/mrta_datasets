@@ -1,0 +1,207 @@
+dataset_name: non_overlapping_1
+dataset_type: non_overlapping_tw
+interval_type: tight
+lower_bound: 60
+task_type: TaskRequest
+tasks:
+  16dbc482-d242-4342-8c62-3c2e8ca2773a:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: inspection_area
+      subAreas: []
+      type: ''
+    earliest_start_time: 859.1
+    id: 16dbc482-d242-4342-8c62-3c2e8ca2773a
+    latest_start_time: 919.1
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_can
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  514e5b4e-1a2e-4380-b835-aa546f432daf:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    earliest_start_time: 736.74
+    id: 514e5b4e-1a2e-4380-b835-aa546f432daf
+    latest_start_time: 796.74
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: inspection_area
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  6cff3a9a-be4b-42b3-ad99-80490a733f08:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    earliest_start_time: 490.32
+    id: 6cff3a9a-be4b-42b3-ad99-80490a733f08
+    latest_start_time: 550.32
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: cupboard
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  6e9c845b-74a9-4c59-b643-83a72613cee0:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf_cupboard
+      subAreas: []
+      type: ''
+    earliest_start_time: 983.03
+    id: 6e9c845b-74a9-4c59-b643-83a72613cee0
+    latest_start_time: 1043.03
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: observation_pose
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  a4ff353e-87a4-441b-bf45-da1df2530b5b:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: observation_pose
+      subAreas: []
+      type: ''
+    earliest_start_time: 614.02
+    id: a4ff353e-87a4-441b-bf45-da1df2530b5b
+    latest_start_time: 674.02
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: inspection_area
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  b1b4819f-7a80-45e2-82e5-deb3609de760:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf
+      subAreas: []
+      type: ''
+    earliest_start_time: 363.96
+    id: b1b4819f-7a80-45e2-82e5-deb3609de760
+    latest_start_time: 423.96
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  b3a7b43d-e8c5-4d50-87fb-c81d7b3692ad:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: living_room
+      subAreas: []
+      type: ''
+    earliest_start_time: 1232.08
+    id: b3a7b43d-e8c5-4d50-87fb-c81d7b3692ad
+    latest_start_time: 1292.08
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  cf9acfce-c8e1-4a7e-90e4-333b57931285:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: second_door
+      subAreas: []
+      type: ''
+    earliest_start_time: 242.85
+    id: cf9acfce-c8e1-4a7e-90e4-333b57931285
+    latest_start_time: 302.85
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_bin1
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  e4760404-5585-4bfb-a8b3-2a20669cc820:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: second_door
+      subAreas: []
+      type: ''
+    earliest_start_time: 1108.74
+    id: e4760404-5585-4bfb-a8b3-2a20669cc820
+    latest_start_time: 1168.74
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf_cupboard
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  ef91ea04-1eff-4ae8-a4a3-0cb22164fb29:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: living_room
+      subAreas: []
+      type: ''
+    earliest_start_time: 120
+    id: ef91ea04-1eff-4ae8-a4a3-0cb22164fb29
+    latest_start_time: 180
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+upper_bound: 300

@@ -1,0 +1,11 @@
+finish_pose_name,hard_constraints,latest_start_time,start_pose_name,id,earliest_start_time,estimated_duration
+trash_bin1,True,557.78,second_door_outside,1970dc0c-089b-4a12-ba3d-238601387c07,497.78,2.03
+inspection_area,True,1050.04,shelf_cupboard,843b3e79-08af-45cd-a1cf-74f14f50ab02,990.04,3.01
+shelf_cupboard,True,302.72,kitchen,a2cd9e06-94cb-4f69-bc68-d69d6c8175b9,242.72,7.24
+living_room,True,806.08,kitchen,691a7cac-d000-4cbf-b97e-9fe031256678,746.08,2.85
+second_door,True,1173.05,shelf_cupboard,db18099a-3128-4f81-836a-7305641d61d4,1113.05,3.34
+inspection_area,True,679.81,second_door,b394a20d-282b-4231-be67-01415ba65a0c,619.81,6.27
+second_door_outside,True,1296.39,observation_pose,04f080a0-89c6-4336-b889-de043c18ec75,1236.39,9.55
+inspection_area,True,180,observation_pose,2a798d91-8c91-46ea-b4eb-ec663ee82f79,120,2.72
+observation_pose,True,429.96,trash_bin1,05f1fdf0-4286-4669-9644-25e5ea76c8e4,369.96,7.82
+second_door,True,928.93,trash_bin1,bc8ea998-6f2f-4873-9e56-0bc5aff7d118,868.93,1.11

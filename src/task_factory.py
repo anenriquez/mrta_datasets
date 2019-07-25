@@ -56,12 +56,14 @@ def ropod_task_creator(task_cls, **kwargs):
     delivery_pose = kwargs.get('finish_pose_name', Area())
     earliest_start_time = kwargs.get('earliest_start_time', -1)
     latest_start_time = kwargs.get('latest_start_time', -1)
+    estimated_duration = kwargs.get('estimated_duration', -1)
 
     task = task_cls()
     task.pickup_pose.name = pickup_pose
     task.delivery_pose.name = delivery_pose
     task.earliest_start_time = earliest_start_time
     task.latest_start_time = latest_start_time
+    task.estimated_duration = estimated_duration
 
     return task
 
@@ -71,12 +73,28 @@ def generic_task_csv_loader(task_cls, task_csv):
 
     _task_args = {'earliest_start_time': task_csv['earliest_start_time'],
                   'latest_start_time': task_csv['latest_start_time'],
+                  'estimated_duration': task_csv['estimated_duration'],
                   'start_pose_name': task_csv['start_pose_name'],
                   'finish_pose_name': task_csv['finish_pose_name'],
                   'hard_constraints': task_csv['hard_constraints']
                   }
 
     task = task_cls(id, **_task_args)
+    return task
+
+
+def task_request_creator(task_cls, **kwargs):
+    pickup_pose = kwargs.get('start_pose_name', Area())
+    delivery_pose = kwargs.get('finish_pose_name', Area())
+    earliest_start_time = kwargs.get('earliest_start_time', -1)
+    latest_start_time = kwargs.get('latest_start_time', -1)
+
+    task = task_cls()
+    task.pickup_pose.name = pickup_pose
+    task.delivery_pose.name = delivery_pose
+    task.earliest_start_time = earliest_start_time
+    task.latest_start_time = latest_start_time
+
     return task
 
 
@@ -127,7 +145,7 @@ def initialize_task_factory():
     task_factory.register_task_cls(RopodTask.__name__, RopodTask)
 
     task_factory.register_task_creator(TaskRequest.__name__,
-                                       ropod_task_creator)
+                                       task_request_creator)
 
     task_factory.register_task_csv_loader(TaskRequest.__name__,
                                           task_request_csv_loader)

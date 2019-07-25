@@ -78,6 +78,8 @@ def overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose
 
         start_pose_name, finish_pose_name = get_poses(pose_names)
 
+        estimated_duration = get_estimated_duration(pose_names, start_pose_name, finish_pose_name)
+
         print("est: ", est)
         print("lst: ", lst)
         print("start pose name: ", start_pose_name)
@@ -85,6 +87,7 @@ def overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose
 
         _task_args = {'earliest_start_time': est,
                       'latest_start_time': lst,
+                      'estimated_duration': estimated_duration,
                       'start_pose_name': start_pose_name,
                       'finish_pose_name': finish_pose_name}
 
@@ -178,6 +181,7 @@ def non_overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, 
 
         _task_args = {'earliest_start_time': est,
                       'latest_start_time': lst,
+                      'estimated_duration': estimated_duration,
                       'start_pose_name': start_pose_name,
                       'finish_pose_name': finish_pose_name}
 

@@ -1,0 +1,11 @@
+pickup_pose_id,delivery_pose_id,delivery_pose_subAreas,load_type,pickup_pose_type,pickup_pose_name,load_id,priority,latest_start_time,pickup_pose_subAreas,id,earliest_start_time,pickup_pose_floorNumber,delivery_pose_floorNumber,delivery_pose_type,user_id,delivery_pose_name
+,,[],,,inspection_area,,-1,674.02,[],a4ff353e-87a4-441b-bf45-da1df2530b5b,614.02,0,0,,,observation_pose
+,,[],,,inspection_area,,-1,796.74,[],514e5b4e-1a2e-4380-b835-aa546f432daf,736.74,0,0,,,table
+,,[],,,shelf_cupboard,,-1,1168.74,[],e4760404-5585-4bfb-a8b3-2a20669cc820,1108.74,0,0,,,second_door
+,,[],,,shelf,,-1,1292.08,[],b3a7b43d-e8c5-4d50-87fb-c81d7b3692ad,1232.08,0,0,,,living_room
+,,[],,,cupboard,,-1,550.32,[],6cff3a9a-be4b-42b3-ad99-80490a733f08,490.32,0,0,,,table
+,,[],,,table,,-1,180,[],ef91ea04-1eff-4ae8-a4a3-0cb22164fb29,120,0,0,,,living_room
+,,[],,,trash_can,,-1,919.1,[],16dbc482-d242-4342-8c62-3c2e8ca2773a,859.1,0,0,,,inspection_area
+,,[],,,trash_bin1,,-1,302.85,[],cf9acfce-c8e1-4a7e-90e4-333b57931285,242.85,0,0,,,second_door
+,,[],,,observation_pose,,-1,1043.03,[],6e9c845b-74a9-4c59-b643-83a72613cee0,983.03,0,0,,,shelf_cupboard
+,,[],,,table,,-1,423.96,[],b1b4819f-7a80-45e2-82e5-deb3609de760,363.96,0,0,,,shelf
