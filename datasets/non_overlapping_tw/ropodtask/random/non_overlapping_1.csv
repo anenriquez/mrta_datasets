@@ -1,0 +1,11 @@
+latest_finish_time,latest_start_time,hard_constraints,status_status,estimated_duration,id,earliest_finish_time,priority,start_time,finish_time,loadId,pickup_pose_name,team_robot_ids,delivery_pose_name,pickup_start_time,loadType,earliest_start_time
+-2,3172.92,True,,-1,b4526ed7-d9c8-45a1-a87f-684467ff91fc,-2,2,-1,-1,,trash_bin1,[],shelf,-1,,3004.76
+-2,3529.99,True,,-1,4f3af1ef-e5ba-486d-a642-8a0d5c8eab4b,-2,2,-1,-1,,shelf_cupboard,[],table,-1,,3248.99
+-2,1481.3,True,,-1,9b284447-e584-4f84-9c94-731ec1b36a83,-2,2,-1,-1,,trash_bin1,[],observation_pose,-1,,1366.92
+-2,2705.09,True,,-1,d46c7591-5a87-4bb2-ac74-810f78dde073,-2,2,-1,-1,,inspection_area,[],observation_pose,-1,,2434.0
+-2,580.36,True,,-1,405a4ffc-9a7b-4f1e-9be6-9d98ea452444,-2,2,-1,-1,,trash_can,[],table,-1,,507.32
+-2,2330.37,True,,-1,69ea2e25-68e4-4c0a-8854-4e357dd306cd,-2,2,-1,-1,,trash_bin1,[],observation_pose,-1,,2165.68
+-2,3941.58,True,,-1,baef766c-cd41-4e9f-ba16-7dfcea53a178,-2,2,-1,-1,,trash_bin1,[],inspection_area,-1,,3693.12
+-2,1128.91,True,,-1,397cb9b2-c78f-4f0d-a8ad-f826f5d31f09,-2,2,-1,-1,,inspection_area,[],cupboard,-1,,851.08
+-2,383.59,True,,-1,f9fb44c7-dd38-48bc-aa2d-2144160d2832,-2,2,-1,-1,,second_door_outside,[],living_room,-1,,226.78
+-2,1890.78,True,,-1,f961cead-18e9-4156-8945-41b6c23d306e,-2,2,-1,-1,,observation_pose,[],cupboard,-1,,1754.36

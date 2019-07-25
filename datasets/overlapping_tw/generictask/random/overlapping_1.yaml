@@ -1,0 +1,77 @@
+dataset_name: overlapping_1
+dataset_type: overlapping_tw
+interval_type: random
+lower_bound: 60
+task_type: GenericTask
+tasks:
+  40277fb9-9604-48e8-9bee-34b6e65afaaf:
+    earliest_start_time: 78.18
+    finish_pose_name: observation_pose
+    hard_constraints: true
+    id: 40277fb9-9604-48e8-9bee-34b6e65afaaf
+    latest_start_time: 222.58
+    start_pose_name: inspection_area
+  62a6f7d9-1e72-4492-8f4d-a1e74f003e97:
+    earliest_start_time: 251.87
+    finish_pose_name: trash_can
+    hard_constraints: true
+    id: 62a6f7d9-1e72-4492-8f4d-a1e74f003e97
+    latest_start_time: 450.81
+    start_pose_name: trash_bin1
+  6ab4709f-1bd4-4351-9005-ea94b2fab025:
+    earliest_start_time: 64.36
+    finish_pose_name: trash_bin1
+    hard_constraints: true
+    id: 6ab4709f-1bd4-4351-9005-ea94b2fab025
+    latest_start_time: 173.65
+    start_pose_name: kitchen
+  6c9754e0-d5ab-4936-bd6e-247132a036f5:
+    earliest_start_time: 204.06
+    finish_pose_name: trash_bin1
+    hard_constraints: true
+    id: 6c9754e0-d5ab-4936-bd6e-247132a036f5
+    latest_start_time: 492.01
+    start_pose_name: observation_pose
+  7b462be1-2179-4e28-9303-5e1b142f8eaf:
+    earliest_start_time: 214.57
+    finish_pose_name: cupboard
+    hard_constraints: true
+    id: 7b462be1-2179-4e28-9303-5e1b142f8eaf
+    latest_start_time: 389.54
+    start_pose_name: inspection_area
+  8aa6fcba-4d9d-4cbc-a778-ecbf0e597cb5:
+    earliest_start_time: 290.7
+    finish_pose_name: second_door_outside
+    hard_constraints: true
+    id: 8aa6fcba-4d9d-4cbc-a778-ecbf0e597cb5
+    latest_start_time: 541.91
+    start_pose_name: inspection_area
+  8e618e35-0755-4db9-8582-4e87493ea43c:
+    earliest_start_time: 124.34
+    finish_pose_name: observation_pose
+    hard_constraints: true
+    id: 8e618e35-0755-4db9-8582-4e87493ea43c
+    latest_start_time: 199.41
+    start_pose_name: table
+  d45ded77-eda5-41e6-83f4-02c790bfb963:
+    earliest_start_time: 124.6
+    finish_pose_name: observation_pose
+    hard_constraints: true
+    id: d45ded77-eda5-41e6-83f4-02c790bfb963
+    latest_start_time: 268.86
+    start_pose_name: inspection_area
+  ea9fcaad-be0d-4a67-9bf8-8d8ec28200db:
+    earliest_start_time: 91.05
+    finish_pose_name: trash_can
+    hard_constraints: true
+    id: ea9fcaad-be0d-4a67-9bf8-8d8ec28200db
+    latest_start_time: 378.95
+    start_pose_name: trash_bin1
+  f6aa408e-0f71-421a-a8a3-eead5d9dc22c:
+    earliest_start_time: 263.69
+    finish_pose_name: shelf_cupboard
+    hard_constraints: true
+    id: f6aa408e-0f71-421a-a8a3-eead5d9dc22c
+    latest_start_time: 326.38
+    start_pose_name: trash_bin1
+upper_bound: 300

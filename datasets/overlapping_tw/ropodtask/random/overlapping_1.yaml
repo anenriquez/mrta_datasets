@@ -1,0 +1,347 @@
+dataset_name: overlapping_1
+dataset_type: overlapping_tw
+interval_type: random
+lower_bound: 60
+task_type: RopodTask
+tasks:
+  2c13613b-0f4f-4350-9f40-6421bc985be8:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_can
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 250.82
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: 2c13613b-0f4f-4350-9f40-6421bc985be8
+    latest_finish_time: -2
+    latest_start_time: 537.18
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf_cupboard
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  3197f60d-df54-418b-92fa-d074c84e1c22:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_can
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 242.49
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: 3197f60d-df54-418b-92fa-d074c84e1c22
+    latest_finish_time: -2
+    latest_start_time: 372.83
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: second_door
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  3ce7f55b-80f6-478b-a8c6-840ab1ccf2c6:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: second_door_outside
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 285.16
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: 3ce7f55b-80f6-478b-a8c6-840ab1ccf2c6
+    latest_finish_time: -2
+    latest_start_time: 365.02
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  4599e508-50e9-48ec-bf89-8898e33797d6:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 66.75
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: 4599e508-50e9-48ec-bf89-8898e33797d6
+    latest_finish_time: -2
+    latest_start_time: 343.23
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_can
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  5e090148-674a-4d6c-a218-10be08ae645f:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: observation_pose
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 274.89
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: 5e090148-674a-4d6c-a218-10be08ae645f
+    latest_finish_time: -2
+    latest_start_time: 480.19
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: living_room
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  663692d8-797f-4462-bf4d-863768480a15:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_can
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 208.22
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: 663692d8-797f-4462-bf4d-863768480a15
+    latest_finish_time: -2
+    latest_start_time: 339.19
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: cupboard
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  736f2a19-6aa1-434e-b106-1395df4fd551:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 257.3
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: 736f2a19-6aa1-434e-b106-1395df4fd551
+    latest_finish_time: -2
+    latest_start_time: 489.24
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: second_door_outside
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  7f91ef7d-6976-4c5a-ac00-80619b1bea40:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 106.3
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: 7f91ef7d-6976-4c5a-ac00-80619b1bea40
+    latest_finish_time: -2
+    latest_start_time: 345.28
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf_cupboard
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  e5c8fc92-c323-4341-893a-1c1227aa469a:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: cupboard
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 217.2
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: e5c8fc92-c323-4341-893a-1c1227aa469a
+    latest_finish_time: -2
+    latest_start_time: 359.23
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf_cupboard
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  ebebaa45-e91c-4f55-80c7-4037d98762d4:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_can
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 250.78
+    estimated_duration: -1
+    finish_time: -1
+    hard_constraints: true
+    id: ebebaa45-e91c-4f55-80c7-4037d98762d4
+    latest_finish_time: -2
+    latest_start_time: 542.45
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: living_room
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+upper_bound: 300
