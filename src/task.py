@@ -1,10 +1,5 @@
-import uuid
-
-
-def generate_uuid():
-    """ Returns a string containing a random uuid
-    """
-    return str(uuid.uuid4())
+from src.utils.uuid import generate_uuid
+from src.utils.datasets import flatten_dict
 
 
 class Task(object):
@@ -44,3 +39,12 @@ class Task(object):
         task.finish_pose_name = task_dict['finish_pose_name']
         task.hard_constraints = task_dict['hard_constraints']
         return task
+
+    @staticmethod
+    def to_csv(task_dict):
+        """ Prepares dict to be written to a csv
+        :return: dict
+        """
+        to_csv_dict = flatten_dict(task_dict)
+
+        return to_csv_dict

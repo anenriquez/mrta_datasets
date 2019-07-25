@@ -80,3 +80,5 @@ if __name__ == '__main__':
 
     dataset_creator.store_as_yaml(dataset, path)
 
+    dataset_creator.store_as_csv(dataset, task_cls, path)
+

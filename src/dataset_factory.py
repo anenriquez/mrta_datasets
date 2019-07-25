@@ -3,6 +3,7 @@ import numpy as np
 import random
 from pathlib import Path
 import math
+from src.utils.datasets import to_csv
 from src.task_factory import TaskCreator, generic_task_creator
 from ropod.structs.task import Task as RopodTask
 from src.task import Task as GenericTask
@@ -278,9 +279,9 @@ class DatasetCreator(object):
 
         self.dataset_creator = dataset_factory.get_dataset_creator(dataset_type)
 
-    def create(self, task_type, n_tasks, dataset_name, pose_names, **kwargs):
+    def create(self, task_cls, n_tasks, dataset_name, pose_names, **kwargs):
 
-        task_creator = TaskCreator(task_type)
+        task_creator = TaskCreator(task_cls)
         kwargs.update({'task_creator': task_creator})
 
         dataset = self.dataset_creator(n_tasks, dataset_name, pose_names, **kwargs)
@@ -297,4 +298,22 @@ class DatasetCreator(object):
 
         with open(file, 'w') as outfile:
             yaml.safe_dump(dataset, outfile, default_flow_style=False)
+
+    @staticmethod
+    def store_as_csv(dataset, task_cls, path):
+
+        # Create path if it doesn't exist
+        Path(path).mkdir(parents=True, exist_ok=True)
+
+        file = path + dataset.get('dataset_name') + '.csv'
+
+        tasks = dataset.get('tasks')
+        list_task_dicts = list()
+
+        for task_id, task in tasks.items():
+            csv_dict = task_cls.to_csv(task)
+            list_task_dicts.append(csv_dict)
+
+        to_csv(list_task_dicts, file)
+
 
