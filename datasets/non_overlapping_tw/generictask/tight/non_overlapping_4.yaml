@@ -1,0 +1,87 @@
+dataset_name: non_overlapping_4
+dataset_type: non_overlapping_tw
+interval_type: tight
+lower_bound: 60
+task_type: GenericTask
+tasks:
+  3336dc8d-a8f7-4a46-9187-19cc1a985e8b:
+    earliest_start_time: 372.53
+    estimated_duration: 6.79
+    finish_pose_name: observation_pose
+    hard_constraints: true
+    id: 3336dc8d-a8f7-4a46-9187-19cc1a985e8b
+    latest_start_time: 432.53
+    start_pose_name: shelf
+  33d55da2-525f-41ac-922f-4a4d2ecea143:
+    earliest_start_time: 1001.26
+    estimated_duration: 4.19
+    finish_pose_name: observation_pose
+    hard_constraints: true
+    id: 33d55da2-525f-41ac-922f-4a4d2ecea143
+    latest_start_time: 1061.26
+    start_pose_name: cupboard
+  438bcd9f-341c-412e-9205-601f519f2cb5:
+    earliest_start_time: 1125.45
+    estimated_duration: 2.03
+    finish_pose_name: trash_bin1
+    hard_constraints: true
+    id: 438bcd9f-341c-412e-9205-601f519f2cb5
+    latest_start_time: 1185.45
+    start_pose_name: second_door_outside
+  85acd30d-04c6-4195-949c-f6e69eee0ab3:
+    earliest_start_time: 871.71
+    estimated_duration: 9.55
+    finish_pose_name: second_door_outside
+    hard_constraints: true
+    id: 85acd30d-04c6-4195-949c-f6e69eee0ab3
+    latest_start_time: 931.71
+    start_pose_name: observation_pose
+  a5caaba0-6db0-45c9-85b1-e3b5fba04fdc:
+    earliest_start_time: 120
+    estimated_duration: 2.85
+    finish_pose_name: kitchen
+    hard_constraints: true
+    id: a5caaba0-6db0-45c9-85b1-e3b5fba04fdc
+    latest_start_time: 180
+    start_pose_name: living_room
+  b603693b-afb8-444c-b2de-57d5649faf2e:
+    earliest_start_time: 499.32
+    estimated_duration: 2.03
+    finish_pose_name: second_door_outside
+    hard_constraints: true
+    id: b603693b-afb8-444c-b2de-57d5649faf2e
+    latest_start_time: 559.32
+    start_pose_name: trash_bin1
+  b91f92cf-bfea-4f52-a60b-d574f4ad2e7e:
+    earliest_start_time: 242.85
+    estimated_duration: 9.68
+    finish_pose_name: trash_can
+    hard_constraints: true
+    id: b91f92cf-bfea-4f52-a60b-d574f4ad2e7e
+    latest_start_time: 302.85
+    start_pose_name: second_door
+  ef1bff87-2464-4740-9d41-94c77134a09f:
+    earliest_start_time: 621.35
+    estimated_duration: 6.27
+    finish_pose_name: second_door
+    hard_constraints: true
+    id: ef1bff87-2464-4740-9d41-94c77134a09f
+    latest_start_time: 681.35
+    start_pose_name: inspection_area
+  ef854264-7bc0-4612-a039-1b49099235ad:
+    earliest_start_time: 747.62
+    estimated_duration: 4.09
+    finish_pose_name: inspection_area
+    hard_constraints: true
+    id: ef854264-7bc0-4612-a039-1b49099235ad
+    latest_start_time: 807.62
+    start_pose_name: shelf
+  efef73b0-99f4-4a22-8152-5cdcf68eb9e2:
+    earliest_start_time: 1247.48
+    estimated_duration: 2.36
+    finish_pose_name: table
+    hard_constraints: true
+    id: efef73b0-99f4-4a22-8152-5cdcf68eb9e2
+    latest_start_time: 1307.48
+    start_pose_name: inspection_area
+upper_bound: 300

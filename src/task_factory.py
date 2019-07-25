@@ -68,21 +68,6 @@ def ropod_task_creator(task_cls, **kwargs):
     return task
 
 
-def generic_task_csv_loader(task_cls, task_csv):
-    id = task_csv['id']
-
-    _task_args = {'earliest_start_time': task_csv['earliest_start_time'],
-                  'latest_start_time': task_csv['latest_start_time'],
-                  'estimated_duration': task_csv['estimated_duration'],
-                  'start_pose_name': task_csv['start_pose_name'],
-                  'finish_pose_name': task_csv['finish_pose_name'],
-                  'hard_constraints': task_csv['hard_constraints']
-                  }
-
-    task = task_cls(id, **_task_args)
-    return task
-
-
 def task_request_creator(task_cls, **kwargs):
     pickup_pose = kwargs.get('start_pose_name', Area())
     delivery_pose = kwargs.get('finish_pose_name', Area())
@@ -98,6 +83,21 @@ def task_request_creator(task_cls, **kwargs):
     return task
 
 
+def generic_task_csv_loader(task_cls, task_csv):
+    id = task_csv['id']
+
+    _task_args = {'earliest_start_time': float(task_csv['earliest_start_time']),
+                  'latest_start_time': float(task_csv['latest_start_time']),
+                  'estimated_duration': float(task_csv['estimated_duration']),
+                  'start_pose_name': task_csv['start_pose_name'],
+                  'finish_pose_name': task_csv['finish_pose_name'],
+                  'hard_constraints': task_csv['hard_constraints']
+                  }
+
+    task = task_cls(id, **_task_args)
+    return task
+
+
 def ropod_task_csv_loader(task_cls, task_csv):
 
     task = task_cls()
@@ -105,8 +105,9 @@ def ropod_task_csv_loader(task_cls, task_csv):
     task.id = task_csv['id']
     task.pickup_pose.name = task_csv['pickup_pose_name']
     task.delivery_pose.name = task_csv['delivery_pose_name']
-    task.earliest_start_time = task_csv['earliest_start_time']
-    task.latest_start_time = task_csv['latest_start_time']
+    task.earliest_start_time = float(task_csv['earliest_start_time'])
+    task.latest_start_time = float(task_csv['latest_start_time'])
+    task.earliest_start_time = float(task_csv['estimated_duration'])
     task.hard_constraints = task_csv['hard_constraints']
 
     return task
@@ -119,8 +120,8 @@ def task_request_csv_loader(task_cls, task_csv):
     task.id = task_csv['id']
     task.pickup_pose.name = task_csv['pickup_pose_name']
     task.delivery_pose.name = task_csv['delivery_pose_name']
-    task.earliest_start_time = task_csv['earliest_start_time']
-    task.latest_start_time = task_csv['latest_start_time']
+    task.earliest_start_time = float(task_csv['earliest_start_time'])
+    task.latest_start_time = float(task_csv['latest_start_time'])
 
     return task
 
