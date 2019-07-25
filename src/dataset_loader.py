@@ -1,5 +1,6 @@
 import csv
 import os
+from src.utils.datasets import load_yaml
 from src.task_factory import TaskLoader
 from ropod.structs.task import Task as RopodTask, TaskRequest
 from src.task import Task as GenericTask
@@ -42,11 +43,37 @@ def load_csv_dataset(dataset_name, task_cls, path):
     return tasks
 
 
+def load_yaml_dataset(dataset_name, task_cls, path):
+
+    datasets_dir = get_datasets_dir()
+
+    dataset_path = datasets_dir + path + dataset_name + '.yaml'
+
+    dataset_dict = load_yaml(dataset_path)
+
+    tasks = list()
+
+    task_dicts = dataset_dict.get('tasks')
+
+    for task_id, task_info in task_dicts.items():
+        task = task_cls.from_dict(task_info)
+        tasks.append(task)
+
+    return tasks
+
+
 if __name__ == '__main__':
 
-    path = '/non_overlapping_tw/taskrequest/random/'
+    path = '/non_overlapping_tw/generictask/random/'
 
-    tasks = load_csv_dataset('non_overlapping_1', TaskRequest, path)
+    tasks = load_csv_dataset('non_overlapping_1', GenericTask, path)
+
+    for task in tasks:
+        print(task.id)
+
+    print("-------")
+
+    tasks = load_yaml_dataset('non_overlapping_1', GenericTask, path)
 
     for task in tasks:
         print(task.id)
