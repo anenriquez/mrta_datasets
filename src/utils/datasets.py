@@ -1,11 +1,28 @@
-""" Includes methods to prepare and write struct objects to csv files
+""" Includes methods to prepare and write dataset files
 """
 
 import csv
+from pathlib import Path
+import yaml
+
+
+def load_yaml(file):
+    """ Reads a yaml file and returns a dictionary with its contents
+
+    :param file: file to load
+    :return: data as dict()
+    """
+    with open(file, 'r') as file:
+        data = yaml.safe_load(file)
+    return data
 
 
 def flatten_dict(dict_input):
     """ Returns a dictionary without nested dictionaries
+
+    :param dict_input: nested dictionary
+    :return: flattened dictionary
+
     """
     flattened_dict = dict()
 
@@ -23,13 +40,15 @@ def flatten_dict(dict_input):
 
 
 def keep_entry(dict_input, parent_key, child_keys):
-    """ Args:
-        dict_input
-        parent_key  string
-        child_keys  list of strings
-
-    Keeps child_keys in dict_input and not other entries that start with the same parent_key
     """
+    Keeps child_keys in dict_input and not other entries that start with the same parent_key
+
+    :param dict_input:
+    :param parent_key: string
+    :param child_keys: list of strings
+    :return: dictionary with removed child keys
+    """
+
     dict_output = dict()
 
     child_keys = [''.join((parent_key, '_', child_key)) for child_key in child_keys]
@@ -44,10 +63,12 @@ def keep_entry(dict_input, parent_key, child_keys):
 
 
 def to_csv(list_dicts, file_name):
-    ''' Exports a list of dictionaries to a csv file
-    args: list_dicts    list of dictionaries to be exported
-          file_name     name of the csv file
-    '''
+    """ Exports a list of dictionaries to a csv file
+
+    :param list_dicts: list of dictionaries to be exported
+    :param file_name: name of the csv file
+
+    """
     # We assume that all the dictionaries have the same keys
     fieldnames = list_dicts[0].keys()
 
@@ -55,3 +76,44 @@ def to_csv(list_dicts, file_name):
         dict_writer = csv.DictWriter(output_file, fieldnames)
         dict_writer.writeheader()
         dict_writer.writerows(list_dicts)
+
+
+def store_as_yaml(dataset, path):
+    """ Receives a dictionary (in yaml format) and stores it as yaml in path
+
+    :param dataset: dictionary of tasks
+    :param path: path where the dataset will be stored
+    """
+
+    # Create path if it doesn't exist
+    Path(path).mkdir(parents=True, exist_ok=True)
+
+    file = path + dataset.get('dataset_name') + '.yaml'
+
+    with open(file, 'w') as outfile:
+        yaml.safe_dump(dataset, outfile, default_flow_style=False)
+
+
+def store_as_csv(dataset, task_cls, path):
+    """ Receives a dictionary (in yaml format) and saves it
+    as a csv file in path
+
+    :param dataset: dictionary of tasks
+    :param task_cls: class of tasks in dataset
+    :param path: path where the dataset will be stored
+    :return:
+    """
+
+    # Create path if it doesn't exist
+    Path(path).mkdir(parents=True, exist_ok=True)
+
+    file = path + dataset.get('dataset_name') + '.csv'
+
+    tasks = dataset.get('tasks')
+    list_task_dicts = list()
+
+    for task_id, task in tasks.items():
+        csv_dict = task_cls.to_csv(task)
+        list_task_dicts.append(csv_dict)
+
+    to_csv(list_task_dicts, file)

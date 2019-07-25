@@ -1,9 +1,6 @@
-import yaml
 import numpy as np
 import random
-from pathlib import Path
 import math
-from src.utils.datasets import to_csv
 from src.task_factory import TaskCreator, generic_task_creator
 from ropod.structs.task import Task as RopodTask
 from src.task import Task as GenericTask
@@ -198,18 +195,6 @@ def non_overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
     return dataset_dict
 
 
-def load_file(file):
-    """ Reads a yaml file and returns a dictionary with its contents
-
-    :param file: file to load
-    :return: data as dict()
-    """
-    file_handle = open(file, 'r')
-    data = yaml.safe_load(file_handle)
-    file_handle.close()
-    return data
-
-
 def get_interval(interval_type, lower_bound, upper_bound):
     if interval_type == 'tight':
         interval = lower_bound
@@ -287,33 +272,4 @@ class DatasetCreator(object):
         dataset = self.dataset_creator(n_tasks, dataset_name, pose_names, **kwargs)
 
         return dataset
-
-    @staticmethod
-    def store_as_yaml(dataset, path):
-
-        # Create path if it doesn't exist
-        Path(path).mkdir(parents=True, exist_ok=True)
-
-        file = path + dataset.get('dataset_name') + '.yaml'
-
-        with open(file, 'w') as outfile:
-            yaml.safe_dump(dataset, outfile, default_flow_style=False)
-
-    @staticmethod
-    def store_as_csv(dataset, task_cls, path):
-
-        # Create path if it doesn't exist
-        Path(path).mkdir(parents=True, exist_ok=True)
-
-        file = path + dataset.get('dataset_name') + '.csv'
-
-        tasks = dataset.get('tasks')
-        list_task_dicts = list()
-
-        for task_id, task in tasks.items():
-            csv_dict = task_cls.to_csv(task)
-            list_task_dicts.append(csv_dict)
-
-        to_csv(list_task_dicts, file)
-
 

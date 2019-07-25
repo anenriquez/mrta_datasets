@@ -1,23 +1,11 @@
 from src.dataset_factory import DatasetCreator
 from src.task_factory import TaskFactory
 import argparse
-import yaml
+from src.utils.datasets import load_yaml, store_as_yaml, store_as_csv
 from ropod.structs.task import Task as RopodTask
 from src.task import Task as GenericTask
 GenericTask.__name__ = 'GenericTask'
 RopodTask.__name__ = 'RopodTask'
-
-
-def load_file(file):
-    """ Reads a yaml file and returns a dictionary with its contents
-
-    :param file: file to load
-    :return: data as dict()
-    """
-    file_handle = open(file, 'r')
-    data = yaml.safe_load(file_handle)
-    file_handle.close()
-    return data
 
 
 def get_task_cls(task_cls_name):
@@ -61,7 +49,7 @@ if __name__ == '__main__':
 
     task_cls = get_task_cls(args.task_cls_name)
 
-    pose_names = load_file(args.poses_file).get('pose_names')
+    pose_names = load_yaml(args.poses_file).get('pose_names')
 
     dataset_creator = DatasetCreator(args.dataset_type)
 
@@ -78,7 +66,7 @@ if __name__ == '__main__':
            '/' + args.task_cls_name.lower() + '/' + \
            args.interval_type + '/'
 
-    dataset_creator.store_as_yaml(dataset, path)
+    store_as_yaml(dataset, path)
 
-    dataset_creator.store_as_csv(dataset, task_cls, path)
+    store_as_csv(dataset, task_cls, path)
 
