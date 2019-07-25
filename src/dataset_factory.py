@@ -1,7 +1,7 @@
 import yaml
 import numpy as np
 import random
-import os
+from pathlib import Path
 import math
 from src.task_factory import TaskCreator, generic_task_creator
 from ropod.structs.task import Task as RopodTask
@@ -9,57 +9,6 @@ from src.task import Task as GenericTask
 
 GenericTask.__name__ = 'GenericTask'
 RopodTask.__name__ = 'RopodTask'
-
-
-def load_file(file):
-    """ Reads a yaml file and returns a dictionary with its contents
-
-    :param file: file to load
-    :return: data as dict()
-    """
-    file_handle = open(file, 'r')
-    data = yaml.safe_load(file_handle)
-    file_handle.close()
-    return data
-
-
-def get_interval(interval_type, lower_bound, upper_bound):
-    if interval_type == 'tight':
-        interval = lower_bound
-    elif interval_type == 'loose':
-        interval = upper_bound
-    elif interval_type == 'random':
-        interval = np.random.uniform(lower_bound, upper_bound)
-    else:
-        raise ValueError(interval_type)
-
-    return round(interval, 2)
-
-
-def get_estimated_duration(pose_names, start_pose_name, finish_pose_name):
-    # TODO: get the estimated duration from the probability distribution
-
-    # For now, we assume constant velocity of 1 m/s
-    # The estimated duration is equal to the euclidean distance
-
-    start_coordinates = pose_names.get(start_pose_name)[:2]
-    finish_coordinates = pose_names.get(finish_pose_name)[:2]
-
-    estimated_duration = math.sqrt(sum([(a - b) ** 2 for a, b in zip(start_coordinates, finish_coordinates)]))
-
-    return round(estimated_duration, 2)
-
-
-def get_poses(pose_names):
-
-    available_poses = dict(pose_names)
-
-    start_pose_name = random.choice(list(available_poses.keys()))
-    available_poses.pop(start_pose_name, None)
-
-    finish_pose_name = random.choice(list(available_poses.keys()))
-
-    return start_pose_name, finish_pose_name
 
 
 class DatasetFactory(object):
@@ -119,11 +68,13 @@ def overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
     start_time_upper_bound = kwargs.get('upper_bound', 300)
     task_creator = kwargs.get('task_creator', generic_task_creator)
 
-    dataset = dict()
-    dataset['dataset_name'] = dataset_name
-    dataset['dataset_type'] = 'overlapping_tw'
-    dataset['task_type'] = task_creator.get_task_cls_name()
-    dataset['tasks'] = dict()
+    task_type = task_creator.get_task_cls_name()
+
+    dataset_dict = get_metadata(dataset_name, 'overlapping_tw',
+                                task_type, interval_type,
+                                start_time_lower_bound, start_time_upper_bound)
+
+    dataset_dict['tasks'] = dict()
 
     for i in range(0, n_tasks):
         print("Task: ", i)
@@ -145,11 +96,11 @@ def overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
 
         task = task_creator.create(**_task_args)
 
-        dataset['tasks'][task.id] = task.to_dict()
+        dataset_dict['tasks'][task.id] = task.to_dict()
 
-    print("Dataset", dataset)
+    print("Dataset", dataset_dict)
 
-    return dataset
+    return dataset_dict
 
 
 def non_overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
@@ -195,11 +146,13 @@ def non_overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
     time_window_upper_bound = kwargs.get('upper_bound', 300)
     task_creator = kwargs.get('task_creator', generic_task_creator)
 
-    dataset = dict()
-    dataset['dataset_name'] = dataset_name
-    dataset['dataset_type'] = 'non_overlapping_tw'
-    dataset['task_type'] = task_creator.get_task_cls_name()
-    dataset['tasks'] = dict()
+    task_type = task_creator.get_task_cls_name()
+
+    dataset_dict = get_metadata(dataset_name, 'non_overlapping_tw',
+                                task_type, interval_type,
+                                time_window_lower_bound, time_window_upper_bound)
+
+    dataset_dict['tasks'] = dict()
 
     finish_last_task = time_window_lower_bound
 
@@ -239,8 +192,77 @@ def non_overlapping_time_windows(n_tasks, dataset_name, pose_names, **kwargs):
 
         print(task.id)
 
-        dataset['tasks'][task.id] = task.to_dict()
+        dataset_dict['tasks'][task.id] = task.to_dict()
 
+    return dataset_dict
+
+
+def load_file(file):
+    """ Reads a yaml file and returns a dictionary with its contents
+
+    :param file: file to load
+    :return: data as dict()
+    """
+    file_handle = open(file, 'r')
+    data = yaml.safe_load(file_handle)
+    file_handle.close()
+    return data
+
+
+def get_interval(interval_type, lower_bound, upper_bound):
+    if interval_type == 'tight':
+        interval = lower_bound
+    elif interval_type == 'loose':
+        interval = upper_bound
+    elif interval_type == 'random':
+        interval = np.random.uniform(lower_bound, upper_bound)
+    else:
+        raise ValueError(interval_type)
+
+    return round(interval, 2)
+
+
+def get_estimated_duration(pose_names, start_pose_name, finish_pose_name):
+    # TODO: get the estimated duration from the probability distribution
+
+    # For now, we assume constant velocity of 1 m/s
+    # The estimated duration is equal to the euclidean distance
+
+    start_coordinates = pose_names.get(start_pose_name)[:2]
+    finish_coordinates = pose_names.get(finish_pose_name)[:2]
+
+    estimated_duration = math.sqrt(sum([(a - b) ** 2 for a, b in zip(start_coordinates, finish_coordinates)]))
+
+    return round(estimated_duration, 2)
+
+
+def get_poses(pose_names):
+    """ Randomly chooses a start and a finish pose name
+
+    :param pose_names: dictionary of pose names
+    :return: start_pose_name, finish_pose_name
+    """
+
+    available_poses = dict(pose_names)
+
+    start_pose_name = random.choice(list(available_poses.keys()))
+    available_poses.pop(start_pose_name, None)
+
+    finish_pose_name = random.choice(list(available_poses.keys()))
+
+    return start_pose_name, finish_pose_name
+
+
+def get_metadata(dataset_name, dataset_type, task_type,
+                 interval_type, lower_bound, upper_bound):
+
+    dataset = dict()
+    dataset['dataset_name'] = dataset_name
+    dataset['dataset_type'] = dataset_type
+    dataset['task_type'] = task_type
+    dataset['interval_type'] = interval_type
+    dataset['lower_bound'] = lower_bound
+    dataset['upper_bound'] = upper_bound
     return dataset
 
 
@@ -266,13 +288,12 @@ class DatasetCreator(object):
         return dataset
 
     @staticmethod
-    def store(dataset, path):
-        if not os.path.exists(path):
-            os.mkdir(path)
+    def store_as_yaml(dataset, path):
+
+        # Create path if it doesn't exist
+        Path(path).mkdir(parents=True, exist_ok=True)
 
         file = path + dataset.get('dataset_name') + '.yaml'
-
-        print("File: ", file)
 
         with open(file, 'w') as outfile:
             yaml.safe_dump(dataset, outfile, default_flow_style=False)

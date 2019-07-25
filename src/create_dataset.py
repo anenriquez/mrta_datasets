@@ -72,5 +72,11 @@ if __name__ == '__main__':
 
     print(dataset)
 
-    dataset_creator.store(dataset, '../datasets/')
+    # Save in path datasets/dataset_type/task_type/interval_type
+
+    path = '../datasets/' + args.dataset_type +\
+           '/' + args.task_cls_name.lower() + '/' + \
+           args.interval_type + '/'
+
+    dataset_creator.store_as_yaml(dataset, path)
 
