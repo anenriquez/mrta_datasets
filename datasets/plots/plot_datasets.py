@@ -1,17 +1,13 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import matplotlib.dates as mdate
-import matplotlib.ticker as mtick
-import yaml
-from math import sqrt
 import os
-import collections
-from datetime import datetime, timedelta
-import time
-
+from datetime import datetime
+import argparse
+from pathlib import Path
+from src.task_factory import initialize_task_factory
 from src.dataset_loader import load_yaml_dataset, load_csv_dataset
-from ropod.structs.task import Task as RopodTask, TaskRequest
+from ropod.structs.task import Task as RopodTask
 from src.task import Task as GenericTask
 GenericTask.__name__ = 'GenericTask'
 RopodTask.__name__ = 'RopodTask'
@@ -52,7 +48,7 @@ def load_datasets(path, task_cls, extension):
     return datasets
 
 
-def plot_dataset(dataset_name, tasks):
+def plot_dataset(dataset_name, tasks, show=False):
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
@@ -97,21 +93,55 @@ def plot_dataset(dataset_name, tasks):
 
     plt.xlabel("Time (hours:minutes:seconds)")
     plt.ylabel("Task number")
-    plt.title("Temporal Distribution: Dataset " + dataset_name)
+    plt.title("Dataset: " + dataset_name)
 
     plt.draw()
     plt.grid()
-    # fig.savefig(dataset_name + "-temporal.png")
 
-    plt.show()
+    if show:
+        plt.show()
+
+    return fig
+
+
+def save_plot(fig, dataset_name, path):
+    code_dir = os.path.abspath(os.path.dirname(__file__))
+    main_dir = os.path.dirname(code_dir)
+
+    plot_path = main_dir + '/plots' + path
+
+    # Create path if it doesn't exist
+    Path(plot_path).mkdir(parents=True, exist_ok=True)
+
+    fig.savefig(plot_path + dataset_name + ".png")
 
 
 if __name__ == '__main__':
 
-    path = '/non_overlapping_tw/generictask/tight/'
+    parser = argparse.ArgumentParser()
 
-    datasets = load_datasets(path, GenericTask, '.csv')
+    parser.add_argument('dataset_type', type=str, help='Dataset type',
+                        choices=['overlapping_tw', 'non_overlapping_tw'])
+
+    parser.add_argument('task_cls_name', type=str, help='Task class name',
+                        choices=['GenericTask', 'RopodTask'])
+
+    parser.add_argument('interval_type', type=str,
+                        help='Start time interval for overlapping tw'
+                        'or time window interval for non_overlapping_tw',
+                        choices=['tight', 'loose', 'random'])
+
+    args = parser.parse_args()
+
+    task_factory = initialize_task_factory()
+    task_cls = task_factory.get_task_cls(args.task_cls_name)
+
+    path = '/' + args.dataset_type + '/' + args.task_cls_name.lower() \
+           + '/' + args.interval_type + '/'
+
+    datasets = load_datasets(path, task_cls, '.csv')
 
     for dataset_name, tasks in datasets.items():
-        plot_dataset(dataset_name, tasks)
+        fig = plot_dataset(dataset_name, tasks, show=True)
+        save_plot(fig, dataset_name, path)
 
