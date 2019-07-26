@@ -107,7 +107,7 @@ def ropod_task_csv_loader(task_cls, task_csv):
     task.delivery_pose.name = task_csv['delivery_pose_name']
     task.earliest_start_time = float(task_csv['earliest_start_time'])
     task.latest_start_time = float(task_csv['latest_start_time'])
-    task.earliest_start_time = float(task_csv['estimated_duration'])
+    task.estimated_duration = float(task_csv['estimated_duration'])
     task.hard_constraints = task_csv['hard_constraints']
 
     return task
