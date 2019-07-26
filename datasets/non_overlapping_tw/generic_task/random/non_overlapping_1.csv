@@ -1,0 +1,11 @@
+latest_start_time,start_pose_name,id,earliest_start_time,estimated_duration,hard_constraints,finish_pose_name
+334.67,table,002767db-01f3-4e0c-af4e-52c4d81bd713,247.46,9.12,True,second_door_outside
+3359.1,inspection_area,173d27eb-d0a4-4b94-986b-1e9b8eca0579,3197.08,6.84,True,second_door_outside
+642.01,cupboard,4076f78b-16d8-4057-a1ad-d16d239764fa,479.33,2.74,True,shelf
+3937.8,living_room,6d17963b-10b5-4143-b279-84d8e93aaaa3,3642.88,2.3,True,observation_pose
+2776.44,shelf,73ace543-260e-474a-9112-3abd470ed5b5,2503.91,8.24,True,kitchen
+2303.49,living_room,988640de-f114-4b13-820d-7a410085ef96,2170.7,4.91,True,inspection_area
+1063.35,cupboard,a4e10576-a0e3-4662-8aec-5992a75d2838,786.06,2.74,True,shelf
+3062.39,shelf_cupboard,a71f1730-d5ed-45c5-9b3b-ad783869957c,2861.26,6.37,True,trash_can
+1969.0,observation_pose,d36ba90a-7bee-4ee6-a7ce-82ac237457fb,1677.82,4.19,True,cupboard
+1530.52,living_room,fa1316ec-151c-46ea-8c62-72480b2654b5,1250.51,2.3,True,observation_pose

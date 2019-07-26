@@ -1,0 +1,11 @@
+pickup_start_time,priority,earliest_finish_time,start_time,loadId,id,latest_start_time,hard_constraints,team_robot_ids,pickup_pose_name,delivery_pose_name,earliest_start_time,finish_time,latest_finish_time,status_status,estimated_duration,loadType
+-1,2,-2,-1,,06d0ee7a-9ee5-4bb8-95fb-25bba55681b5,313.51,True,[],table,inspection_area,129.48,-1,-2,,2.36,
+-1,2,-2,-1,,38056b05-39b4-4054-b22d-d23be6fa2d58,308.09,True,[],observation_pose,second_door,235.06,-1,-2,,8.88,
+-1,2,-2,-1,,629a37c4-90a0-46e6-abdc-d151c91980cd,352.42,True,[],trash_can,kitchen,227.33,-1,-2,,1.07,
+-1,2,-2,-1,,8aeb3116-995d-4710-bc10-e774842d7c49,501.73,True,[],shelf_cupboard,kitchen,270.75,-1,-2,,7.24,
+-1,2,-2,-1,,92be2915-ab4c-4f79-b098-c5384bfe5cc1,385.0,True,[],living_room,trash_bin1,218.33,-1,-2,,10.07,
+-1,2,-2,-1,,9e59e85a-b997-4191-a2d7-773684b9d7c3,419.72,True,[],shelf,observation_pose,157.09,-1,-2,,6.79,
+-1,2,-2,-1,,c6bd5714-637a-4f4e-9897-ffb4e7ecd5ad,388.2,True,[],cupboard,kitchen,244.89,-1,-2,,6.28,
+-1,2,-2,-1,,e60e83bb-d97e-4dff-a218-b28c6d31ff4c,429.92,True,[],trash_bin1,kitchen,211.21,-1,-2,,9.46,
+-1,2,-2,-1,,ebeb49e0-5871-4441-ba6f-90d9900901fb,553.57,True,[],second_door,trash_can,296.65,-1,-2,,9.68,
+-1,2,-2,-1,,fbe512bc-9be7-4b91-97b5-38b42763d32f,411.13,True,[],second_door_outside,cupboard,144.03,-1,-2,,5.48,

@@ -2,10 +2,9 @@ import csv
 import os
 from src.utils.datasets import load_yaml
 from src.task_factory import TaskLoader
-from ropod.structs.task import Task as RopodTask, TaskRequest
-from src.task import Task as GenericTask
-GenericTask.__name__ = 'GenericTask'
-RopodTask.__name__ = 'RopodTask'
+import argparse
+from src.task_factory import initialize_task_factory
+import collections
 
 
 def get_datasets_dir():
@@ -17,13 +16,12 @@ def get_datasets_dir():
     return datasets_dir
 
 
-def load_csv_dataset(dataset_name, task_cls, path):
+def load_csv_dataset(dataset_name, task_type, path):
 
     datasets_dir = get_datasets_dir()
 
     dataset_path = datasets_dir + path + dataset_name + '.csv'
 
-    print(dataset_path)
     tasks = list()
 
     task_loader = TaskLoader()
@@ -31,9 +29,9 @@ def load_csv_dataset(dataset_name, task_cls, path):
     try:
         with open(dataset_path, 'r') as file:
             csv_reader = csv.DictReader(file)
-            for task_csv in csv_reader:
 
-                task = task_loader.load_csv(task_cls, task_csv)
+            for task_csv in csv_reader:
+                task = task_loader.load_csv(task_type, task_csv)
 
                 tasks.append(task)
 
@@ -43,7 +41,7 @@ def load_csv_dataset(dataset_name, task_cls, path):
     return tasks
 
 
-def load_yaml_dataset(dataset_name, task_cls, path):
+def load_yaml_dataset(dataset_name, task_type, path):
 
     datasets_dir = get_datasets_dir()
 
@@ -51,11 +49,14 @@ def load_yaml_dataset(dataset_name, task_cls, path):
 
     dataset_dict = load_yaml(dataset_path)
 
+    task_factory = initialize_task_factory()
+    task_cls = task_factory.get_task_cls(task_type)
+
     tasks = list()
+    tasks_dict = dataset_dict.get('tasks')
+    ordered_tasks = collections.OrderedDict(sorted(tasks_dict.items()))
 
-    task_dicts = dataset_dict.get('tasks')
-
-    for task_id, task_info in task_dicts.items():
+    for task_id, task_info in ordered_tasks.items():
         task = task_cls.from_dict(task_info)
         tasks.append(task)
 
@@ -64,16 +65,37 @@ def load_yaml_dataset(dataset_name, task_cls, path):
 
 if __name__ == '__main__':
 
-    path = '/non_overlapping_tw/generictask/random/'
+    parser = argparse.ArgumentParser()
 
-    tasks = load_csv_dataset('non_overlapping_1', GenericTask, path)
+    parser.add_argument('dataset_name', type=str, help='Name of the dataset')
+
+    parser.add_argument('dataset_type', type=str, help='Dataset type',
+                        choices=['overlapping_tw', 'non_overlapping_tw'])
+
+    parser.add_argument('task_type', type=str, help='Task type',
+                        choices=['generic_task', 'ropod_task', 'task_request'])
+
+    parser.add_argument('interval_type', type=str,
+                        help='Start time interval for overlapping tw'
+                             'or time window interval for non_overlapping_tw',
+                        choices=['tight', 'loose', 'random'])
+
+    parser.add_argument('file_extension', type=str, help='File extension',
+                        choices=['csv', 'yaml'])
+
+    args = parser.parse_args()
+
+    path = '/' + args.dataset_type + '/' + args.task_type \
+           + '/' + args.interval_type + '/'
+
+    if args.file_extension == 'csv':
+
+        tasks = load_csv_dataset(args.dataset_name, args.task_type, path)
+
+    elif args.file_extension == 'yaml':
+
+        tasks = load_yaml_dataset(args.dataset_name, args.task_type, path)
 
     for task in tasks:
         print(task.id)
 
-    print("-------")
-
-    tasks = load_yaml_dataset('non_overlapping_1', GenericTask, path)
-
-    for task in tasks:
-        print(task.id)

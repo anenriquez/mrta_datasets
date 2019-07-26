@@ -4,6 +4,7 @@
 import csv
 from pathlib import Path
 import yaml
+import collections
 
 
 def load_yaml(file):
@@ -90,6 +91,14 @@ def store_as_yaml(dataset, path):
 
     file = path + dataset.get('dataset_name') + '.yaml'
 
+
+    # tasks = dataset.get('tasks')
+    # ordered_tasks = collections.OrderedDict(sorted(tasks.items()))
+    #
+    # print(ordered_tasks)
+
+    # dataset.update({tasks: ordered_tasks})
+
     with open(file, 'w') as outfile:
         yaml.safe_dump(dataset, outfile, default_flow_style=False)
 
@@ -112,7 +121,9 @@ def store_as_csv(dataset, task_cls, path):
     tasks = dataset.get('tasks')
     list_task_dicts = list()
 
-    for task_id, task in tasks.items():
+    ordered_tasks = collections.OrderedDict(sorted(tasks.items()))
+
+    for task_id, task in ordered_tasks.items():
         csv_dict = task_cls.to_csv(task)
         list_task_dicts.append(csv_dict)
 

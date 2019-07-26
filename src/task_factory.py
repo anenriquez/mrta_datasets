@@ -1,13 +1,5 @@
 from src.utils.uuid import generate_uuid
-
-# Import the tasks structs to use in the datasets and rename the classes
-# to avoid conflicts
-from src.task import Task as GenericTask
-from ropod.structs.task import Task as RopodTask, TaskRequest
-from ropod.structs.area import Area
-
-GenericTask.__name__ = 'GenericTask'
-RopodTask.__name__ = 'RopodTask'
+from importlib import import_module
 
 
 class TaskFactory(object):
@@ -16,31 +8,31 @@ class TaskFactory(object):
         self._task_csv_loaders = {}
         self._task_cls = {}
 
-    def register_task_creator(self, task_name, task_creator):
-        self._task_creators[task_name] = task_creator
+    def register_task_creator(self, task_type, task_creator):
+        self._task_creators[task_type] = task_creator
 
-    def get_task_creator(self, task_name):
-        task_creator = self._task_creators.get(task_name)
+    def get_task_creator(self, task_type):
+        task_creator = self._task_creators.get(task_type)
         if not task_creator:
-            raise ValueError(task_name)
+            raise ValueError(task_type)
         return task_creator
 
-    def register_task_csv_loader(self, task_name, task_csv_loader):
-        self._task_csv_loaders[task_name] = task_csv_loader
+    def register_task_csv_loader(self, task_type, task_csv_loader):
+        self._task_csv_loaders[task_type] = task_csv_loader
 
-    def get_task_csv_loader(self, task_name):
-        task_csv_loader = self._task_csv_loaders.get(task_name)
+    def get_task_csv_loader(self, task_type):
+        task_csv_loader = self._task_csv_loaders.get(task_type)
         if not task_csv_loader:
-            raise ValueError(task_name)
+            raise ValueError(task_type)
         return task_csv_loader
 
-    def register_task_cls(self, task_name, task_cls):
-        self._task_cls[task_name] = task_cls
+    def register_task_cls(self, task_type, task_cls):
+        self._task_cls[task_type] = task_cls
 
-    def get_task_cls(self, task_name):
-        task_cls = self._task_cls.get(task_name)
+    def get_task_cls(self, task_type):
+        task_cls = self._task_cls.get(task_type)
         if not task_cls:
-            raise ValueError(task_name)
+            raise ValueError(task_type)
 
         return task_cls
 
@@ -52,8 +44,11 @@ def generic_task_creator(task_cls, **kwargs):
 
 
 def ropod_task_creator(task_cls, **kwargs):
-    pickup_pose = kwargs.get('start_pose_name', Area())
-    delivery_pose = kwargs.get('finish_pose_name', Area())
+
+    area_cls = getattr(import_module('ropod.structs.area'), 'Area')
+
+    pickup_pose = kwargs.get('start_pose_name', area_cls())
+    delivery_pose = kwargs.get('finish_pose_name', area_cls())
     earliest_start_time = kwargs.get('earliest_start_time', -1)
     latest_start_time = kwargs.get('latest_start_time', -1)
     estimated_duration = kwargs.get('estimated_duration', -1)
@@ -69,8 +64,11 @@ def ropod_task_creator(task_cls, **kwargs):
 
 
 def task_request_creator(task_cls, **kwargs):
-    pickup_pose = kwargs.get('start_pose_name', Area())
-    delivery_pose = kwargs.get('finish_pose_name', Area())
+
+    area_cls = getattr(import_module('ropod.structs.area'), 'Area')
+
+    pickup_pose = kwargs.get('start_pose_name', area_cls())
+    delivery_pose = kwargs.get('finish_pose_name', area_cls())
     earliest_start_time = kwargs.get('earliest_start_time', -1)
     latest_start_time = kwargs.get('latest_start_time', -1)
 
@@ -129,29 +127,23 @@ def task_request_csv_loader(task_cls, task_csv):
 def initialize_task_factory():
     task_factory = TaskFactory()
 
-    task_factory.register_task_creator(GenericTask.__name__,
-                                       generic_task_creator)
+    ropod_task_cls = getattr(import_module('ropod.structs.task'), 'Task')
 
-    task_factory.register_task_csv_loader(GenericTask.__name__,
-                                          generic_task_csv_loader)
+    task_factory.register_task_cls('ropod_task', ropod_task_cls)
+    task_factory.register_task_creator('ropod_task', ropod_task_creator)
+    task_factory.register_task_csv_loader('ropod_task', ropod_task_csv_loader)
 
-    task_factory.register_task_cls(GenericTask.__name__, GenericTask)
+    generic_task_cls = getattr(import_module('src.task'), 'Task')
 
-    task_factory.register_task_creator(RopodTask.__name__,
-                                       ropod_task_creator)
+    task_factory.register_task_cls('generic_task', generic_task_cls)
+    task_factory.register_task_creator('generic_task', generic_task_creator)
+    task_factory.register_task_csv_loader('generic_task', generic_task_csv_loader)
 
-    task_factory.register_task_csv_loader(RopodTask.__name__,
-                                          ropod_task_csv_loader)
+    task_request_cls = getattr(import_module('ropod.structs.task'), 'TaskRequest')
 
-    task_factory.register_task_cls(RopodTask.__name__, RopodTask)
-
-    task_factory.register_task_creator(TaskRequest.__name__,
-                                       task_request_creator)
-
-    task_factory.register_task_csv_loader(TaskRequest.__name__,
-                                          task_request_csv_loader)
-
-    task_factory.register_task_cls(TaskRequest.__name__, TaskRequest)
+    task_factory.register_task_cls('task_request', task_request_cls)
+    task_factory.register_task_creator('task_request', task_request_creator)
+    task_factory.register_task_csv_loader('task_request', task_request_csv_loader)
 
     return task_factory
 
@@ -161,9 +153,11 @@ class TaskCreator(object):
     def __init__(self):
         self.task_factory = initialize_task_factory()
 
-    def create(self, task_cls, **kwargs):
-        task_generator = self.task_factory.get_task_creator(task_cls.__name__)
-        new_task = task_generator(task_cls, **kwargs)
+    def create(self, task_type, **kwargs):
+        task_creator = self.task_factory.get_task_creator(task_type)
+        task_cls = self.task_factory.get_task_cls(task_type)
+
+        new_task = task_creator(task_cls, **kwargs)
         return new_task
 
 
@@ -172,7 +166,8 @@ class TaskLoader(object):
     def __init__(self):
         self.task_factory = initialize_task_factory()
 
-    def load_csv(self, task_cls, task_csv):
-        task_csv_loader = self.task_factory.get_task_csv_loader(task_cls.__name__)
+    def load_csv(self, task_type, task_csv):
+        task_csv_loader = self.task_factory.get_task_csv_loader(task_type)
+        task_cls = self.task_factory.get_task_cls(task_type)
         task = task_csv_loader(task_cls, task_csv)
         return task

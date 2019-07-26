@@ -1,200 +1,30 @@
 dataset_name: non_overlapping_1
 dataset_type: non_overlapping_tw
-interval_type: tight
+interval_type: random
 lower_bound: 60
-task_type: RopodTask
+task_type: ropod_task
 tasks:
-  0407ded2-5f2a-4ba1-8a87-5be3b3dbd215:
+  0ff928e1-de2a-422e-9f12-5fb9b2e95ca2:
     delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: cupboard
-      subAreas: []
-      type: ''
-    earliest_finish_time: -2
-    earliest_start_time: 367.63
-    estimated_duration: 5.48
-    finish_time: -1
-    hard_constraints: true
-    id: 0407ded2-5f2a-4ba1-8a87-5be3b3dbd215
-    latest_finish_time: -2
-    latest_start_time: 427.63
-    loadId: ''
-    loadType: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: second_door_outside
-      subAreas: []
-      type: ''
-    pickup_start_time: -1
-    priority: 2
-    robot_actions: {}
-    start_time: -1
-    status:
-      completed_robot_actions: {}
-      current_robot_actions: {}
-      estimated_task_duration: -1.0
-      status: ''
-      task_id: ''
-    team_robot_ids: []
-  1f3b2352-b853-4ace-ad5d-0269f77ebe63:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: observation_pose
-      subAreas: []
-      type: ''
-    earliest_finish_time: -2
-    earliest_start_time: 120
-    estimated_duration: 2.72
-    finish_time: -1
-    hard_constraints: true
-    id: 1f3b2352-b853-4ace-ad5d-0269f77ebe63
-    latest_finish_time: -2
-    latest_start_time: 180
-    loadId: ''
-    loadType: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: inspection_area
-      subAreas: []
-      type: ''
-    pickup_start_time: -1
-    priority: 2
-    robot_actions: {}
-    start_time: -1
-    status:
-      completed_robot_actions: {}
-      current_robot_actions: {}
-      estimated_task_duration: -1.0
-      status: ''
-      task_id: ''
-    team_robot_ids: []
-  3c1f46f6-6d85-4fc8-adc3-db519e72ad85:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: shelf
-      subAreas: []
-      type: ''
-    earliest_finish_time: -2
-    earliest_start_time: 1118.22
-    estimated_duration: 2.76
-    finish_time: -1
-    hard_constraints: true
-    id: 3c1f46f6-6d85-4fc8-adc3-db519e72ad85
-    latest_finish_time: -2
-    latest_start_time: 1178.22
-    loadId: ''
-    loadType: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: second_door_outside
-      subAreas: []
-      type: ''
-    pickup_start_time: -1
-    priority: 2
-    robot_actions: {}
-    start_time: -1
-    status:
-      completed_robot_actions: {}
-      current_robot_actions: {}
-      estimated_task_duration: -1.0
-      status: ''
-      task_id: ''
-    team_robot_ids: []
-  4fc6c08b-1a3f-4a52-a7df-b95d0a46c816:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: trash_can
-      subAreas: []
-      type: ''
-    earliest_finish_time: -2
-    earliest_start_time: 994.49
-    estimated_duration: 3.73
-    finish_time: -1
-    hard_constraints: true
-    id: 4fc6c08b-1a3f-4a52-a7df-b95d0a46c816
-    latest_finish_time: -2
-    latest_start_time: 1054.49
-    loadId: ''
-    loadType: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: table
-      subAreas: []
-      type: ''
-    pickup_start_time: -1
-    priority: 2
-    robot_actions: {}
-    start_time: -1
-    status:
-      completed_robot_actions: {}
-      current_robot_actions: {}
-      estimated_task_duration: -1.0
-      status: ''
-      task_id: ''
-    team_robot_ids: []
-  5e1edd3d-ed66-438a-92fc-c695d57fb69b:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: shelf_cupboard
-      subAreas: []
-      type: ''
-    earliest_finish_time: -2
-    earliest_start_time: 1240.98
-    estimated_duration: 3.34
-    finish_time: -1
-    hard_constraints: true
-    id: 5e1edd3d-ed66-438a-92fc-c695d57fb69b
-    latest_finish_time: -2
-    latest_start_time: 1300.98
-    loadId: ''
-    loadType: ''
-    pickup_pose:
       floorNumber: 0
       id: ''
       name: second_door
       subAreas: []
       type: ''
-    pickup_start_time: -1
-    priority: 2
-    robot_actions: {}
-    start_time: -1
-    status:
-      completed_robot_actions: {}
-      current_robot_actions: {}
-      estimated_task_duration: -1.0
-      status: ''
-      task_id: ''
-    team_robot_ids: []
-  69f83300-fa2b-4ba1-adb8-3a5b5f454ca9:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: inspection_area
-      subAreas: []
-      type: ''
     earliest_finish_time: -2
-    earliest_start_time: 745.43
-    estimated_duration: 6.84
+    earliest_start_time: 835.88
+    estimated_duration: 6.27
     finish_time: -1
     hard_constraints: true
-    id: 69f83300-fa2b-4ba1-adb8-3a5b5f454ca9
+    id: 0ff928e1-de2a-422e-9f12-5fb9b2e95ca2
     latest_finish_time: -2
-    latest_start_time: 805.43
+    latest_start_time: 996.78
     loadId: ''
     loadType: ''
     pickup_pose:
       floorNumber: 0
       id: ''
-      name: second_door_outside
+      name: inspection_area
       subAreas: []
       type: ''
     pickup_start_time: -1
@@ -208,7 +38,41 @@ tasks:
       status: ''
       task_id: ''
     team_robot_ids: []
-  8f898fb3-e6a4-4697-96eb-485cb29e309a:
+  1e75f273-cc36-46ae-83ef-5c92dc29422c:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 2894.95
+    estimated_duration: 0.59
+    finish_time: -1
+    hard_constraints: true
+    id: 1e75f273-cc36-46ae-83ef-5c92dc29422c
+    latest_finish_time: -2
+    latest_start_time: 3123.04
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: observation_pose
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  246ddaea-422d-4d8a-b3f1-547ba118601a:
     delivery_pose:
       floorNumber: 0
       id: ''
@@ -216,47 +80,13 @@ tasks:
       subAreas: []
       type: ''
     earliest_finish_time: -2
-    earliest_start_time: 872.27
-    estimated_duration: 2.22
+    earliest_start_time: 1638.99
+    estimated_duration: 10.07
     finish_time: -1
     hard_constraints: true
-    id: 8f898fb3-e6a4-4697-96eb-485cb29e309a
+    id: 246ddaea-422d-4d8a-b3f1-547ba118601a
     latest_finish_time: -2
-    latest_start_time: 932.27
-    loadId: ''
-    loadType: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: shelf_cupboard
-      subAreas: []
-      type: ''
-    pickup_start_time: -1
-    priority: 2
-    robot_actions: {}
-    start_time: -1
-    status:
-      completed_robot_actions: {}
-      current_robot_actions: {}
-      estimated_task_duration: -1.0
-      status: ''
-      task_id: ''
-    team_robot_ids: []
-  97537d53-5f3b-4756-babf-96e6798562c3:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: inspection_area
-      subAreas: []
-      type: ''
-    earliest_finish_time: -2
-    earliest_start_time: 242.72
-    estimated_duration: 4.91
-    finish_time: -1
-    hard_constraints: true
-    id: 97537d53-5f3b-4756-babf-96e6798562c3
-    latest_finish_time: -2
-    latest_start_time: 302.72
+    latest_start_time: 1770.05
     loadId: ''
     loadType: ''
     pickup_pose:
@@ -276,21 +106,123 @@ tasks:
       status: ''
       task_id: ''
     team_robot_ids: []
-  aa123788-3761-4d6e-ad8a-1796c2db086b:
+  24756561-04f3-48ae-8abd-c055e05418ae:
     delivery_pose:
       floorNumber: 0
       id: ''
-      name: inspection_area
+      name: table
       subAreas: []
       type: ''
     earliest_finish_time: -2
-    earliest_start_time: 618.59
-    estimated_duration: 6.84
+    earliest_start_time: 3364.33
+    estimated_duration: 7.34
     finish_time: -1
     hard_constraints: true
-    id: aa123788-3761-4d6e-ad8a-1796c2db086b
+    id: 24756561-04f3-48ae-8abd-c055e05418ae
     latest_finish_time: -2
-    latest_start_time: 678.59
+    latest_start_time: 3446.92
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_bin1
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  39dff5d3-5068-4296-ae93-f2afa5f1410a:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 4154.81
+    estimated_duration: 6.79
+    finish_time: -1
+    hard_constraints: true
+    id: 39dff5d3-5068-4296-ae93-f2afa5f1410a
+    latest_finish_time: -2
+    latest_start_time: 4335.95
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: observation_pose
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  ae988d35-3916-49f3-a7ae-ce91666cbc4d:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf_cupboard
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 2482.58
+    estimated_duration: 5.71
+    finish_time: -1
+    hard_constraints: true
+    id: ae988d35-3916-49f3-a7ae-ce91666cbc4d
+    latest_finish_time: -2
+    latest_start_time: 2771.96
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: observation_pose
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  b01959fa-ef8f-41cc-946f-77325a6e2bca:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf_cupboard
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 3676.97
+    estimated_duration: 3.84
+    finish_time: -1
+    hard_constraints: true
+    id: b01959fa-ef8f-41cc-946f-77325a6e2bca
+    latest_finish_time: -2
+    latest_start_time: 3855.72
     loadId: ''
     loadType: ''
     pickup_pose:
@@ -310,27 +242,95 @@ tasks:
       status: ''
       task_id: ''
     team_robot_ids: []
-  df4f1469-cf64-45e5-a0d1-74471c63d94e:
+  ba700c6f-520a-4795-b472-89f54c9135b6:
     delivery_pose:
       floorNumber: 0
       id: ''
-      name: second_door_outside
+      name: second_door
       subAreas: []
       type: ''
     earliest_finish_time: -2
-    earliest_start_time: 493.11
-    estimated_duration: 5.48
+    earliest_start_time: 291.23
+    estimated_duration: 1.63
     finish_time: -1
     hard_constraints: true
-    id: df4f1469-cf64-45e5-a0d1-74471c63d94e
+    id: ba700c6f-520a-4795-b472-89f54c9135b6
     latest_finish_time: -2
-    latest_start_time: 553.11
+    latest_start_time: 536.04
     loadId: ''
     loadType: ''
     pickup_pose:
       floorNumber: 0
       id: ''
-      name: cupboard
+      name: second_door_outside
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  c24cf9cf-3c89-4941-9b6a-cb8ef766e5b2:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 2019.69
+    estimated_duration: 7.33
+    finish_time: -1
+    hard_constraints: true
+    id: c24cf9cf-3c89-4941-9b6a-cb8ef766e5b2
+    latest_finish_time: -2
+    latest_start_time: 2201.99
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_can
+      subAreas: []
+      type: ''
+    pickup_start_time: -1
+    priority: 2
+    robot_actions: {}
+    start_time: -1
+    status:
+      completed_robot_actions: {}
+      current_robot_actions: {}
+      estimated_task_duration: -1.0
+      status: ''
+      task_id: ''
+    team_robot_ids: []
+  d8aef5e6-3642-4a95-ba49-92007ecb9f68:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: table
+      subAreas: []
+      type: ''
+    earliest_finish_time: -2
+    earliest_start_time: 1241.01
+    estimated_duration: 3.81
+    finish_time: -1
+    hard_constraints: true
+    id: d8aef5e6-3642-4a95-ba49-92007ecb9f68
+    latest_finish_time: -2
+    latest_start_time: 1445.18
+    loadId: ''
+    loadType: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: kitchen
       subAreas: []
       type: ''
     pickup_start_time: -1

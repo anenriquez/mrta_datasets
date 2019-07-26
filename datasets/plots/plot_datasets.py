@@ -5,12 +5,7 @@ import os
 from datetime import datetime
 import argparse
 from pathlib import Path
-from src.task_factory import initialize_task_factory
 from src.dataset_loader import load_yaml_dataset, load_csv_dataset
-from ropod.structs.task import Task as RopodTask
-from src.task import Task as GenericTask
-GenericTask.__name__ = 'GenericTask'
-RopodTask.__name__ = 'RopodTask'
 
 
 def get_dataset_names(dataset_path, extension):
@@ -26,7 +21,7 @@ def get_dataset_names(dataset_path, extension):
     return dataset_names
 
 
-def load_datasets(path, task_cls, extension):
+def load_datasets(path, task_type, extension):
 
     code_dir = os.path.abspath(os.path.dirname(__file__))
     main_dir = os.path.dirname(code_dir)
@@ -38,10 +33,10 @@ def load_datasets(path, task_cls, extension):
     for dataset_name in dataset_names:
 
         if extension == '.yaml':
-            tasks = load_yaml_dataset(dataset_name, task_cls, path)
+            tasks = load_yaml_dataset(dataset_name, task_type, path)
 
         elif extension == '.csv':
-            tasks = load_csv_dataset(dataset_name, task_cls, path)
+            tasks = load_csv_dataset(dataset_name, task_type, path)
 
         datasets[dataset_name] = tasks
 
@@ -123,25 +118,25 @@ if __name__ == '__main__':
     parser.add_argument('dataset_type', type=str, help='Dataset type',
                         choices=['overlapping_tw', 'non_overlapping_tw'])
 
-    parser.add_argument('task_cls_name', type=str, help='Task class name',
-                        choices=['GenericTask', 'RopodTask'])
+    parser.add_argument('task_type', type=str, help='Task type',
+                        choices=['generic_task', 'ropod_task'])
 
     parser.add_argument('interval_type', type=str,
                         help='Start time interval for overlapping tw'
                         'or time window interval for non_overlapping_tw',
                         choices=['tight', 'loose', 'random'])
 
+    parser.add_argument('file_extension', type=str, help='File extension',
+                        choices=['csv', 'yaml'])
+
     args = parser.parse_args()
 
-    task_factory = initialize_task_factory()
-    task_cls = task_factory.get_task_cls(args.task_cls_name)
-
-    path = '/' + args.dataset_type + '/' + args.task_cls_name.lower() \
+    path = '/' + args.dataset_type + '/' + args.task_type \
            + '/' + args.interval_type + '/'
 
-    datasets = load_datasets(path, task_cls, '.csv')
+    datasets = load_datasets(path, args.task_type, '.' + args.file_extension)
 
     for dataset_name, tasks in datasets.items():
-        fig = plot_dataset(dataset_name, tasks, show=True)
+        fig = plot_dataset(dataset_name, tasks, show=False)
         save_plot(fig, dataset_name, path)
 

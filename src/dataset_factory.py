@@ -21,7 +21,7 @@ class DatasetFactory(object):
         return dataset_creator
 
 
-def overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose_names, **kwargs):
+def overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name, pose_names, **kwargs):
     """ Overlapping time windows dataset generator
 
      The start time interval (time between the earliest start time and the latest
@@ -38,7 +38,7 @@ def overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose
     The start and finish pose names are randomly chosen from the pose_names
 
     :param task_creator: instance of class TaskCreator
-    :param task_cls: Class of the task in the dataset
+    :param task_type: Class of the task in the dataset
     :param n_tasks: Number of tasks in the dataset
     :param dataset_name: Name of the new dataset
     :param pose_names: dict with pose names (keys) and poses (values)
@@ -58,7 +58,7 @@ def overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose
     :return: dataset (a dictionary of n_tasks with overlapping time windows)
     """
 
-    task_type = task_cls.__name__
+    task_type = task_type
 
     interval_type = kwargs.get('interval_type', 'random')
     start_time_lower_bound = kwargs.get('lower_bound', 60)
@@ -71,7 +71,6 @@ def overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose
     dataset_dict['tasks'] = dict()
 
     for i in range(0, n_tasks):
-        print("Task: ", i)
         est = round(np.random.uniform(start_time_lower_bound, start_time_upper_bound), 2)
         lst = round(est +
                     get_interval(interval_type, start_time_lower_bound, start_time_upper_bound), 2)
@@ -80,27 +79,20 @@ def overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose
 
         estimated_duration = get_estimated_duration(pose_names, start_pose_name, finish_pose_name)
 
-        print("est: ", est)
-        print("lst: ", lst)
-        print("start pose name: ", start_pose_name)
-        print("finish pose name: ", finish_pose_name)
-
         _task_args = {'earliest_start_time': est,
                       'latest_start_time': lst,
                       'estimated_duration': estimated_duration,
                       'start_pose_name': start_pose_name,
                       'finish_pose_name': finish_pose_name}
 
-        task = task_creator.create(task_cls=task_cls, **_task_args)
+        task = task_creator.create(task_type=task_type, **_task_args)
 
         dataset_dict['tasks'][task.id] = task.to_dict()
-
-    print("Dataset", dataset_dict)
 
     return dataset_dict
 
 
-def non_overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, pose_names, **kwargs):
+def non_overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name, pose_names, **kwargs):
     """ Non-overlapping time windows dataset generator
 
     The time window interval (time between tasks, i.e., the time between
@@ -119,7 +111,7 @@ def non_overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, 
     The start and finish pose names are randomly chosen from the pose_names
 
     :param task_creator: instance of class TaskCreator
-    :param task_cls: Class of the task in the dataset
+    :param task_type: Class of the task in the dataset
     :param n_tasks: Number of tasks in the dataset
     :param dataset_name: Name of the new dataset
     :param pose_names: dict with pose names (keys) and poses (values)
@@ -138,8 +130,7 @@ def non_overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, 
 
     """
 
-    task_type = task_cls.__name__
-
+    task_type = task_type
     interval_type = kwargs.get('interval_type', 'random')
     time_window_lower_bound = kwargs.get('lower_bound', 60)
     time_window_upper_bound = kwargs.get('upper_bound', 300)
@@ -153,14 +144,10 @@ def non_overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, 
     finish_last_task = time_window_lower_bound
 
     for i in range(0, n_tasks):
-        print("Task: ", i)
 
         start_pose_name, finish_pose_name = get_poses(pose_names)
 
         time_window_interval = get_interval(interval_type, time_window_lower_bound, time_window_upper_bound)
-
-        print("Finish last task: ", finish_last_task)
-        print("TW Interval: ", time_window_interval)
 
         est = round(finish_last_task + time_window_interval, 2)
         lst = round(est +
@@ -171,23 +158,13 @@ def non_overlapping_time_windows(task_creator, task_cls, n_tasks, dataset_name, 
         # Update finish last task
         finish_last_task = lst + estimated_duration
 
-        print("est: ", est)
-        print("lst: ", lst)
-        print("start pose name: ", start_pose_name)
-        print("finish pose name: ", finish_pose_name)
-        print("estimated duration: ", estimated_duration)
-
-        print("New finish last task: ", finish_last_task)
-
         _task_args = {'earliest_start_time': est,
                       'latest_start_time': lst,
                       'estimated_duration': estimated_duration,
                       'start_pose_name': start_pose_name,
                       'finish_pose_name': finish_pose_name}
 
-        task = task_creator.create(task_cls=task_cls, **_task_args)
-
-        print(task.id)
+        task = task_creator.create(task_type=task_type, **_task_args)
 
         dataset_dict['tasks'][task.id] = task.to_dict()
 
@@ -268,11 +245,11 @@ class DatasetCreator(object):
         self.dataset_factory = initialize_dataset_factory()
         self.task_creator = TaskCreator()
 
-    def create(self, task_cls, dataset_type, n_tasks, dataset_name, pose_names, **kwargs):
+    def create(self, task_type, dataset_type, n_tasks, dataset_name, pose_names, **kwargs):
 
         dataset_creator = self.dataset_factory.get_dataset_creator(dataset_type)
 
-        dataset = dataset_creator(self.task_creator, task_cls, n_tasks, dataset_name, pose_names, **kwargs)
+        dataset = dataset_creator(self.task_creator, task_type, n_tasks, dataset_name, pose_names, **kwargs)
 
         return dataset
 

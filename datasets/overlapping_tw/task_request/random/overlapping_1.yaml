@@ -1,19 +1,19 @@
-dataset_name: non_overlapping_1
-dataset_type: non_overlapping_tw
-interval_type: tight
+dataset_name: overlapping_1
+dataset_type: overlapping_tw
+interval_type: random
 lower_bound: 60
-task_type: TaskRequest
+task_type: task_request
 tasks:
-  16dbc482-d242-4342-8c62-3c2e8ca2773a:
+  3eb17b12-2e1f-448b-a755-330d8b284e8a:
     delivery_pose:
       floorNumber: 0
       id: ''
-      name: inspection_area
+      name: second_door_outside
       subAreas: []
       type: ''
-    earliest_start_time: 859.1
-    id: 16dbc482-d242-4342-8c62-3c2e8ca2773a
-    latest_start_time: 919.1
+    earliest_start_time: 122.25
+    id: 3eb17b12-2e1f-448b-a755-330d8b284e8a
+    latest_start_time: 321.29
     load_id: ''
     load_type: ''
     pickup_pose:
@@ -24,76 +24,156 @@ tasks:
       type: ''
     priority: -1
     user_id: ''
-  514e5b4e-1a2e-4380-b835-aa546f432daf:
+  4a6c40cd-e1a5-41c7-97d5-a79ff584fe72:
     delivery_pose:
       floorNumber: 0
       id: ''
-      name: table
+      name: trash_can
       subAreas: []
       type: ''
-    earliest_start_time: 736.74
-    id: 514e5b4e-1a2e-4380-b835-aa546f432daf
-    latest_start_time: 796.74
+    earliest_start_time: 149.95
+    id: 4a6c40cd-e1a5-41c7-97d5-a79ff584fe72
+    latest_start_time: 379.55
     load_id: ''
     load_type: ''
     pickup_pose:
       floorNumber: 0
       id: ''
-      name: inspection_area
+      name: second_door_outside
       subAreas: []
       type: ''
     priority: -1
     user_id: ''
-  6cff3a9a-be4b-42b3-ad99-80490a733f08:
+  4d825ed6-cdd4-4f8d-a577-f44780f0e0f8:
     delivery_pose:
       floorNumber: 0
       id: ''
-      name: table
+      name: kitchen
       subAreas: []
       type: ''
-    earliest_start_time: 490.32
-    id: 6cff3a9a-be4b-42b3-ad99-80490a733f08
-    latest_start_time: 550.32
+    earliest_start_time: 129.56
+    id: 4d825ed6-cdd4-4f8d-a577-f44780f0e0f8
+    latest_start_time: 221.72
     load_id: ''
     load_type: ''
     pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: living_room
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  88099da8-ebb1-4a33-b48e-31f8f536daf3:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf
+      subAreas: []
+      type: ''
+    earliest_start_time: 166.18
+    id: 88099da8-ebb1-4a33-b48e-31f8f536daf3
+    latest_start_time: 324.62
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: second_door_outside
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  9dcaa547-90e6-4c8f-af4d-ebf73887b454:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf
+      subAreas: []
+      type: ''
+    earliest_start_time: 199.54
+    id: 9dcaa547-90e6-4c8f-af4d-ebf73887b454
+    latest_start_time: 476.75
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: kitchen
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  ad3286aa-a596-49eb-888a-b35667eb8e34:
+    delivery_pose:
       floorNumber: 0
       id: ''
       name: cupboard
       subAreas: []
       type: ''
+    earliest_start_time: 63.03
+    id: ad3286aa-a596-49eb-888a-b35667eb8e34
+    latest_start_time: 266.36
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: kitchen
+      subAreas: []
+      type: ''
     priority: -1
     user_id: ''
-  6e9c845b-74a9-4c59-b643-83a72613cee0:
+  b6c087a4-8e4b-4876-9738-b949295f3134:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: trash_can
+      subAreas: []
+      type: ''
+    earliest_start_time: 200.96
+    id: b6c087a4-8e4b-4876-9738-b949295f3134
+    latest_start_time: 450.85
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: second_door
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  cf1eb07c-9c0e-4c96-a722-c1e723747ee5:
+    delivery_pose:
+      floorNumber: 0
+      id: ''
+      name: second_door_outside
+      subAreas: []
+      type: ''
+    earliest_start_time: 253.87
+    id: cf1eb07c-9c0e-4c96-a722-c1e723747ee5
+    latest_start_time: 414.45
+    load_id: ''
+    load_type: ''
+    pickup_pose:
+      floorNumber: 0
+      id: ''
+      name: shelf
+      subAreas: []
+      type: ''
+    priority: -1
+    user_id: ''
+  e566bece-bdb8-46c1-9244-32ca1350ec12:
     delivery_pose:
       floorNumber: 0
       id: ''
       name: shelf_cupboard
       subAreas: []
       type: ''
-    earliest_start_time: 983.03
-    id: 6e9c845b-74a9-4c59-b643-83a72613cee0
-    latest_start_time: 1043.03
-    load_id: ''
-    load_type: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: observation_pose
-      subAreas: []
-      type: ''
-    priority: -1
-    user_id: ''
-  a4ff353e-87a4-441b-bf45-da1df2530b5b:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: observation_pose
-      subAreas: []
-      type: ''
-    earliest_start_time: 614.02
-    id: a4ff353e-87a4-441b-bf45-da1df2530b5b
-    latest_start_time: 674.02
+    earliest_start_time: 74.85
+    id: e566bece-bdb8-46c1-9244-32ca1350ec12
+    latest_start_time: 163.37
     load_id: ''
     load_type: ''
     pickup_pose:
@@ -104,102 +184,22 @@ tasks:
       type: ''
     priority: -1
     user_id: ''
-  b1b4819f-7a80-45e2-82e5-deb3609de760:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: shelf
-      subAreas: []
-      type: ''
-    earliest_start_time: 363.96
-    id: b1b4819f-7a80-45e2-82e5-deb3609de760
-    latest_start_time: 423.96
-    load_id: ''
-    load_type: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: table
-      subAreas: []
-      type: ''
-    priority: -1
-    user_id: ''
-  b3a7b43d-e8c5-4d50-87fb-c81d7b3692ad:
+  fa7608d1-edc7-4a78-a0fb-28edab1c4a7d:
     delivery_pose:
       floorNumber: 0
       id: ''
       name: living_room
       subAreas: []
       type: ''
-    earliest_start_time: 1232.08
-    id: b3a7b43d-e8c5-4d50-87fb-c81d7b3692ad
-    latest_start_time: 1292.08
-    load_id: ''
-    load_type: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: shelf
-      subAreas: []
-      type: ''
-    priority: -1
-    user_id: ''
-  cf9acfce-c8e1-4a7e-90e4-333b57931285:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: second_door
-      subAreas: []
-      type: ''
-    earliest_start_time: 242.85
-    id: cf9acfce-c8e1-4a7e-90e4-333b57931285
-    latest_start_time: 302.85
+    earliest_start_time: 223.18
+    id: fa7608d1-edc7-4a78-a0fb-28edab1c4a7d
+    latest_start_time: 498.72
     load_id: ''
     load_type: ''
     pickup_pose:
       floorNumber: 0
       id: ''
       name: trash_bin1
-      subAreas: []
-      type: ''
-    priority: -1
-    user_id: ''
-  e4760404-5585-4bfb-a8b3-2a20669cc820:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: second_door
-      subAreas: []
-      type: ''
-    earliest_start_time: 1108.74
-    id: e4760404-5585-4bfb-a8b3-2a20669cc820
-    latest_start_time: 1168.74
-    load_id: ''
-    load_type: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: shelf_cupboard
-      subAreas: []
-      type: ''
-    priority: -1
-    user_id: ''
-  ef91ea04-1eff-4ae8-a4a3-0cb22164fb29:
-    delivery_pose:
-      floorNumber: 0
-      id: ''
-      name: living_room
-      subAreas: []
-      type: ''
-    earliest_start_time: 120
-    id: ef91ea04-1eff-4ae8-a4a3-0cb22164fb29
-    latest_start_time: 180
-    load_id: ''
-    load_type: ''
-    pickup_pose:
-      floorNumber: 0
-      id: ''
-      name: table
       subAreas: []
       type: ''
     priority: -1
