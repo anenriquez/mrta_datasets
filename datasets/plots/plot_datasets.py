@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 import argparse
 from pathlib import Path
-from src.dataset_loader import load_yaml_dataset, load_csv_dataset
+from dataset_lib.dataset_loader import load_yaml_dataset, load_csv_dataset
 
 
 def get_dataset_names(dataset_path, extension):

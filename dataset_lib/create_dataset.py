@@ -1,7 +1,7 @@
-from src.dataset_factory import DatasetCreator
-from src.task_factory import initialize_task_factory
+from dataset_lib.dataset_factory import DatasetCreator
+from dataset_lib.task_factory import initialize_task_factory
 import argparse
-from src.utils.datasets import load_yaml, store_as_yaml, store_as_csv
+from dataset_lib.utils.datasets import load_yaml, store_as_yaml, store_as_csv
 
 
 if __name__ == '__main__':

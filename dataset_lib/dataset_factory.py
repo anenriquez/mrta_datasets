@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import math
-from src.task_factory import TaskCreator
+from dataset_lib.task_factory import TaskCreator
 
 
 class DatasetFactory(object):

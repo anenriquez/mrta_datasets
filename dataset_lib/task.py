@@ -1,5 +1,5 @@
-from src.utils.uuid import generate_uuid
-from src.utils.datasets import flatten_dict
+from dataset_lib.utils.uuid import generate_uuid
+from dataset_lib.utils.datasets import flatten_dict
 
 
 class Task(object):

@@ -1,4 +1,4 @@
-from src.utils.uuid import generate_uuid
+from dataset_lib.utils.uuid import generate_uuid
 from importlib import import_module
 
 
@@ -133,7 +133,7 @@ def initialize_task_factory():
     task_factory.register_task_creator('ropod_task', ropod_task_creator)
     task_factory.register_task_csv_loader('ropod_task', ropod_task_csv_loader)
 
-    generic_task_cls = getattr(import_module('src.task'), 'Task')
+    generic_task_cls = getattr(import_module('dataset_lib.task'), 'Task')
 
     task_factory.register_task_cls('generic_task', generic_task_cls)
     task_factory.register_task_creator('generic_task', generic_task_creator)

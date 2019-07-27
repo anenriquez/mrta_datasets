@@ -1,9 +1,9 @@
 import csv
 import os
-from src.utils.datasets import load_yaml
-from src.task_factory import TaskLoader
+from dataset_lib.utils.datasets import load_yaml
+from dataset_lib.task_factory import TaskLoader
 import argparse
-from src.task_factory import initialize_task_factory
+from dataset_lib.task_factory import initialize_task_factory
 import collections
 
 
