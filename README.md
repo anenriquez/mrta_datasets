@@ -21,7 +21,7 @@ python3 create_dataset.py dataset_type n_tasks dataset_name --task_type task_typ
 
 Example: 
 ```
-python3 create_dataset.py overlapping_tw 10 overlapping_1 --task_cls_name RopodTask
+python3 create_dataset.py overlapping_tw 10 overlapping_1 --task_type RopodTask
 
 ```
 
