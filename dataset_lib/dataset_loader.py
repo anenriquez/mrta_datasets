@@ -63,6 +63,30 @@ def load_yaml_dataset(dataset_name, task_type, path):
     return tasks
 
 
+def load_dataset(dataset_name, dataset_type, task_type, interval_type, file_extension):
+
+    path = get_path_to_dataset(dataset_type, task_type, interval_type)
+
+    if file_extension == 'csv':
+
+        tasks = load_csv_dataset(dataset_name, task_type, path)
+
+    elif file_extension == 'yaml':
+
+        tasks = load_yaml_dataset(dataset_name, task_type, path)
+
+    else:
+        raise ValueError(file_extension)
+
+    return tasks
+
+
+def get_path_to_dataset(dataset_type, task_type, interval_type):
+    path = '/' + dataset_type + '/' + task_type \
+           + '/' + interval_type + '/'
+    return path
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -85,16 +109,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    path = '/' + args.dataset_type + '/' + args.task_type \
-           + '/' + args.interval_type + '/'
-
-    if args.file_extension == 'csv':
-
-        tasks = load_csv_dataset(args.dataset_name, args.task_type, path)
-
-    elif args.file_extension == 'yaml':
-
-        tasks = load_yaml_dataset(args.dataset_name, args.task_type, path)
+    tasks = load_dataset(args.dataset_name, args.dataset_type, args.task_type, args.interval_type,
+                         args.file_extension)
 
     for task in tasks:
         print(task.id)
