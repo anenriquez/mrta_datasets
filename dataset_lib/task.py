@@ -68,15 +68,15 @@ class TaskStatus(object):
     SCHEDULED = 3  # Task is ready to be dispatched
     SHIPPED = 4  # The task was sent to the robot
     ONGOING = 5
-    DELAYED = 6  # The robot is engaged in task execution but the task is taking longer than expected.
-    COMPLETED = 7
-    ABORTED = 8  # Aborted by the system, not by the user
-    FAILED = 9  # Re-allocation or re-scheduling failed
-    CANCELED = 10  # Canceled before execution starts
-    PREEMPTED = 11  # Canceled during execution
+    COMPLETED = 6
+    ABORTED = 7  # Aborted by the system, not by the user
+    FAILED = 8  # Execution failed
+    CANCELED = 9  # Canceled before execution starts
+    PREEMPTED = 10  # Canceled during execution
 
     def __init__(self, task_id=''):
         self.task_id = task_id
+        self.delayed = False
         self.status = self.UNALLOCATED
 
     def to_dict(self):
