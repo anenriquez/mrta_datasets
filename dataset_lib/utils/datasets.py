@@ -91,14 +91,6 @@ def store_as_yaml(dataset, path):
 
     file = path + dataset.get('dataset_name') + '.yaml'
 
-
-    # tasks = dataset.get('tasks')
-    # ordered_tasks = collections.OrderedDict(sorted(tasks.items()))
-    #
-    # print(ordered_tasks)
-
-    # dataset.update({tasks: ordered_tasks})
-
     with open(file, 'w') as outfile:
         yaml.safe_dump(dataset, outfile, default_flow_style=False)
 
