@@ -38,7 +38,8 @@ class TaskFactory(object):
 
 
 def generic_task_creator(task_cls, **kwargs):
-    task = task_cls(id=generate_uuid(), **kwargs)
+    # task = task_cls(id=generate_uuid(), **kwargs)
+    task = task_cls(task_id=generate_uuid(), **kwargs)
 
     return task
 
@@ -82,17 +83,17 @@ def task_request_creator(task_cls, **kwargs):
 
 
 def generic_task_csv_loader(task_cls, task_csv):
-    id = task_csv['id']
+    task_id = task_csv['task_id']
 
     _task_args = {'earliest_start_time': float(task_csv['earliest_start_time']),
                   'latest_start_time': float(task_csv['latest_start_time']),
                   'estimated_duration': float(task_csv['estimated_duration']),
-                  'start_pose_name': task_csv['start_pose_name'],
-                  'finish_pose_name': task_csv['finish_pose_name'],
+                  'start_location': task_csv['start_location'],
+                  'finish_location': task_csv['finish_location'],
                   'hard_constraints': task_csv['hard_constraints']
                   }
 
-    task = task_cls(id, **_task_args)
+    task = task_cls(task_id, **_task_args)
     return task
 
 

@@ -5,42 +5,7 @@ import os
 from datetime import datetime
 import argparse
 from pathlib import Path
-from dataset_lib.dataset_loader import load_yaml_dataset, load_csv_dataset
-
-
-def get_dataset_names(dataset_path, extension):
-    dataset_names = list()
-
-    for dataset_file in os.listdir(dataset_path):
-        if dataset_file.endswith(extension):
-
-            # Remove the extension from the name
-            dataset_name = dataset_file.split('.')[0]
-            dataset_names.append(dataset_name)
-
-    return dataset_names
-
-
-def load_datasets(path, task_type, extension):
-
-    code_dir = os.path.abspath(os.path.dirname(__file__))
-    main_dir = os.path.dirname(code_dir)
-    dataset_path = main_dir + path
-
-    dataset_names = get_dataset_names(dataset_path, extension)
-    datasets = dict()
-
-    for dataset_name in dataset_names:
-
-        if extension == '.yaml':
-            tasks = load_yaml_dataset(dataset_name, task_type, path)
-
-        elif extension == '.csv':
-            tasks = load_csv_dataset(dataset_name, task_type, path)
-
-        datasets[dataset_name] = tasks
-
-    return datasets
+from dataset_lib.dataset_loader import load_dataset, get_path_to_dataset
 
 
 def plot_dataset(dataset_name, tasks, show=False):
@@ -99,11 +64,13 @@ def plot_dataset(dataset_name, tasks, show=False):
     return fig
 
 
-def save_plot(fig, dataset_name, path):
+def save_plot(fig, dataset_name, dataset_type, task_type, interval_type):
     code_dir = os.path.abspath(os.path.dirname(__file__))
     main_dir = os.path.dirname(code_dir)
 
-    plot_path = main_dir + '/plots' + path
+    path = get_path_to_dataset(dataset_type, task_type, interval_type)
+
+    plot_path = main_dir + '/datasets' + path
 
     # Create path if it doesn't exist
     Path(plot_path).mkdir(parents=True, exist_ok=True)
@@ -114,6 +81,8 @@ def save_plot(fig, dataset_name, path):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
+
+    parser.add_argument('dataset_name', type=str, help='Name of the dataset')
 
     parser.add_argument('dataset_type', type=str, help='Dataset type',
                         choices=['overlapping_tw', 'non_overlapping_tw'])
@@ -131,12 +100,10 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    path = '/' + args.dataset_type + '/' + args.task_type \
-           + '/' + args.interval_type + '/'
+    tasks = load_dataset(args.dataset_name, args.dataset_type, args.task_type, args.interval_type,
+                         args.file_extension)
 
-    datasets = load_datasets(path, args.task_type, '.' + args.file_extension)
+    fig = plot_dataset(args.dataset_name, tasks)
+    save_plot(fig, args.dataset_name, args.dataset_type, args.task_type, args.interval_type)
 
-    for dataset_name, tasks in datasets.items():
-        fig = plot_dataset(dataset_name, tasks, show=False)
-        save_plot(fig, dataset_name, path)
 
