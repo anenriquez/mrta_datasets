@@ -40,8 +40,8 @@ class Task(object):
         finish_location = task_dict['finish_location']
         hard_constraints = task_dict['hard_constraints']
         estimated_duration = task_dict['estimated_duration']
-        task = cls(task_id, hard_constraints, earliest_start_time, latest_start_time,
-                   start_location, finish_location, estimated_duration)
+        task = cls(task_id, earliest_start_time, latest_start_time, start_location,
+                   finish_location, estimated_duration, hard_constraints)
         return task
 
     @staticmethod
