@@ -2,7 +2,8 @@
 
 from setuptools import setup
 
-setup(name='mrta_datasets',
+setup(name='dataset_lib',
+      packages=['dataset_lib', 'dataset_lib.utils'],
       version='0.1.0',
       description='Datasets and structs for MRTA',
       author='Angela Enriquez Gomez',

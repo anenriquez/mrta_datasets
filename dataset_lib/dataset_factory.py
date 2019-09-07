@@ -82,12 +82,12 @@ def overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name, pos
         _task_args = {'earliest_start_time': est,
                       'latest_start_time': lst,
                       'estimated_duration': estimated_duration,
-                      'start_pose_name': start_pose_name,
-                      'finish_pose_name': finish_pose_name}
+                      'start_location': start_pose_name,
+                      'finish_location': finish_pose_name}
 
         task = task_creator.create(task_type=task_type, **_task_args)
 
-        dataset_dict['tasks'][task.id] = task.to_dict()
+        dataset_dict['tasks'][task.task_id] = task.to_dict()
 
     return dataset_dict
 
@@ -161,12 +161,12 @@ def non_overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name,
         _task_args = {'earliest_start_time': est,
                       'latest_start_time': lst,
                       'estimated_duration': estimated_duration,
-                      'start_pose_name': start_pose_name,
-                      'finish_pose_name': finish_pose_name}
+                      'start_location': start_pose_name,
+                      'finish_location': finish_pose_name}
 
         task = task_creator.create(task_type=task_type, **_task_args)
 
-        dataset_dict['tasks'][task.id] = task.to_dict()
+        dataset_dict['tasks'][task.task_id] = task.to_dict()
 
     return dataset_dict
 
