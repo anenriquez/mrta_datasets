@@ -8,12 +8,12 @@ pip3 install -r requirements.txt
 Add the task_allocation to your `PYTHONPATH` by running:
 
 ```
-sudo pip3 install -e .
+pip3 install --user -e .
 ```
 
 ## Create a dataset
 
-Go to `src/` 
+Go to `dataset_lib/`
 
 ```
 python3 create_dataset.py dataset_type n_tasks dataset_name --task_type task_type --poses_file poses_file --interval_type interval type --lower_bound lower_bound --upper_bound upper_bound 
@@ -21,7 +21,7 @@ python3 create_dataset.py dataset_type n_tasks dataset_name --task_type task_typ
 
 Example: 
 ```
-python3 create_dataset.py overlapping_tw 10 overlapping_1 --task_type RopodTask
+python3 create_dataset.py overlapping_tw 10 overlapping_1 --task_type generic_task
 
 ```
 
@@ -30,12 +30,12 @@ python3 create_dataset.py overlapping_tw 10 overlapping_1 --task_type RopodTask
 Go to `datasets/plots`
 
 ```
-python3 plot_datasety.py dataset_type task_type interval_type file_extension
+python3 plot_datasety.py dataset_name dataset_type task_type interval_type file_extension
 
 ```
 
 Example:
 
 ```
-python3 plot_datasets.py non_overlapping_tw ropod_task random yaml
+python3 plot_datasets.py overlapping_1 overlapping_tw generic_task random yaml
 ```
