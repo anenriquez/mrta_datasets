@@ -1,87 +1,91 @@
+dataset_lower_bound: null
 dataset_name: non_overlapping_1
 dataset_type: non_overlapping_tw
+dataset_upper_bound: null
 interval_type: random
-lower_bound: 60
+start_time_lower_bound: 1
+start_time_upper_bound: 2
 task_type: generic_task
 tasks:
-  37c30d1d-db8b-4a96-b465-75a490dc227e:
-    earliest_start_time: 3447.22
-    estimated_duration: 4.09
-    finish_location: inspection_area
+  3b393fde-f07d-428a-b2b3-bb5762f0f3bc:
+    earliest_start_time: 28.3
+    estimated_duration: 0.59
+    finish_location: observation_pose
     hard_constraints: true
-    latest_start_time: 3628.97
+    latest_start_time: 29.57
+    start_location: table
+    task_id: 3b393fde-f07d-428a-b2b3-bb5762f0f3bc
+  3fa823f0-0db0-48f0-9971-794c1d36b851:
+    earliest_start_time: 32.64
+    estimated_duration: 1.09
+    finish_location: shelf_cupboard
+    hard_constraints: true
+    latest_start_time: 34.38
     start_location: shelf
-    task_id: 37c30d1d-db8b-4a96-b465-75a490dc227e
-  546e5a43-2339-4d1e-bbc6-b88f5e48977d:
-    earliest_start_time: 2611.72
+    task_id: 3fa823f0-0db0-48f0-9971-794c1d36b851
+  4c5fa617-bfa1-4ad9-bf4c-8b5337b690e7:
+    earliest_start_time: 67.65
+    estimated_duration: 2.36
+    finish_location: table
+    hard_constraints: true
+    latest_start_time: 68.67
+    start_location: inspection_area
+    task_id: 4c5fa617-bfa1-4ad9-bf4c-8b5337b690e7
+  666a60b1-974b-41fc-863e-792f76df1ff4:
+    earliest_start_time: 2.39
+    estimated_duration: 11.15
+    finish_location: living_room
+    hard_constraints: true
+    latest_start_time: 3.74
+    start_location: second_door
+    task_id: 666a60b1-974b-41fc-863e-792f76df1ff4
+  8ee1aecb-bfd6-438a-b1a8-e209a78ee3a1:
+    earliest_start_time: 83.5
+    estimated_duration: 3.7
+    finish_location: table
+    hard_constraints: true
+    latest_start_time: 84.91
+    start_location: cupboard
+    task_id: 8ee1aecb-bfd6-438a-b1a8-e209a78ee3a1
+  948e32db-3b85-441d-8754-64c864684274:
+    earliest_start_time: 16.52
+    estimated_duration: 7.24
+    finish_location: shelf_cupboard
+    hard_constraints: true
+    latest_start_time: 18.48
+    start_location: kitchen
+    task_id: 948e32db-3b85-441d-8754-64c864684274
+  989579fe-7093-4661-ac14-84631fb3c6d6:
+    earliest_start_time: 52.2
+    estimated_duration: 2.72
+    finish_location: observation_pose
+    hard_constraints: true
+    latest_start_time: 54.03
+    start_location: inspection_area
+    task_id: 989579fe-7093-4661-ac14-84631fb3c6d6
+  a13c158b-ffb7-48cd-963b-b76fce06cdff:
+    earliest_start_time: 72.48
+    estimated_duration: 7.24
+    finish_location: shelf_cupboard
+    hard_constraints: true
+    latest_start_time: 73.53
+    start_location: kitchen
+    task_id: a13c158b-ffb7-48cd-963b-b76fce06cdff
+  b387acbd-2bb2-4afa-b217-82b0a4b0ee14:
+    earliest_start_time: 37.57
+    estimated_duration: 11.74
+    finish_location: living_room
+    hard_constraints: true
+    latest_start_time: 38.59
+    start_location: second_door_outside
+    task_id: b387acbd-2bb2-4afa-b217-82b0a4b0ee14
+  fc868f32-1ef8-48e9-8cfb-48b14b67e56a:
+    earliest_start_time: 58.28
     estimated_duration: 6.27
     finish_location: inspection_area
     hard_constraints: true
-    latest_start_time: 2827.03
+    latest_start_time: 59.39
     start_location: second_door
-    task_id: 546e5a43-2339-4d1e-bbc6-b88f5e48977d
-  554aacd2-5144-47a4-9866-270b69b28ca1:
-    earliest_start_time: 1243.51
-    estimated_duration: 1.07
-    finish_location: trash_can
-    hard_constraints: true
-    latest_start_time: 1452.01
-    start_location: kitchen
-    task_id: 554aacd2-5144-47a4-9866-270b69b28ca1
-  653ef848-2b49-4bd4-ae81-5ff6ca72624c:
-    earliest_start_time: 2216.74
-    estimated_duration: 4.69
-    finish_location: cupboard
-    hard_constraints: true
-    latest_start_time: 2464.36
-    start_location: second_door
-    task_id: 653ef848-2b49-4bd4-ae81-5ff6ca72624c
-  78cebafb-1362-4c0a-8575-9e966c5cbbf7:
-    earliest_start_time: 852.75
-    estimated_duration: 6.84
-    finish_location: inspection_area
-    hard_constraints: true
-    latest_start_time: 1124.29
-    start_location: second_door_outside
-    task_id: 78cebafb-1362-4c0a-8575-9e966c5cbbf7
-  9c6ac534-05c2-4c7f-b96a-abefdd035e73:
-    earliest_start_time: 498.89
-    estimated_duration: 5.57
-    finish_location: trash_can
-    hard_constraints: true
-    latest_start_time: 667.65
-    start_location: cupboard
-    task_id: 9c6ac534-05c2-4c7f-b96a-abefdd035e73
-  b1f48827-3b2f-4976-81a3-705edae6ba59:
-    earliest_start_time: 2978.25
-    estimated_duration: 7.82
-    finish_location: observation_pose
-    hard_constraints: true
-    latest_start_time: 3143.66
-    start_location: trash_bin1
-    task_id: b1f48827-3b2f-4976-81a3-705edae6ba59
-  b3044f1d-93fd-41bb-ad06-8114ccedfcc7:
-    earliest_start_time: 1521.56
-    estimated_duration: 9.55
-    finish_location: second_door_outside
-    hard_constraints: true
-    latest_start_time: 1702.03
-    start_location: observation_pose
-    task_id: b3044f1d-93fd-41bb-ad06-8114ccedfcc7
-  cb98ee54-8234-4a79-b31e-0c2dd862de52:
-    earliest_start_time: 222.36
-    estimated_duration: 2.74
-    finish_location: shelf
-    hard_constraints: true
-    latest_start_time: 323.95
-    start_location: cupboard
-    task_id: cb98ee54-8234-4a79-b31e-0c2dd862de52
-  e047ed79-ec51-42cf-9d96-f3e64e655a56:
-    earliest_start_time: 2005.79
-    estimated_duration: 8.24
-    finish_location: shelf
-    hard_constraints: true
-    latest_start_time: 2066.81
-    start_location: kitchen
-    task_id: e047ed79-ec51-42cf-9d96-f3e64e655a56
-upper_bound: 300
+    task_id: fc868f32-1ef8-48e9-8cfb-48b14b67e56a
+time_window_lower_bound: 1
+time_window_upper_bound: 3
