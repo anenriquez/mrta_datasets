@@ -113,5 +113,5 @@ if __name__ == '__main__':
                          args.file_extension)
 
     for task in tasks:
-        print(task.id)
+        print(task.task_id)
 
