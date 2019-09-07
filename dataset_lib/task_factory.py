@@ -83,7 +83,7 @@ def task_request_creator(task_cls, **kwargs):
 
 
 def generic_task_csv_loader(task_cls, task_csv):
-    id = task_csv['id']
+    task_id = task_csv['task_id']
 
     _task_args = {'earliest_start_time': float(task_csv['earliest_start_time']),
                   'latest_start_time': float(task_csv['latest_start_time']),
@@ -93,7 +93,7 @@ def generic_task_csv_loader(task_cls, task_csv):
                   'hard_constraints': task_csv['hard_constraints']
                   }
 
-    task = task_cls(id, **_task_args)
+    task = task_cls(task_id, **_task_args)
     return task
 
 
