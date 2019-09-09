@@ -14,10 +14,11 @@ def plot_dataset(dataset_name, tasks, show=False):
 
     dataset_start_time = float('inf')
     dataset_finish_time = - float('inf')
+    now = datetime.now().timestamp()
 
     for i, task in enumerate(tasks):
-        earliest_start_time = task.earliest_start_time
-        latest_finish_time = task.latest_start_time + task.estimated_duration
+        earliest_start_time = task.earliest_start_time + now
+        latest_finish_time = task.latest_start_time + task.estimated_duration + now
 
         if earliest_start_time < dataset_start_time:
             dataset_start_time = earliest_start_time
