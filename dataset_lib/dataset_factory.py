@@ -1,7 +1,10 @@
-import numpy as np
-import random
 import math
+import random
+
+import numpy as np
+
 from dataset_lib.task_factory import TaskCreator
+from dataset_lib.utils.uuid import generate_uuid
 
 
 class DatasetFactory(object):
@@ -237,6 +240,7 @@ def get_poses(pose_names):
 def get_metadata(**kwargs):
 
     dataset = dict()
+    dataset['datset_id'] = generate_uuid()
     dataset['dataset_name'] = kwargs.get('dataset_name')
     dataset['dataset_type'] = kwargs.get('dataset_type')
     dataset['task_type'] = kwargs.get('task_type')
