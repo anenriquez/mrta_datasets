@@ -38,7 +38,6 @@ class TaskFactory(object):
 
 
 def generic_task_creator(task_cls, **kwargs):
-    # task = task_cls(id=generate_uuid(), **kwargs)
     task = task_cls(task_id=generate_uuid(), **kwargs)
 
     return task
