@@ -27,7 +27,7 @@ python3 create_dataset.py overlapping_tw 10 overlapping_1 --task_type generic_ta
 
 ## Plot the dataset
 
-Go to `datasets/plots`
+Go to `dataset_lib/`
 
 ```
 python3 plot_datasety.py dataset_name dataset_type task_type interval_type file_extension
