@@ -3,7 +3,9 @@
 from setuptools import setup
 
 setup(name='dataset_lib',
-      packages=['dataset_lib', 'dataset_lib.utils'],
+      packages=['dataset_lib', 'dataset_lib.utils',
+                'dataset_lib.datasets.non_overlapping_tw.generic_task.random',
+                'dataset_lib.datasets.overlapping_tw.generic_task.random'],
       version='0.1.0',
       description='Datasets and structs for MRTA',
       author='Angela Enriquez Gomez',

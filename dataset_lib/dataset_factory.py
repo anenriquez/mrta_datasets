@@ -240,7 +240,7 @@ def get_poses(pose_names):
 def get_metadata(**kwargs):
 
     dataset = dict()
-    dataset['datset_id'] = generate_uuid()
+    dataset['dataset_id'] = generate_uuid()
     dataset['dataset_name'] = kwargs.get('dataset_name')
     dataset['dataset_type'] = kwargs.get('dataset_type')
     dataset['task_type'] = kwargs.get('task_type')
