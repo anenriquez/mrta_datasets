@@ -70,8 +70,8 @@ if __name__ == '__main__':
 
     # Save in path datasets/dataset_type/task_type/interval_type
 
-    path = '../datasets/' + args.dataset_type +\
-           '/' + args.task_type+ '/' + \
+    path = '/datasets/' + args.dataset_type +\
+           '/' + args.task_type + '/' + \
            args.interval_type + '/'
 
     store_as_yaml(dataset, path)

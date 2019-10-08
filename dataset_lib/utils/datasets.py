@@ -85,11 +85,13 @@ def store_as_yaml(dataset, path):
     :param dataset: dictionary of tasks
     :param path: path where the dataset will be stored
     """
+    dataset_path = str(Path.cwd()) + path
 
     # Create path if it doesn't exist
-    Path(path).mkdir(parents=True, exist_ok=True)
+    Path(dataset_path).mkdir(parents=True, exist_ok=True)
 
-    file = path + dataset.get('dataset_name') + '.yaml'
+    file = dataset_path + dataset.get('dataset_name') + '.yaml'
+    open(dataset_path + '__init__.py', "w+")
 
     with open(file, 'w') as outfile:
         yaml.safe_dump(dataset, outfile, default_flow_style=False)
@@ -104,11 +106,12 @@ def store_as_csv(dataset, task_cls, path):
     :param path: path where the dataset will be stored
     :return:
     """
+    dataset_path = str(Path.cwd()) + path
 
     # Create path if it doesn't exist
-    Path(path).mkdir(parents=True, exist_ok=True)
+    Path(dataset_path).mkdir(parents=True, exist_ok=True)
 
-    file = path + dataset.get('dataset_name') + '.csv'
+    file = dataset_path + dataset.get('dataset_name') + '.csv'
 
     tasks = dataset.get('tasks')
     list_task_dicts = list()

@@ -1,0 +1,11 @@
+estimated_duration,hard_constraints,earliest_start_time,finish_location,start_location,task_id,latest_start_time
+2.85,True,9.09,table,living_room,385b7340-617f-4c55-ba14-e3d2843f087b,11.09
+8.88,True,10.47,second_door,observation_pose,45105a53-59ea-425f-b4f3-6db1c58c8e7b,12.47
+4.69,True,27.07,cupboard,second_door,64cb4c73-f12e-4de7-9fa0-86942743a9e3,29.07
+11.15,True,9.25,second_door,living_room,6560f583-d5e4-46ef-9baa-f13086f9f006,11.25
+5.17,True,13.34,trash_bin1,inspection_area,66f84cb5-c4e5-4ba7-b440-ba9a4f3846ca,15.34
+1.72,True,19.98,shelf_cupboard,cupboard,792766e7-c6b8-4d4f-860e-4e53f8670d0d,21.98
+1.11,True,10.84,second_door,trash_bin1,9af4439d-862d-40c1-b412-714adb487ee0,12.84
+5.48,True,3.74,second_door_outside,cupboard,ae52b72f-296f-4819-a8bb-42a17196275a,5.74
+8.39,True,18.42,second_door,table,e6a982c6-0931-4b41-87d3-264b27c7ca8d,20.42
+1.72,True,3.15,shelf_cupboard,cupboard,e75070b1-5894-4874-a73c-a86873db9538,5.15
