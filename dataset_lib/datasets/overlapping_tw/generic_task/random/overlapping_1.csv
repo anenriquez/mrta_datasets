@@ -1,0 +1,11 @@
+hard_constraints,finish_location,estimated_duration,latest_start_time,earliest_start_time,task_id,start_location
+True,inspection_area,5.17,13.93,12.26,256ab7c1-ee5e-4b0a-866e-e527088bcb77,trash_bin1
+True,second_door,1.11,10.01,8.29,48d265bd-ad06-41b0-b652-3cf88697ac4c,trash_bin1
+True,trash_can,1.07,15.62,14.54,748d1b31-dfe3-40de-93df-3a9a10532ac5,kitchen
+True,observation_pose,9.55,6.28,4.32,749524ce-32aa-42de-baed-5def19dfe0ad,second_door_outside
+True,living_room,11.15,16.71,14.99,7933b8b5-9a36-4a73-88fe-3538a9894e55,second_door
+True,trash_can,3.34,24.02,22.75,7a9eb29e-00b7-42ac-9d93-32bc6cb3bd6d,observation_pose
+True,observation_pose,5.71,3.62,2.15,85070e6a-babc-4666-bf70-a9fabca36c9c,shelf_cupboard
+True,shelf,2.76,15.4,13.44,d4b5c8e9-1f5f-43ac-8e81-8c3d0a606388,second_door_outside
+True,trash_bin1,8.57,28.44,26.73,e2824f51-3fd7-4acf-bde3-b678f0d540b3,trash_can
+True,inspection_area,3.93,25.83,24.21,fec1fe1f-72a0-4153-a836-1926685063e4,trash_can

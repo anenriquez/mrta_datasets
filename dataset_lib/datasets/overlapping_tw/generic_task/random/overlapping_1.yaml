@@ -1,0 +1,92 @@
+dataset_lower_bound: 1
+dataset_name: overlapping_1
+dataset_type: overlapping_tw
+dataset_upper_bound: 30
+datset_id: 42cb4f89-3500-4554-b7a5-33362f254fbe
+interval_type: random
+start_time_lower_bound: 1
+start_time_upper_bound: 2
+task_type: generic_task
+tasks:
+  256ab7c1-ee5e-4b0a-866e-e527088bcb77:
+    earliest_start_time: 12.26
+    estimated_duration: 5.17
+    finish_location: inspection_area
+    hard_constraints: true
+    latest_start_time: 13.93
+    start_location: trash_bin1
+    task_id: 256ab7c1-ee5e-4b0a-866e-e527088bcb77
+  48d265bd-ad06-41b0-b652-3cf88697ac4c:
+    earliest_start_time: 8.29
+    estimated_duration: 1.11
+    finish_location: second_door
+    hard_constraints: true
+    latest_start_time: 10.01
+    start_location: trash_bin1
+    task_id: 48d265bd-ad06-41b0-b652-3cf88697ac4c
+  748d1b31-dfe3-40de-93df-3a9a10532ac5:
+    earliest_start_time: 14.54
+    estimated_duration: 1.07
+    finish_location: trash_can
+    hard_constraints: true
+    latest_start_time: 15.62
+    start_location: kitchen
+    task_id: 748d1b31-dfe3-40de-93df-3a9a10532ac5
+  749524ce-32aa-42de-baed-5def19dfe0ad:
+    earliest_start_time: 4.32
+    estimated_duration: 9.55
+    finish_location: observation_pose
+    hard_constraints: true
+    latest_start_time: 6.28
+    start_location: second_door_outside
+    task_id: 749524ce-32aa-42de-baed-5def19dfe0ad
+  7933b8b5-9a36-4a73-88fe-3538a9894e55:
+    earliest_start_time: 14.99
+    estimated_duration: 11.15
+    finish_location: living_room
+    hard_constraints: true
+    latest_start_time: 16.71
+    start_location: second_door
+    task_id: 7933b8b5-9a36-4a73-88fe-3538a9894e55
+  7a9eb29e-00b7-42ac-9d93-32bc6cb3bd6d:
+    earliest_start_time: 22.75
+    estimated_duration: 3.34
+    finish_location: trash_can
+    hard_constraints: true
+    latest_start_time: 24.02
+    start_location: observation_pose
+    task_id: 7a9eb29e-00b7-42ac-9d93-32bc6cb3bd6d
+  85070e6a-babc-4666-bf70-a9fabca36c9c:
+    earliest_start_time: 2.15
+    estimated_duration: 5.71
+    finish_location: observation_pose
+    hard_constraints: true
+    latest_start_time: 3.62
+    start_location: shelf_cupboard
+    task_id: 85070e6a-babc-4666-bf70-a9fabca36c9c
+  d4b5c8e9-1f5f-43ac-8e81-8c3d0a606388:
+    earliest_start_time: 13.44
+    estimated_duration: 2.76
+    finish_location: shelf
+    hard_constraints: true
+    latest_start_time: 15.4
+    start_location: second_door_outside
+    task_id: d4b5c8e9-1f5f-43ac-8e81-8c3d0a606388
+  e2824f51-3fd7-4acf-bde3-b678f0d540b3:
+    earliest_start_time: 26.73
+    estimated_duration: 8.57
+    finish_location: trash_bin1
+    hard_constraints: true
+    latest_start_time: 28.44
+    start_location: trash_can
+    task_id: e2824f51-3fd7-4acf-bde3-b678f0d540b3
+  fec1fe1f-72a0-4153-a836-1926685063e4:
+    earliest_start_time: 24.21
+    estimated_duration: 3.93
+    finish_location: inspection_area
+    hard_constraints: true
+    latest_start_time: 25.83
+    start_location: trash_can
+    task_id: fec1fe1f-72a0-4153-a836-1926685063e4
+time_window_lower_bound: null
+time_window_upper_bound: null

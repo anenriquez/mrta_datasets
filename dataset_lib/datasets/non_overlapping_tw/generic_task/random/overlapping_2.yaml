@@ -1,0 +1,36 @@
+dataset_id: 42cb4f89-3500-4554-b7a5-33362f254fbe
+dataset_lower_bound: null
+dataset_name: overlapping_2
+dataset_type: overlapping_tw
+dataset_upper_bound: 30
+interval_type: random
+start_time_lower_bound: 1
+start_time_upper_bound: 2
+task_type: generic_task
+tasks:
+  256ab7c1-ee5e-4b0a-866e-e527088bcb77:
+    earliest_start_time: 12.26
+    estimated_duration: 5.17
+    finish_location: inspection_area
+    hard_constraints: true
+    latest_start_time: 13.93
+    start_location: trash_bin1
+    task_id: 256ab7c1-ee5e-4b0a-866e-e527088bcb77
+  748d1b31-dfe3-40de-93df-3a9a10532ac5:
+    earliest_start_time: 12.26
+    estimated_duration: 5.17
+    finish_location: inspection_area
+    hard_constraints: true
+    latest_start_time: 13.93
+    start_location: trash_bin1
+    task_id: 748d1b31-dfe3-40de-93df-3a9a10532ac5
+  48d265bd-ad06-41b0-b652-3cf88697ac4c:
+    earliest_start_time: 12.26
+    estimated_duration: 5.17
+    finish_location: inspection_area
+    hard_constraints: true
+    latest_start_time: 13.93
+    start_location: trash_bin1
+    task_id: 48d265bd-ad06-41b0-b652-3cf88697ac4c
+time_window_lower_bound: 1
+time_window_upper_bound: 3

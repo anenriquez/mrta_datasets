@@ -1,0 +1,28 @@
+dataset_id: 6ff2305f-5767-44b5-ac5d-bdd13facd366
+dataset_lower_bound: null
+dataset_name: non_overlapping_2
+dataset_type: non_overlapping_tw
+dataset_upper_bound: null
+interval_type: random
+start_time_lower_bound: 1
+start_time_upper_bound: 2
+task_type: generic_task
+tasks:
+  00c0f18c-9e9f-494c-a022-f405620b3e4e:
+    earliest_start_time: 34.86
+    estimated_duration: 1.63
+    finish_location: second_door_outside
+    hard_constraints: true
+    latest_start_time: 36.77
+    start_location: second_door
+    task_id: 00c0f18c-9e9f-494c-a022-f405620b3e4e
+  018a9b00-c1f9-4464-ad27-7f1208b3727f:
+    earliest_start_time: 22.15
+    estimated_duration: 9.46
+    finish_location: kitchen
+    hard_constraints: true
+    latest_start_time: 23.16
+    start_location: trash_bin1
+    task_id: 018a9b00-c1f9-4464-ad27-7f1208b3727f
+time_window_lower_bound: 1
+time_window_upper_bound: 3

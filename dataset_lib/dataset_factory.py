@@ -1,7 +1,10 @@
-import numpy as np
-import random
 import math
+import random
+
+import numpy as np
+
 from dataset_lib.task_factory import TaskCreator
+from dataset_lib.utils.uuid import generate_uuid
 
 
 class DatasetFactory(object):
@@ -30,10 +33,10 @@ def overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name, pos
         - loose
         - random
 
-    The earliest_start_time (est) of a task is drawn from the interval
-    (start_time_lower_bound, start_time_upper_bound)
+    The earliest start time (est) of a task in the dataset is drawn from the interval
+    (dataset_lower_bound, dataset_upper_bound)
 
-    The latest_start_time (lst) of a task is the est + start interval
+    The latest_start_time (lst) of a task in the dataset is the est + start time interval
 
     The start and finish pose names are randomly chosen from the pose_names
 
@@ -48,30 +51,33 @@ def overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name, pos
     interval_type (str) :   'tight', 'loose' or 'random'
                             default: 'random'
 
-    start_time_lower_bound (int):  default: 60
+    start_time_lower_bound (int):  default: 1 minute
+    start_time_upper_bound (int):  default: 2 minutes
 
-    est_upper_bound (int):  default: 300
-
-    task_generator (function): default: generic_task_generator
-
+    dataset_lower_bound (int):  default: 1 minute
+    dataset_upper_bound (int):  default: 30 minutes
 
     :return: dataset (a dictionary of n_tasks with overlapping time windows)
     """
-
-    task_type = task_type
-
     interval_type = kwargs.get('interval_type', 'random')
-    start_time_lower_bound = kwargs.get('lower_bound', 60)
-    start_time_upper_bound = kwargs.get('upper_bound', 300)
+    start_time_lower_bound = kwargs.get('start_time_lower_bound', 1)
+    start_time_upper_bound = kwargs.get('start_time_upper_bound', 2)
+    dataset_lower_bound = kwargs.get('dataset_lower_bound', 1)
+    dataset_upper_bound = kwargs.get('dataset_upper_bound', 30)
 
-    dataset_dict = get_metadata(dataset_name, 'overlapping_tw',
-                                task_type, interval_type,
-                                start_time_lower_bound, start_time_upper_bound)
+    dataset_dict = get_metadata(dataset_name=dataset_name,
+                                dataset_type='overlapping_tw',
+                                task_type=task_type,
+                                interval_type=interval_type,
+                                start_time_lower_bound=start_time_lower_bound,
+                                start_time_upper_bound=start_time_upper_bound,
+                                dataset_lower_bound=dataset_lower_bound,
+                                dataset_upper_bound=dataset_upper_bound)
 
     dataset_dict['tasks'] = dict()
 
     for i in range(0, n_tasks):
-        est = round(np.random.uniform(start_time_lower_bound, start_time_upper_bound), 2)
+        est = round(np.random.uniform(dataset_lower_bound, dataset_upper_bound), 2)
         lst = round(est +
                     get_interval(interval_type, start_time_lower_bound, start_time_upper_bound), 2)
 
@@ -82,12 +88,12 @@ def overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name, pos
         _task_args = {'earliest_start_time': est,
                       'latest_start_time': lst,
                       'estimated_duration': estimated_duration,
-                      'start_pose_name': start_pose_name,
-                      'finish_pose_name': finish_pose_name}
+                      'start_location': start_pose_name,
+                      'finish_location': finish_pose_name}
 
         task = task_creator.create(task_type=task_type, **_task_args)
 
-        dataset_dict['tasks'][task.id] = task.to_dict()
+        dataset_dict['tasks'][task.task_id] = task.to_dict()
 
     return dataset_dict
 
@@ -103,7 +109,15 @@ def non_overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name,
         - random
 
     The earliest start time of a task (est) is the finish time of the last task
-    plues the time window interval
+    plus the time window interval
+
+    The start time interval (time between the earliest start time and the latest
+     start time of a task) can be:
+        - tight
+        - loose
+        - random
+
+    The latest start time (lst) of a task in the dataset is the est + start time interval
 
     The duration of a task is estimated using the euclidean distance between the
     start and finish poses of the task (assuming a constant velocity of 1 m/s)
@@ -121,23 +135,31 @@ def non_overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name,
     interval_type (str) :   'tight', 'loose' or 'random'
                             default: 'random'
 
-    start_time_lower_bound (int):  default: 60
+    time_window_lower_bound (int):  default: 1 minute
+    time_window_upper_bound (int):  default: 3 minutes
 
-    est_upper_bound (int):  default: 300
+    start_time_lower_bound (int):  default: 1 minute
+    start_time_upper_bound (int):  default: 2 minutes
 
 
     :return: dataset (a dictionary of n_tasks with overlapping time windows)
 
     """
 
-    task_type = task_type
     interval_type = kwargs.get('interval_type', 'random')
-    time_window_lower_bound = kwargs.get('lower_bound', 60)
-    time_window_upper_bound = kwargs.get('upper_bound', 300)
+    time_window_lower_bound = kwargs.get('time_window_lower_bound', 1)
+    time_window_upper_bound = kwargs.get('time_window_upper_bound', 3)
+    start_time_lower_bound = kwargs.get('start_time_lower_bound', 1)
+    start_time_upper_bound = kwargs.get('start_time_upper_bound', 2)
 
-    dataset_dict = get_metadata(dataset_name, 'non_overlapping_tw',
-                                task_type, interval_type,
-                                time_window_lower_bound, time_window_upper_bound)
+    dataset_dict = get_metadata(dataset_name=dataset_name,
+                                dataset_type='non_overlapping_tw',
+                                task_type=task_type,
+                                interval_type=interval_type,
+                                time_window_lower_bound=time_window_lower_bound,
+                                time_window_upper_bound=time_window_upper_bound,
+                                start_time_lower_bound=start_time_lower_bound,
+                                start_time_upper_bound=start_time_upper_bound)
 
     dataset_dict['tasks'] = dict()
 
@@ -151,7 +173,7 @@ def non_overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name,
 
         est = round(finish_last_task + time_window_interval, 2)
         lst = round(est +
-                    get_interval(interval_type, time_window_lower_bound, time_window_upper_bound), 2)
+                    get_interval(interval_type, start_time_lower_bound, start_time_upper_bound), 2)
 
         estimated_duration = get_estimated_duration(pose_names, start_pose_name, finish_pose_name)
 
@@ -161,12 +183,12 @@ def non_overlapping_time_windows(task_creator, task_type, n_tasks, dataset_name,
         _task_args = {'earliest_start_time': est,
                       'latest_start_time': lst,
                       'estimated_duration': estimated_duration,
-                      'start_pose_name': start_pose_name,
-                      'finish_pose_name': finish_pose_name}
+                      'start_location': start_pose_name,
+                      'finish_location': finish_pose_name}
 
         task = task_creator.create(task_type=task_type, **_task_args)
 
-        dataset_dict['tasks'][task.id] = task.to_dict()
+        dataset_dict['tasks'][task.task_id] = task.to_dict()
 
     return dataset_dict
 
@@ -215,16 +237,20 @@ def get_poses(pose_names):
     return start_pose_name, finish_pose_name
 
 
-def get_metadata(dataset_name, dataset_type, task_type,
-                 interval_type, lower_bound, upper_bound):
+def get_metadata(**kwargs):
 
     dataset = dict()
-    dataset['dataset_name'] = dataset_name
-    dataset['dataset_type'] = dataset_type
-    dataset['task_type'] = task_type
-    dataset['interval_type'] = interval_type
-    dataset['lower_bound'] = lower_bound
-    dataset['upper_bound'] = upper_bound
+    dataset['dataset_id'] = generate_uuid()
+    dataset['dataset_name'] = kwargs.get('dataset_name')
+    dataset['dataset_type'] = kwargs.get('dataset_type')
+    dataset['task_type'] = kwargs.get('task_type')
+    dataset['interval_type'] = kwargs.get('interval_type')
+    dataset['time_window_lower_bound'] = kwargs.get('time_window_lower_bound')
+    dataset['time_window_upper_bound'] = kwargs.get('time_window_upper_bound')
+    dataset['start_time_lower_bound'] = kwargs.get('start_time_lower_bound')
+    dataset['start_time_upper_bound'] = kwargs.get('start_time_upper_bound')
+    dataset['dataset_lower_bound'] = kwargs.get('dataset_lower_bound')
+    dataset['dataset_upper_bound'] = kwargs.get('dataset_upper_bound')
     return dataset
 
 
