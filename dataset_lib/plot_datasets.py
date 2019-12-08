@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 import argparse
 from pathlib import Path
-from dataset_lib.dataset_loader import load_dataset, get_path_to_dataset
+from dataset_lib.load_dataset import load_dataset, get_path_to_dataset
 
 
 def plot_dataset(dataset_name, tasks, show=False):
@@ -17,8 +17,8 @@ def plot_dataset(dataset_name, tasks, show=False):
     now = datetime.now().timestamp()
 
     for i, task in enumerate(tasks):
-        earliest_start_time = task.earliest_start_time + now
-        latest_finish_time = task.latest_start_time + task.estimated_duration + now
+        earliest_start_time = task.earliest_pickup_time + now
+        latest_finish_time = task.latest_pickup_time + task.plan.estimated_duration + now
 
         if earliest_start_time < dataset_start_time:
             dataset_start_time = earliest_start_time
@@ -71,7 +71,7 @@ def save_plot(fig, dataset_name, dataset_type, task_type, interval_type):
 
     path = get_path_to_dataset(dataset_type, task_type, interval_type)
 
-    plot_path = main_dir + '/datasets' + path
+    plot_path = code_dir + '/datasets' + path
 
     # Create path if it doesn't exist
     Path(plot_path).mkdir(parents=True, exist_ok=True)
@@ -89,15 +89,17 @@ if __name__ == '__main__':
                         choices=['overlapping_tw', 'non_overlapping_tw'])
 
     parser.add_argument('task_type', type=str, help='Task type',
-                        choices=['generic_task', 'ropod_task'])
+                        choices=['task'],
+                        default='task')
 
     parser.add_argument('interval_type', type=str,
                         help='Start time interval for overlapping tw'
                         'or time window interval for non_overlapping_tw',
                         choices=['tight', 'loose', 'random'])
 
-    parser.add_argument('file_extension', type=str, help='File extension',
-                        choices=['csv', 'yaml'])
+    parser.add_argument('--file_extension', type=str, help='File extension',
+                        choices=['csv', 'yaml'],
+                        default='yaml')
 
     args = parser.parse_args()
 

@@ -1,55 +1,24 @@
 import csv
 import os
 from dataset_lib.utils.datasets import load_yaml
-from dataset_lib.task_factory import TaskLoader
+from dataset_lib.config.factories import task_factory
 import argparse
-from dataset_lib.task_factory import initialize_task_factory
 import collections
 
 
 def get_datasets_dir():
     code_dir = os.path.abspath(os.path.dirname(__file__))
-    main_dir = os.path.dirname(code_dir)
-
-    datasets_dir = main_dir + '/datasets'
+    datasets_dir = code_dir + '/datasets'
 
     return datasets_dir
-
-
-def load_csv_dataset(dataset_name, task_type, path):
-
-    datasets_dir = get_datasets_dir()
-
-    dataset_path = datasets_dir + path + dataset_name + '.csv'
-
-    tasks = list()
-
-    task_loader = TaskLoader()
-
-    try:
-        with open(dataset_path, 'r') as file:
-            csv_reader = csv.DictReader(file)
-
-            for task_csv in csv_reader:
-                task = task_loader.load_csv(task_type, task_csv)
-
-                tasks.append(task)
-
-    except IOError:
-        print("File does not exist")
-
-    return tasks
 
 
 def load_yaml_dataset(dataset_name, task_type, path):
 
     datasets_dir = get_datasets_dir()
-
     dataset_path = datasets_dir + path + dataset_name + '.yaml'
-
     dataset_dict = load_yaml(dataset_path)
 
-    task_factory = initialize_task_factory()
     task_cls = task_factory.get_task_cls(task_type)
 
     tasks = list()
@@ -67,11 +36,7 @@ def load_dataset(dataset_name, dataset_type, task_type, interval_type, file_exte
 
     path = get_path_to_dataset(dataset_type, task_type, interval_type)
 
-    if file_extension == 'csv':
-
-        tasks = load_csv_dataset(dataset_name, task_type, path)
-
-    elif file_extension == 'yaml':
+    if file_extension == 'yaml':
 
         tasks = load_yaml_dataset(dataset_name, task_type, path)
 
@@ -97,15 +62,17 @@ if __name__ == '__main__':
                         choices=['overlapping_tw', 'non_overlapping_tw'])
 
     parser.add_argument('task_type', type=str, help='Task type',
-                        choices=['generic_task', 'ropod_task', 'task_request'])
+                        choices=['task'],
+                        default='task')
 
     parser.add_argument('interval_type', type=str,
                         help='Start time interval for overlapping tw'
                              'or time window interval for non_overlapping_tw',
                         choices=['tight', 'loose', 'random'])
 
-    parser.add_argument('file_extension', type=str, help='File extension',
-                        choices=['csv', 'yaml'])
+    parser.add_argument('--file_extension', type=str, help='File extension',
+                        choices=['csv', 'yaml'],
+                        default='yaml')
 
     args = parser.parse_args()
 
@@ -114,4 +81,5 @@ if __name__ == '__main__':
 
     for task in tasks:
         print(task.task_id)
+        print(task.pickup_location)
 
