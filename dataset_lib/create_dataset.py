@@ -1,8 +1,7 @@
-from dataset_lib.dataset_factory import DatasetCreator
-from dataset_lib.task_factory import initialize_task_factory
 import argparse
-from dataset_lib.utils.datasets import load_yaml, store_as_yaml, store_as_csv
 
+from dataset_lib.config.creators import DatasetCreator
+from dataset_lib.utils.datasets import load_yaml, store_as_yaml, store_as_csv
 
 if __name__ == '__main__':
 
@@ -16,11 +15,11 @@ if __name__ == '__main__':
     parser.add_argument('dataset_name', type=str, help='Name of the dataset')
 
     parser.add_argument('--task_type', type=str, help='task type',
-                        choices=['generic_task', 'ropod_task', 'task_request'],
-                        default='generic_task')
+                        choices=['task'],
+                        default='task')
 
-    parser.add_argument('--poses_file', type=str, help='Path to the config file',
-                        default='../poses/brsu_c069_lab.yaml')
+    parser.add_argument('--map_name', type=str, help='Name of the map to get poses from',
+                        default='brsu')
 
     parser.add_argument('--interval_type', type=str,
                         help='Start time interval for overlapping tw'
@@ -53,30 +52,29 @@ if __name__ == '__main__':
     parser.add_argument('--dataset_upper_bound', type=int, help='Latest start time of task in the dataset (minutes)',
                         default=30)
 
+    parser.add_argument('--map_sections', type=list, help='Name of sections in the map to take goal poses from',
+                        default=['square'])
+
     args = parser.parse_args()
 
-    pose_names = load_yaml(args.poses_file).get('pose_names')
+    dataset_creator = DatasetCreator(args.map_name)
 
-    dataset_creator = DatasetCreator()
-
-    dataset = dataset_creator.create(args.task_type, args.dataset_type, args.n_tasks, args.dataset_name, pose_names,
+    dataset = dataset_creator.create(args.task_type, args.dataset_type, args.n_tasks, args.dataset_name,
                                      interval_type=args.interval_type,
                                      time_window_lower_bound=args.time_window_lower_bound,
                                      time_window_upper_bound=args.time_window_upper_bound,
                                      start_time_lower_bound=args.start_time_lower_bound,
                                      start_time_upper_bound=args.start_time_upper_bound,
                                      dataset_lower_bound=args.dataset_lower_bound,
-                                     dataset_upper_bound=args.dataset_upper_bound)
+                                     dataset_upper_bound=args.dataset_upper_bound,
+                                     map_sections=args.map_sections)
 
     # Save in path datasets/dataset_type/task_type/interval_type
 
-    path = '/datasets/' + args.dataset_type +\
-           '/' + args.task_type + '/' + \
-           args.interval_type + '/'
+    path = '/datasets/' + args.dataset_type + '/' + args.task_type + '/' + args.interval_type + '/'
 
     store_as_yaml(dataset, path)
 
-    task_factory = initialize_task_factory()
-    task_cls = task_factory.get_task_cls(args.task_type)
-    store_as_csv(dataset, task_cls, path)
+    # task_cls = task_factory.get_task_cls(args.task_type)
+    # store_as_csv(dataset, task_cls, path)
 
