@@ -1,4 +1,4 @@
 PyYAML
 numpy
 importlib_resources
-git+https://github.com/anenriquez/mrta_planner@egg=planner
+git+https://github.com/anenriquez/mrta_planner@master#egg=planner
