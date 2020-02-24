@@ -12,6 +12,7 @@ setup(name='dataset_lib',
       install_requires=[
             'numpy',
             'pyYAML',
+            'planner@git+https://github.com/anenriquez/mrta_planner.git@master#egg=planner',
       ],
       description='Datasets for MRTA',
       author='Angela Enriquez Gomez',
