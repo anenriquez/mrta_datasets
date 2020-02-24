@@ -8,15 +8,15 @@ import collections
 
 def get_datasets_dir():
     code_dir = os.path.abspath(os.path.dirname(__file__))
-    datasets_dir = code_dir + '/datasets'
+    datasets_dir = code_dir + '/datasets/'
 
     return datasets_dir
 
 
-def load_yaml_dataset(dataset_name, task_type, path):
+def load_yaml_dataset(dataset_name, task_type):
 
     datasets_dir = get_datasets_dir()
-    dataset_path = datasets_dir + path + dataset_name + '.yaml'
+    dataset_path = datasets_dir + dataset_name + '.yaml'
     dataset_dict = load_yaml(dataset_path)
 
     task_cls = task_factory.get_task_cls(task_type)
