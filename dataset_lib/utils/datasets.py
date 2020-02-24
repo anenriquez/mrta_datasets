@@ -79,21 +79,14 @@ def to_csv(list_dicts, file_name):
         dict_writer.writerows(list_dicts)
 
 
-def store_as_yaml(dataset, path):
+def store_as_yaml(dataset, dataset_file):
     """ Receives a dictionary (in yaml format) and stores it as yaml in path
 
     :param dataset: dictionary of tasks
     :param path: path where the dataset will be stored
     """
-    dataset_path = str(Path.cwd()) + path
 
-    # Create path if it doesn't exist
-    Path(dataset_path).mkdir(parents=True, exist_ok=True)
-
-    file = dataset_path + dataset.get('dataset_name') + '.yaml'
-    open(dataset_path + '__init__.py', "w+")
-
-    with open(file, 'w') as outfile:
+    with open(dataset_file, 'w') as outfile:
         yaml.safe_dump(dataset, outfile, default_flow_style=False)
 
 

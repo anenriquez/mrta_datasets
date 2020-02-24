@@ -3,7 +3,6 @@ import random
 from planner.planner import Planner
 
 from dataset_lib.config.factories import dataset_factory
-from dataset_lib.config.factories import pose_factory
 from dataset_lib.config.factories import task_factory
 
 
@@ -20,16 +19,10 @@ class TaskCreator:
 class PoseCreator:
 
     def __init__(self, map_name):
-        self.pose_factory = pose_factory
-        self.planner = self.get_planner(map_name)
+        self.planner = Planner(map_name)
 
-    def get_planner(self, map_name):
-        planner = Planner()
-        map_json_file = self.pose_factory.get_map(map_name)
-        planner.load_map(map_json_file)
-        return planner
-
-    def get_poses(self, map_sections):
+    def get_poses(self, map_sections, **kwargs):
+        pickup_pose = kwargs.get("pickup_pose")
         goals = list()
         for section in map_sections:
             for pose in self.planner.map_graph.graph['goals'][section]:
@@ -37,8 +30,8 @@ class PoseCreator:
 
         available_poses = [pose for pose in list(self.planner.map_graph.nodes())
                            if pose in goals]
-
-        pickup_pose = random.choice(available_poses)
+        if not pickup_pose:
+            pickup_pose = random.choice(available_poses)
         available_poses.remove(pickup_pose)
         delivery_pose = random.choice(available_poses)
 
@@ -62,8 +55,8 @@ class DatasetCreator:
         self.pose_creator = PoseCreator(map_name)
         self.dataset_factory = dataset_factory
 
-    def create(self, task_type, dataset_type, n_tasks, dataset_name, **kwargs):
+    def create(self, task_type, dataset_type, n_tasks, n_overlapping_sets, dataset_name, **kwargs):
         dataset_creator = self.dataset_factory.get_dataset_creator(dataset_type)
-        dataset = dataset_creator(self.task_creator, self.pose_creator, task_type, n_tasks, dataset_name, **kwargs)
+        dataset = dataset_creator(self.task_creator, self.pose_creator, task_type, n_tasks, n_overlapping_sets, dataset_name, **kwargs)
 
         return dataset

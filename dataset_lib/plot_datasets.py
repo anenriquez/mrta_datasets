@@ -5,7 +5,8 @@ import os
 from datetime import datetime
 import argparse
 from pathlib import Path
-from dataset_lib.load_dataset import load_dataset, get_path_to_dataset
+from dataset_lib.load_dataset import load_yaml_dataset, get_path_to_dataset
+from dataset_lib.utils.datasets import load_yaml
 
 
 def plot_dataset(dataset_name, tasks, show=False):
@@ -65,18 +66,18 @@ def plot_dataset(dataset_name, tasks, show=False):
     return fig
 
 
-def save_plot(fig, dataset_name, dataset_type, task_type, interval_type):
+def save_plot(fig, dataset_name):
     code_dir = os.path.abspath(os.path.dirname(__file__))
     main_dir = os.path.dirname(code_dir)
 
-    path = get_path_to_dataset(dataset_type, task_type, interval_type)
+    # path = get_path_to_dataset(dataset_type, task_type, interval_type)
 
-    plot_path = code_dir + '/datasets' + path
+    plot_path = code_dir + '/datasets' + dataset_name + '.yaml'
 
     # Create path if it doesn't exist
-    Path(plot_path).mkdir(parents=True, exist_ok=True)
+    # Path(plot_path).mkdir(parents=True, exist_ok=True)
 
-    fig.savefig(plot_path + dataset_name + ".png")
+    fig.savefig(dataset_name + ".png")
 
 
 if __name__ == '__main__':
@@ -85,28 +86,26 @@ if __name__ == '__main__':
 
     parser.add_argument('dataset_name', type=str, help='Name of the dataset')
 
-    parser.add_argument('dataset_type', type=str, help='Dataset type',
-                        choices=['overlapping_tw', 'non_overlapping_tw'])
-
-    parser.add_argument('task_type', type=str, help='Task type',
-                        choices=['task'],
-                        default='task')
-
-    parser.add_argument('interval_type', type=str,
-                        help='Start time interval for overlapping tw'
-                        'or time window interval for non_overlapping_tw',
-                        choices=['tight', 'loose', 'random'])
-
-    parser.add_argument('--file_extension', type=str, help='File extension',
-                        choices=['csv', 'yaml'],
-                        default='yaml')
+    # parser.add_argument('dataset_type', type=str, help='Dataset type',
+    #                     choices=['overlapping_tw', 'non_overlapping_tw'])
+    #
+    parser.add_argument('--task_type', type=str, help='Task type', choices=['task'], default='task')
+    #
+    # parser.add_argument('interval_type', type=str,
+    #                     help='Start time interval for overlapping tw'
+    #                     'or time window interval for non_overlapping_tw',
+    #                     choices=['tight', 'loose', 'random'])
+    #
+    # parser.add_argument('--file_extension', type=str, help='File extension',
+    #                     choices=['csv', 'yaml'],
+    #                     default='yaml')
 
     args = parser.parse_args()
 
-    tasks = load_dataset(args.dataset_name, args.dataset_type, args.task_type, args.interval_type,
-                         args.file_extension)
+    tasks = load_yaml_dataset(args.dataset_name, args.task_type)
 
     fig = plot_dataset(args.dataset_name, tasks)
-    save_plot(fig, args.dataset_name, args.dataset_type, args.task_type, args.interval_type)
+    fig.savefig('datasets/plots/' + args.dataset_name + '.png')
+    # save_plot(fig, args.dataset_name)
 
 
