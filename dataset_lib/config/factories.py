@@ -1,9 +1,8 @@
-from importlib import import_module
 import logging
+from importlib import import_module
 
 import numpy as np
-
-from dataset_lib.utils.uuid import generate_uuid
+from dataset_lib.utils.utils import AsDictionaryMixin
 
 
 class TaskFactory:
@@ -37,15 +36,17 @@ class DatasetFactory(object):
             raise ValueError(dataset_type)
         return dataset_creator
 
+
+class DatasetMeta(AsDictionaryMixin):
     """
-    Dataset information: 
-    
-    The pickup time interval (time between the earliest pickup time and the latest pickup time of a task) can be:
+    Dataset information:
+
+    The pickup_time_interval (time between the earliest pickup time and the latest pickup time of a task) can be:
         - tight
         - loose
         - random
 
-    The time window interval (time between tasks, i.e., the time between the latest delivery time of a task and the
+    The time_window_interval (time between tasks, i.e., the time between the latest delivery time of a task and the
     earliest start time of the next task) can be:
         - tight
         - loose
@@ -54,211 +55,176 @@ class DatasetFactory(object):
     The earliest pickup time of a task (ept) is: delivery_time_last_task + travel_time + time_window_interval,
     where the travel time is the estimated time to go from the delivery location of the previous task to the pickup
     location of the next task
-    
+
     The latest pickup time (lpt) of a task is the ept + pickup time interval
 
-    interval_type: Defines the pickup time interval and the time window interval
+    interval_type: Defines the pickup_time_interval and the time_window_interval
 
-    An set of tasks consists of n consecutive tasks, where the time window interval between the tasks is defined as above.
+    A set of tasks consists of n consecutive tasks, where the time window interval between the tasks is defined as above
 
     n_overlapping_sets: A dataset consists of one or more overlapping set of tasks
-                        A dataset with non-overlapping-tw contains only one set
-                        A dataset with overlapping-tw contains at least two sets
 
-    The first task of all overlapping sets starts at the dataset's start_time
+    A dataset with non-overlapping-time-windows contains only one set
+    A dataset with overlapping-time-windows contains at least two sets
+
+    start_time (int): Used to compute the earliest pickup time of the first task in each set of overlapping tasks
+    The first task of all overlapping sets starts at the dataset's start_time + pickup_time_interval
+
+    dataset_name: Name of the dataset
+
+    map_sections (list): Sections of the map from where poses are chosen
 
     The pickup and delivery pose names are randomly chosen from the pose_names
 
-    task_creator: instance of class TaskCreator
-    pose_creator: instance of class PoseCreator
-    task_type: Class of the task in the dataset
-    n_tasks: Number of tasks in the dataset
-    n_overlapping_sets: Number of sets of overlapping tasks
-    dataset_name: Name of the new dataset
-
-    kwargs:
-
-    interval_type (str): Defines the pickup time interval and the time window interval
-                        'tight', 'loose' or 'random'
-
-    pickup_time_lower_bound (int):  Lower bound of the pickup time interval
-    pickup_time_upper_bound (int):  Upper bound of the pickup time interval
-
-    time_window_lower_bound (int): Lower bound of the time window interval
-    time_window_upper_bound (int): Upper bound of the time window interval
-
-    n_overlapping_sets (int): Number of sets of consecutive tasks
-
-    dataset_start_time (int): Earliest pickup time of the first task in each set of overlapping tasks
-
-    map_sections (list): Sections of the map from where poses are chosen 
-
     """
 
+    def __init__(self, dataset_name, dataset_type, start_time, pickup_time_interval, time_window_interval, map_sections):
+        self.dataset_name = dataset_name
+        self.dataset_type = dataset_type
+        self.start_time = start_time
+        self.pickup_time_interval = pickup_time_interval
+        self.time_window_interval = time_window_interval
+        self.map_sections = map_sections
 
-def overlapping_time_windows(task_creator, pose_creator, task_type, n_tasks, n_overlapping_sets, dataset_name, **kwargs):
-    """ Overlapping time windows dataset generator
 
-    :return: dataset (a dictionary of n_tasks with overlapping time windows)
+class Interval(AsDictionaryMixin):
+    def __init__(self, interval_type, lower_bound, upper_bound):
+        self.interval_type = interval_type
+        self.lower_bound = lower_bound
+        self.upper_bound = upper_bound
+
+    def __call__(self, *args, **kwargs):
+        if self.interval_type == 'tight':
+            interval = self.lower_bound
+        elif self.interval_type == 'loose':
+            interval = self.upper_bound
+        elif self.interval_type == 'random':
+            interval = np.random.uniform(self.lower_bound, self.upper_bound)
+        else:
+            raise ValueError(self.interval_type)
+        # Round to seconds
+        return round(interval)
+
+
+class OverlappingTW:
+    def __init__(self, task_creator, pose_creator, dataset_meta):
+        """ Creates datasets with overlapping time windows
+        """
+        self.task_creator = task_creator
+        self.pose_creator = pose_creator
+        self.dataset_meta = dataset_meta
+
+    def create(self, n_tasks, n_overlapping_sets, **kwargs):
+        dataset = self.dataset_meta.to_dict()
+        dataset['tasks'] = dict()
+        tasks = kwargs.get("tasks")
+
+        if tasks is None:
+            tasks = dict()
+
+            n_tasks_sets = [int(n_tasks / n_overlapping_sets)] * n_overlapping_sets
+            if n_tasks % n_overlapping_sets != 0:
+                n_tasks_sets.append(n_tasks % n_overlapping_sets)
+
+            map_sections = self.dataset_meta.map_sections * round(len(n_tasks_sets)/len(self.dataset_meta.map_sections))
+
+            # Use a map section per tasks_set
+            for i, (n_tasks_set, map_section) in enumerate(zip(n_tasks_sets, map_sections)):
+                tasks_set = get_tasks_set(self.task_creator, self.pose_creator, n_tasks_set, [map_section], i)
+                tasks_set = order_by_estimated_durations(tasks_set)
+                tasks[i] = tasks_set
+
+        for i, tasks_set in tasks.items():
+            tasks_set = add_constraints(tasks_set, self.dataset_meta.pickup_time_interval,
+                                        self.dataset_meta.pickup_time_interval, self.dataset_meta.start_time,
+                                        self.pose_creator)
+            for task in tasks_set:
+                dataset["tasks"][task.task_id] = task.to_dict()
+
+        return dataset, tasks
+
+
+class NonOverlappingTW:
+    def __init__(self, task_creator, pose_creator, dataset_meta):
+        """ Creates datasets with non overlapping time windows
+        """
+        self.task_creator = task_creator
+        self.pose_creator = pose_creator
+        self.dataset_meta = dataset_meta
+
+    def create(self, n_tasks, **kwargs):
+        dataset = self.dataset_meta.to_dict()
+        dataset['tasks'] = dict()
+        tasks = kwargs.get("tasks")
+
+        if tasks is None:
+            tasks = get_tasks_set(self.task_creator, self.pose_creator, n_tasks, self.dataset_meta.map_sections)
+
+        tasks = add_constraints(tasks, self.dataset_meta.pickup_time_interval, self.dataset_meta.pickup_time_interval,
+                                self.dataset_meta.start_time, self.pose_creator)
+
+        for task in tasks:
+            dataset["tasks"][task.task_id] = task.to_dict()
+
+        return dataset, tasks
+
+
+def get_tasks_set(task_creator, pose_creator, n_tasks_set, map_sections, set_number=1):
+    """ Returns tasks without temporal information
     """
-    interval_type = kwargs.get('interval_type', 'random')
-    pickup_time_lower_bound = kwargs.get('pickup_time_lower_bound')
-    pickup_time_upper_bound = kwargs.get('pickup_time_upper_bound')
-    time_window_lower_bound = kwargs.get('time_window_lower_bound')
-    time_window_upper_bound = kwargs.get('time_window_upper_bound')
-    dataset_start_time = kwargs.get('dataset_start_time')
-    map_sections = kwargs.get('map_sections', ['square', 'street', 'faraway'])
+    tasks = list()
 
-    dataset_dict = get_metadata(dataset_name=dataset_name,
-                                dataset_type='overlapping_tw',
-                                task_type=task_type,
-                                interval_type=interval_type,
-                                pickup_time_lower_bound=pickup_time_lower_bound,
-                                pickup_time_upper_bound=pickup_time_upper_bound,
-                                time_window_lower_bound=time_window_lower_bound,
-                                time_window_upper_bound=time_window_upper_bound,
-                                dataset_start_time=dataset_start_time,
-                                map_sections=map_sections)
-
-    dataset_dict['tasks'] = dict()
-
-    for i in range(0, n_overlapping_sets):
-        n_tasks_set = int(n_tasks/n_overlapping_sets if n_tasks % n_overlapping_sets == 0
-                          else n_tasks % n_overlapping_sets)
-
-        tasks = get_tasks(task_creator, pose_creator, task_type, n_tasks_set, **kwargs)
-        dataset_dict['tasks'].update(tasks)
-
-    return dataset_dict
-
-
-def non_overlapping_time_windows(task_creator, pose_creator, task_type, n_tasks, n_overlapping_sets, dataset_name, **kwargs):
-    """ Non-overlapping time windows dataset generator
-
-    :return: dataset (a dictionary of n_tasks with overlapping time windows)
-
-    """
-    interval_type = kwargs.get('interval_type', 'random')
-    pickup_time_lower_bound = kwargs.get('pickup_time_lower_bound')
-    pickup_time_upper_bound = kwargs.get('pickup_time_upper_bound')
-    time_window_lower_bound = kwargs.get('time_window_lower_bound')
-    time_window_upper_bound = kwargs.get('time_window_upper_bound')
-    dataset_start_time = kwargs.get('dataset_start_time')
-    map_sections = kwargs.get('map_sections', ['square', 'street', 'faraway'])
-
-    dataset_dict = get_metadata(dataset_name=dataset_name,
-                                dataset_type='non_overlapping_tw',
-                                task_type=task_type,
-                                interval_type=interval_type,
-                                pickup_time_lower_bound=pickup_time_lower_bound,
-                                pickup_time_upper_bound=pickup_time_upper_bound,
-                                time_window_lower_bound=time_window_lower_bound,
-                                time_window_upper_bound=time_window_upper_bound,
-                                dataset_start_time=dataset_start_time,
-                                map_sections=map_sections)
-
-    dataset_dict['tasks'] = dict()
-
-    tasks = get_tasks(task_creator, pose_creator, task_type, n_tasks, **kwargs)
-    dataset_dict['tasks'].update(tasks)
-
-    return dataset_dict
-
-
-def get_tasks(task_creator, pose_creator, task_type, n_tasks_set, **kwargs):
-    interval_type = kwargs.get('interval_type', 'random')
-    pickup_time_lower_bound = kwargs.get('pickup_time_lower_bound')
-    pickup_time_upper_bound = kwargs.get('pickup_time_upper_bound')
-    time_window_lower_bound = kwargs.get('time_window_lower_bound')
-    time_window_upper_bound = kwargs.get('time_window_upper_bound')
-    dataset_start_time = kwargs.get('dataset_start_time')
-    map_sections = kwargs.get('map_sections', ['square', 'street', 'faraway'])
-
-    tasks = dict()
-    last_task = None
-
-    logging.debug("Getting a set of %s consecutive tasks", n_tasks_set)
+    logging.debug("Getting a set of %s consecutive tasks using map_sections %s", n_tasks_set, map_sections)
 
     for j in range(0, n_tasks_set):
-        time_window_interval = get_interval(interval_type, time_window_lower_bound, time_window_upper_bound)
+        pickup_pose, delivery_pose = pose_creator.get_poses(map_sections)
+        plan = pose_creator.get_plan(pickup_pose, delivery_pose)
 
-        if last_task:
-            logging.debug("Last task: %s", last_task.task_id)
-            logging.debug("Delivery: %s", last_task.delivery_location)
+        _task_args = {'pickup_location': pickup_pose,
+                      'delivery_location': delivery_pose,
+                      'plan': plan,
+                      'set_number': set_number
+                      }
 
-            # The pickup pose of this task is the delivery of last task
-            pickup_pose, delivery_pose = pose_creator.get_poses(map_sections, pickup_pose=last_task.delivery_location)
+        task = task_creator.create(**_task_args)
 
+        logging.debug("Task: %s", task.task_id)
+
+        tasks.append(task)
+
+    return tasks
+
+
+def order_by_estimated_durations(tasks):
+    return sorted(tasks, key=lambda task: task.plan.estimated_duration)
+
+
+def add_constraints(tasks, pickup_time_interval, time_window_interval, dataset_start_time, pose_creator):
+    """
+    Adds temporal constraints to a set of consecutive tasks
+    """
+
+    for i, task in enumerate(tasks):
+        if i > 0:
+            last_task = tasks[i-1]
             # The finish (delivery) of last task is the latest pickup time plus the estimated time to go from
             # the pickup to the delivery location
             finish_last_task = last_task.latest_pickup_time + last_task.plan.estimated_duration
 
             # The travel path is the path between the delivery location of last task and the pickup of this task
-            travel_path = get_plan(pose_creator, last_task.delivery_location, pickup_pose)
+            travel_path = pose_creator.get_plan(last_task.delivery_location, task.pickup_location)
 
             # The travel time is the estimated time to go from the delivery of last task to the pickup of this task
             travel_time = travel_path.get('estimated_duration')
+
         else:
-            # Randomly choose pickup and delivery poses
-            pickup_pose, delivery_pose = pose_creator.get_poses(map_sections)
             finish_last_task = dataset_start_time
             travel_time = 0
 
-        logging.debug("Finish time of last task: %s", finish_last_task)
-        logging.debug("Travel time: %s", travel_time)
-        logging.debug("Time window interval %s", time_window_interval)
-
-        # Round to seconds
-        ept = round(finish_last_task + travel_time + time_window_interval)
-        lpt = round(ept +
-                    get_interval(interval_type, pickup_time_lower_bound, pickup_time_upper_bound))
-
-        plan = get_plan(pose_creator, pickup_pose, delivery_pose)
-
-        _task_args = {'earliest_pickup_time': ept,
-                      'latest_pickup_time': lpt,
-                      'pickup_location': pickup_pose,
-                      'delivery_location': delivery_pose,
-                      'plan': plan}
-
-        task = task_creator.create(task_type=task_type, **_task_args)
-        last_task = task
-
-        logging.debug("Task: %s", task.task_id)
-        logging.debug("Earliest pickup time: %s", ept)
-        logging.debug("Latest pickup time: %s", lpt)
-        logging.debug("Pickup: %s", task.pickup_location)
-        logging.debug("Delivery: %s", task.delivery_location)
-
-        tasks[task.task_id] = task.to_dict()
+        task.earliest_pickup_time = finish_last_task + travel_time + time_window_interval()
+        task.latest_pickup_time = task.earliest_pickup_time + pickup_time_interval()
 
     return tasks
-
-
-def get_plan(pose_creator, pickup_pose, delivery_pose):
-    path = pose_creator.get_path(pickup_pose, delivery_pose)
-    mean, variance = pose_creator.get_estimated_duration(path)
-    estimated_duration = round(mean + 2*(variance**0.5))
-    return {'path': path, 'estimated_duration': estimated_duration}
-
-
-def get_interval(interval_type, lower_bound, upper_bound):
-    if interval_type == 'tight':
-        interval = lower_bound
-    elif interval_type == 'loose':
-        interval = upper_bound
-    elif interval_type == 'random':
-        interval = np.random.uniform(lower_bound, upper_bound)
-    else:
-        raise ValueError(interval_type)
-
-    return round(interval, 2)
-
-
-def get_metadata(**kwargs):
-    dataset_metadata = {key: value for (key, value) in kwargs.items()}
-    dataset_metadata.update(dataset_id=generate_uuid())
-    return dataset_metadata
 
 
 task_factory = TaskFactory()
@@ -266,5 +232,5 @@ task_cls = getattr(import_module('dataset_lib.config.task'), 'Task')
 task_factory.register_task_cls('task', task_cls)
 
 dataset_factory = DatasetFactory()
-dataset_factory.register_dataset_creator('overlapping', overlapping_time_windows)
-dataset_factory.register_dataset_creator('non_overlapping', non_overlapping_time_windows)
+dataset_factory.register_dataset_creator('overlapping', OverlappingTW)
+dataset_factory.register_dataset_creator('nonoverlapping', NonOverlappingTW)

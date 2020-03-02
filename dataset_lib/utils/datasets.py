@@ -1,10 +1,12 @@
 """ Includes methods to prepare and write dataset files
 """
 
-import csv
-from pathlib import Path
-import yaml
 import collections
+import csv
+import os
+from pathlib import Path
+
+import yaml
 
 
 def load_yaml(file):
@@ -116,3 +118,21 @@ def store_as_csv(dataset, task_cls, path):
         list_task_dicts.append(csv_dict)
 
     to_csv(list_task_dicts, file)
+
+
+def get_dataset_name(n_overlapping_sets, interval_type):
+    dataset_path = 'datasets/'
+    dataset_type = 'overlapping' if n_overlapping_sets > 1 else 'nonoverlapping'
+
+    dataset_name = dataset_type + '_' + interval_type
+    largest_dataset_id = 0
+
+    for file_ in os.listdir(dataset_path):
+        if os.path.isfile(dataset_path + file_) and file_.startswith(dataset_name):
+            dataset_id = int(file_.split('_')[-1].split('.')[0])
+            if dataset_id > largest_dataset_id:
+                largest_dataset_id = dataset_id
+    dataset_id = largest_dataset_id + 1
+
+    dataset_name = dataset_name + '_' + str(dataset_id)
+    return dataset_name
