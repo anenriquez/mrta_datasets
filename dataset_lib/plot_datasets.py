@@ -1,12 +1,11 @@
-import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
-import matplotlib.dates as mdate
-import os
-from datetime import datetime
 import argparse
-from pathlib import Path
-from dataset_lib.load_dataset import load_yaml_dataset, get_path_to_dataset
-from dataset_lib.utils.datasets import load_yaml
+from datetime import datetime
+
+import dateutil.parser
+import matplotlib.dates as mdate
+import matplotlib.pyplot as plt
+from dataset_lib.load_dataset import load_yaml_dataset
+from matplotlib.patches import Rectangle
 
 
 def plot_dataset(dataset_name, tasks, show=False):
@@ -15,14 +14,22 @@ def plot_dataset(dataset_name, tasks, show=False):
 
     dataset_start_time = float('inf')
     dataset_finish_time = - float('inf')
-    now = datetime.now().timestamp()
+    highest_set_number = 0
+    earliest_task = None
 
-    for i, task in enumerate(tasks):
-        earliest_start_time = task.earliest_pickup_time + now
-        latest_finish_time = task.latest_pickup_time + task.plan.estimated_duration + now
+    iso_time = "2020-01-23T08:00:00.000000"
+    start_time = dateutil.parser.parse(iso_time).timestamp()
+
+    for task in tasks:
+        earliest_start_time = task.earliest_pickup_time + start_time
+        latest_finish_time = task.latest_pickup_time + task.plan.estimated_duration + start_time
+
+        if task.set_number > highest_set_number:
+            highest_set_number = task.set_number
 
         if earliest_start_time < dataset_start_time:
             dataset_start_time = earliest_start_time
+            earliest_task = task
 
         if latest_finish_time > dataset_finish_time:
             dataset_finish_time = latest_finish_time
@@ -36,8 +43,15 @@ def plot_dataset(dataset_name, tasks, show=False):
         end_rectangle = mdate.date2num(end_window)
         width_rectangle = end_rectangle - start_rectangle
 
-        rect = Rectangle((start_rectangle, i+1), width_rectangle, 0.2, color='blue')
+        rect = Rectangle((start_rectangle, task.set_number), width_rectangle, 0.2, color='blue')
         ax.add_patch(rect)
+
+        rx, ry = rect.get_xy()
+        cx = rx + rect.get_width() / 2.0
+        cy = ry + rect.get_height() / 2.0
+
+        ax.annotate(task.task_id[:3], (cx, cy), color='w', weight='bold',
+                    fontsize=6, ha='center', va='center')
 
     start_time = mdate.date2num(datetime.fromtimestamp(dataset_start_time))
     finish_time = mdate.date2num(datetime.fromtimestamp(dataset_finish_time))
@@ -51,11 +65,13 @@ def plot_dataset(dataset_name, tasks, show=False):
     fig.autofmt_xdate()
     # set the limits
     plt.xlim([start_time - width_rectangle, finish_time + width_rectangle])
-    plt.ylim([0, len(tasks) + 1])
+    plt.ylim([0, highest_set_number + 1])
 
     plt.xlabel("Time (hours:minutes:seconds)")
-    plt.ylabel("Task number")
+    plt.ylabel("Task set number")
     plt.title("Dataset: " + dataset_name)
+
+    print("Earliest task: ", earliest_task.task_id)
 
     plt.draw()
     plt.grid()
@@ -66,39 +82,13 @@ def plot_dataset(dataset_name, tasks, show=False):
     return fig
 
 
-def save_plot(fig, dataset_name):
-    code_dir = os.path.abspath(os.path.dirname(__file__))
-    main_dir = os.path.dirname(code_dir)
-
-    # path = get_path_to_dataset(dataset_type, task_type, interval_type)
-
-    plot_path = code_dir + '/datasets' + dataset_name + '.yaml'
-
-    # Create path if it doesn't exist
-    # Path(plot_path).mkdir(parents=True, exist_ok=True)
-
-    fig.savefig(dataset_name + ".png")
-
-
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
 
     parser.add_argument('dataset_name', type=str, help='Name of the dataset')
 
-    # parser.add_argument('dataset_type', type=str, help='Dataset type',
-    #                     choices=['overlapping_tw', 'non_overlapping_tw'])
-    #
     parser.add_argument('--task_type', type=str, help='Task type', choices=['task'], default='task')
-    #
-    # parser.add_argument('interval_type', type=str,
-    #                     help='Start time interval for overlapping tw'
-    #                     'or time window interval for non_overlapping_tw',
-    #                     choices=['tight', 'loose', 'random'])
-    #
-    # parser.add_argument('--file_extension', type=str, help='File extension',
-    #                     choices=['csv', 'yaml'],
-    #                     default='yaml')
 
     args = parser.parse_args()
 
@@ -106,6 +96,5 @@ if __name__ == '__main__':
 
     fig = plot_dataset(args.dataset_name, tasks)
     fig.savefig('datasets/plots/' + args.dataset_name + '.png')
-    # save_plot(fig, args.dataset_name)
 
 
