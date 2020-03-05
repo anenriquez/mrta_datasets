@@ -29,7 +29,9 @@ def load_yaml_dataset(dataset_name, task_type):
         task = task_cls.from_dict(task_info)
         tasks.append(task)
 
-    return tasks
+    dataset_dict['tasks'] = tasks
+
+    return dataset_dict
 
 
 def load_dataset(dataset_name, dataset_type, task_type, interval_type, file_extension):

@@ -92,9 +92,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    tasks = load_yaml_dataset(args.dataset_name, args.task_type)
+    dataset = load_yaml_dataset(args.dataset_name, args.task_type)
 
-    fig = plot_dataset(args.dataset_name, tasks)
+    fig = plot_dataset(args.dataset_name, dataset['tasks'])
     fig.savefig('datasets/plots/' + args.dataset_name + '.png')
 
 
