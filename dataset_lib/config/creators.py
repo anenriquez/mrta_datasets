@@ -19,7 +19,11 @@ class PoseCreator:
     def __init__(self, map_name):
         self.planner = Planner(map_name)
 
-    def get_poses(self, map_sections):
+    def get_poses(self, map_sections, duration_range=None):
+        """ Returns a pickup and a delivery pose within the given map_sections
+        duration_range = [min, max] seconds between the pickup and delivery pose
+        if None, the duration is unbounded
+        """
         goals = list()
         for section in map_sections:
             for pose in self.planner.map_graph.graph['goals'][section]:
@@ -29,7 +33,16 @@ class PoseCreator:
                            if pose in goals]
         pickup_pose = random.choice(available_poses)
         available_poses.remove(pickup_pose)
-        delivery_pose = random.choice(available_poses)
+
+        if not duration_range:
+            # Unbounded duration
+            delivery_pose = random.choice(available_poses)
+
+        else:
+            estimated_duration = None
+            while estimated_duration not in duration_range:
+                delivery_pose = random.choice(available_poses)
+                estimated_duration = self.get_estimated_duration(pickup_pose, delivery_pose)
 
         return pickup_pose, delivery_pose
 

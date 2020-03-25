@@ -118,6 +118,7 @@ class OverlappingTW:
         dataset = self.dataset_meta.to_dict()
         dataset['tasks'] = dict()
         tasks = kwargs.get("tasks")
+        duration_range = kwargs.get('duration_range')
 
         if tasks is None:
             tasks = dict()
@@ -130,7 +131,7 @@ class OverlappingTW:
 
             # Use a map section per tasks_set
             for i, (n_tasks_set, map_section) in enumerate(zip(n_tasks_sets, map_sections)):
-                tasks_set = get_tasks_set(self.task_creator, self.pose_creator, n_tasks_set, [map_section], i)
+                tasks_set = get_tasks_set(self.task_creator, self.pose_creator, duration_range, n_tasks_set, [map_section], i)
                 tasks_set = order_by_estimated_durations(tasks_set)
                 tasks[i] = tasks_set
 
@@ -156,9 +157,10 @@ class NonOverlappingTW:
         dataset = self.dataset_meta.to_dict()
         dataset['tasks'] = dict()
         tasks = kwargs.get("tasks")
+        duration_range = kwargs.get('duration_range')
 
         if tasks is None:
-            tasks = get_tasks_set(self.task_creator, self.pose_creator, n_tasks, self.dataset_meta.map_sections)
+            tasks = get_tasks_set(self.task_creator, self.pose_creator, duration_range, n_tasks, self.dataset_meta.map_sections)
 
         tasks = add_constraints(tasks, self.dataset_meta.pickup_time_interval, self.dataset_meta.pickup_time_interval,
                                 self.dataset_meta.start_time, self.pose_creator)
@@ -169,7 +171,7 @@ class NonOverlappingTW:
         return dataset, tasks
 
 
-def get_tasks_set(task_creator, pose_creator, n_tasks_set, map_sections, set_number=1):
+def get_tasks_set(task_creator, pose_creator, duration_range, n_tasks_set, map_sections, set_number=1):
     """ Returns tasks without temporal information
     """
     tasks = list()
@@ -177,7 +179,7 @@ def get_tasks_set(task_creator, pose_creator, n_tasks_set, map_sections, set_num
     logging.debug("Getting a set of %s consecutive tasks using map_sections %s", n_tasks_set, map_sections)
 
     for j in range(0, n_tasks_set):
-        pickup_pose, delivery_pose = pose_creator.get_poses(map_sections)
+        pickup_pose, delivery_pose = pose_creator.get_poses(map_sections, duration_range)
         plan = pose_creator.get_plan(pickup_pose, delivery_pose)
 
         _task_args = {'pickup_location': pickup_pose,

@@ -46,10 +46,17 @@ if __name__ == '__main__':
     parser.add_argument('--map_sections', type=list, help='Name of sections in the map to take goal poses from',
                         default=['square', 'street', 'faraway'])
 
+    parser.add_argument('--min_duration', type=int, help='Minimum duration (seconds) between pickup and delivery',
+                        default=30)
+
+    parser.add_argument('--max_duration', type=int, help='Maximum duration (seconds) between pickup and delivery',
+                        default=120)
+
     args = parser.parse_args()
 
     dataset_name = get_dataset_name(args.n_overlapping_sets, args.interval_type)
     dataset_type = dataset_name.split('_')[0]
+    duration_range = list(range(args.min_duration, args.max_duration))
 
     print("Dataset name: ", dataset_name)
     print("Dataset type: ", dataset_type)
@@ -64,7 +71,8 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.DEBUG)
 
-    dataset, tasks = dataset_creator.create(n_tasks=args.n_tasks, n_overlapping_sets=args.n_overlapping_sets)
+    dataset, tasks = dataset_creator.create(n_tasks=args.n_tasks, n_overlapping_sets=args.n_overlapping_sets,
+                                            duration_range=duration_range)
 
     dataset_file = 'datasets/' + dataset_name + '.yaml'
 

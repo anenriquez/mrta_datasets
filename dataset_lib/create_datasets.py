@@ -7,7 +7,7 @@ from dataset_lib.config.factories import Interval, DatasetMeta
 from dataset_lib.utils.datasets import get_dataset_name
 
 
-def create_datasets(n_tasks, n_overlapping_sets, dataset_start_time, lower_bound, upper_bound, **kwargs):
+def create_datasets(n_tasks, n_overlapping_sets, dataset_start_time, lower_bound, upper_bound, duration_range, **kwargs):
     """
     Creates a dataset with the same tasks for each interval type
     """
@@ -35,9 +35,11 @@ def create_datasets(n_tasks, n_overlapping_sets, dataset_start_time, lower_bound
         dataset_creator = DatasetCreator(task_type, map_name, dataset_meta)
 
         if not tasks:
-            dataset, tasks = dataset_creator.create(n_tasks=n_tasks, n_overlapping_sets=n_overlapping_sets)
+            dataset, tasks = dataset_creator.create(n_tasks=n_tasks, n_overlapping_sets=n_overlapping_sets,
+                                                    duration_range=duration_range)
         else:
-            dataset, tasks = dataset_creator.create(n_tasks=n_tasks, n_overlapping_sets=n_overlapping_sets, tasks=tasks)
+            dataset, tasks = dataset_creator.create(n_tasks=n_tasks, n_overlapping_sets=n_overlapping_sets, tasks=tasks,
+                                                    duration_range=duration_range)
 
         dataset_file = 'datasets/' + dataset_name + '.yaml'
 
@@ -54,16 +56,25 @@ if __name__ == '__main__':
                         'A dataset with non-overlapping-tw contains only one set, '
                         'A dataset with overlapping-tw contains at least two sets')
 
-    parser.add_argument('dataset_start_time', type=int, help='Dataset start time', default=1800)
+    parser.add_argument('--dataset_start_time', type=int, help='Dataset start time (seconds after time 0)', default=1800)
 
-    parser.add_argument('lower_bound', type=int, help='Lower bound for the pickup_time_interval and the '
-                        'time_window_interval')
+    parser.add_argument('--lower_bound', type=int, help='Lower bound for the pickup_time_interval and the '
+                        'time_window_interval (seconds)', default=30)
 
-    parser.add_argument('upper_bound', type=int, help='Upper bound for the pickup_time_interval and the '
-                        'time_window_interval')
+    parser.add_argument('--upper_bound', type=int, help='Upper bound for the pickup_time_interval and the '
+                        'time_window_interval (seconds)', default=300)
+
+    parser.add_argument('--min_duration', type=int, help='Minimum duration (seconds) between pickup and delivery',
+                        default=30)
+
+    parser.add_argument('--max_duration', type=int, help='Maximum duration (seconds) between pickup and delivery',
+                        default=120)
 
     args = parser.parse_args()
 
+    duration_range = list(range(args.min_duration, args.max_duration+1))
+
     logging.basicConfig(level=logging.DEBUG)
 
-    create_datasets(args.n_tasks, args.n_overlapping_sets, args.dataset_start_time, args.lower_bound, args.upper_bound)
+    create_datasets(args.n_tasks, args.n_overlapping_sets, args.dataset_start_time, args.lower_bound, args.upper_bound,
+                    duration_range)
