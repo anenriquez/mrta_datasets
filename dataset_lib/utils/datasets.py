@@ -120,19 +120,22 @@ def store_as_csv(dataset, task_cls, path):
     to_csv(list_task_dicts, file)
 
 
-def get_dataset_name(n_overlapping_sets, interval_type):
-    dataset_path = 'datasets/'
-    dataset_type = 'overlapping' if n_overlapping_sets > 1 else 'nonoverlapping'
+def get_dataset_name(n_tasks, n_overlapping_sets, interval_type):
+        dataset_path = 'datasets/'
+        if n_overlapping_sets > 1:
+            dataset_type = 'overlapping'
+            dataset_name = dataset_type + '_' + interval_type + '_' + str(n_tasks) + '_' + str(n_overlapping_sets)
+        else:
+            dataset_type = 'nonoverlapping'
+            dataset_name = dataset_type + '_' + interval_type + '_' + str(n_tasks)
+        largest_dataset_id = 0
 
-    dataset_name = dataset_type + '_' + interval_type
-    largest_dataset_id = 0
+        for file_ in os.listdir(dataset_path):
+            if os.path.isfile(dataset_path + file_) and file_.startswith(dataset_name):
+                dataset_id = int(file_.split('_')[-1].split('.')[0])
+                if dataset_id > largest_dataset_id:
+                    largest_dataset_id = dataset_id
+        dataset_id = largest_dataset_id + 1
 
-    for file_ in os.listdir(dataset_path):
-        if os.path.isfile(dataset_path + file_) and file_.startswith(dataset_name):
-            dataset_id = int(file_.split('_')[-1].split('.')[0])
-            if dataset_id > largest_dataset_id:
-                largest_dataset_id = dataset_id
-    dataset_id = largest_dataset_id + 1
-
-    dataset_name = dataset_name + '_' + str(dataset_id)
-    return dataset_name
+        dataset_name = dataset_name + '_' + str(dataset_id)
+        return dataset_name
