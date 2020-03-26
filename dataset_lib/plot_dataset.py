@@ -5,9 +5,9 @@ from datetime import datetime
 from datetime import timedelta
 
 import dateutil.parser
-import dateutil.parser
 import matplotlib.dates as mdate
 import matplotlib.pyplot as plt
+from colour import Color
 from dataset_lib.load_dataset import load_yaml_dataset
 from matplotlib.patches import Rectangle
 from plotly import figure_factory as ff
@@ -17,12 +17,20 @@ def get_random_color():
     return "#%06x" % random.randint(0, 0xFFFFFF)
 
 
+def get_gradient_color(n_colors):
+    red = Color("blue")
+    colors = list(red.range_to(Color("cyan").hex, n_colors))
+    hex_colors = [color.hex_l for color in colors]
+    return hex_colors
+
+
 def get_color():
     return 'rgb(52, 70, 235)'
 
 
 def get_colors(gantt_tasks):
-    return {task.get('Resource'): get_color() for task in gantt_tasks}
+    colors = get_gradient_color(len(gantt_tasks))
+    return {task.get('Resource'): colors[i] for i, task in enumerate(gantt_tasks)}
 
 
 def plot_gantt(title, schedule, colors, group_tasks=True, borders=False, **kwargs):
@@ -30,6 +38,7 @@ def plot_gantt(title, schedule, colors, group_tasks=True, borders=False, **kwarg
     xmin = kwargs.get('xmin')
     xmax = kwargs.get('xmax')
     show = kwargs.get('show')
+    file_name = kwargs.get('file_name', title)
 
     fig = ff.create_gantt(schedule, title="Dataset: " + title, group_tasks=group_tasks, showgrid_x=True,
                           index_col='Resource', colors=colors)
@@ -43,8 +52,8 @@ def plot_gantt(title, schedule, colors, group_tasks=True, borders=False, **kwarg
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    fig.write_image(directory + '/%s.png' % title)
-    fig.write_html(directory + '/%s.html' % title)
+    fig.write_image(directory + '/%s.png' % file_name)
+    fig.write_html(directory + '/%s.html' % file_name)
     if show:
         fig.show()
 
@@ -55,7 +64,7 @@ def get_gantt_task(task_id, pickup_time, delivery_time, set_number):
     ]
 
 
-def plot_dataset_plotly(dataset_name, tasks, initial_time, show=False):
+def plot_dataset_plotly(dataset_name, tasks, initial_time, show=False, **kwargs):
     """
     Args:
         dataset_name (str) name of dataset
@@ -64,6 +73,7 @@ def plot_dataset_plotly(dataset_name, tasks, initial_time, show=False):
         e.g. "2020-01-23T08:00:00.000000"
 
     """
+    file_name = kwargs.get('file_name')
     gantt_tasks = list()
     initial_time = dateutil.parser.parse(initial_time).timestamp()
     earliest_time = float('inf')
@@ -72,7 +82,7 @@ def plot_dataset_plotly(dataset_name, tasks, initial_time, show=False):
     for task in tasks:
         pickup_time = task.earliest_pickup_time + initial_time
         delivery_time = task.latest_pickup_time + initial_time + task.plan.estimated_duration
-        gantt_tasks += get_gantt_task(task.task_id,
+        gantt_tasks += get_gantt_task(str(task.task_id),
                                       datetime.fromtimestamp(pickup_time),
                                       datetime.fromtimestamp(delivery_time),
                                       task.set_number)
@@ -83,12 +93,16 @@ def plot_dataset_plotly(dataset_name, tasks, initial_time, show=False):
         if delivery_time > latest_time:
             latest_time = delivery_time
 
-    xmin = datetime.fromtimestamp(earliest_time) - timedelta(seconds=60)
-    xmax = datetime.fromtimestamp(latest_time) + timedelta(seconds=60)
+    xmin = kwargs.get('xmin', datetime.fromtimestamp(earliest_time) - timedelta(seconds=60))
+    xmax = kwargs.get('xmax', datetime.fromtimestamp(latest_time) + timedelta(seconds=60))
+
+    kwargs = {"xmin": xmin, "xmax": xmax, "show": show}
+    if file_name:
+        kwargs.update(file_name=file_name)
 
     colors = get_colors(gantt_tasks)
 
-    plot_gantt(dataset_name, gantt_tasks, colors, xmin=xmin, xmax=xmax, show=show)
+    plot_gantt(dataset_name, gantt_tasks, colors, **kwargs)
 
 
 def plot_dataset_plt(dataset_name, tasks, initial_time, show=False, **kwargs):
@@ -179,7 +193,8 @@ if __name__ == '__main__':
 
     dataset = load_yaml_dataset(args.dataset_name, args.task_type)
 
-    plot_dataset_plotly(args.dataset_name, dataset['tasks'], initial_time)
+    plot_dataset_plotly(args.dataset_name, dataset['tasks'], initial_time, show=True)
+    # plot_dataset_plt(args.dataset_name, dataset['tasks'], initial_time)
 
 
 
