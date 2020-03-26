@@ -1,0 +1,136 @@
+dataset_name: overlapping_random_5_5_1
+dataset_type: overlapping
+map_sections:
+- square
+- street
+- faraway
+pickup_time_interval:
+  interval_type: tight
+  lower_bound: 30
+  upper_bound: 60
+start_time: 1800
+tasks:
+  5f663406-fda9-46f6-836f-586b24c62ca9:
+    delivery_location: C-stairs-2
+    earliest_pickup_time: 1800
+    hard_constraints: true
+    latest_pickup_time: 1830
+    pickup_location: C013-1
+    plan:
+      estimated_duration: 47
+      path:
+      - C013-1
+      - C013-2
+      - LC-006
+      - LC-015
+      - INT-C002
+      - LC-016
+      - C-stairs-1
+      - LC-018
+      - LC-020
+      - C-stairs-2
+    set_number: 0
+    task_id: 5f663406-fda9-46f6-836f-586b24c62ca9
+  90261d12-7a58-4e07-99a8-c499142bc667:
+    delivery_location: A045
+    earliest_pickup_time: 1800
+    hard_constraints: true
+    latest_pickup_time: 1830
+    pickup_location: A-main-entrance
+    plan:
+      estimated_duration: 88
+      path:
+      - A-main-entrance
+      - LA-004
+      - LA-005
+      - mensa-entrance
+      - LA-007
+      - LA-008
+      - LA-010
+      - LA-022
+      - A049
+      - A053
+      - A054
+      - INT-A001
+      - LA-015
+      - LA-017
+      - A045
+    set_number: 4
+    task_id: 90261d12-7a58-4e07-99a8-c499142bc667
+  b6c887ab-3bae-48ff-af54-5114108f76b0:
+    delivery_location: C013-2
+    earliest_pickup_time: 1800
+    hard_constraints: true
+    latest_pickup_time: 1830
+    pickup_location: C058
+    plan:
+      estimated_duration: 63
+      path:
+      - C058
+      - LC-026
+      - INT-C003
+      - LC-023
+      - C-stairs-2
+      - LC-020
+      - LC-018
+      - C-stairs-1
+      - LC-016
+      - INT-C002
+      - LC-015
+      - LC-006
+      - C013-2
+    set_number: 3
+    task_id: b6c887ab-3bae-48ff-af54-5114108f76b0
+  ce9ffd65-2166-4c89-92ce-4eee61901412:
+    delivery_location: mensa-entrance
+    earliest_pickup_time: 1800
+    hard_constraints: true
+    latest_pickup_time: 1830
+    pickup_location: A054
+    plan:
+      estimated_duration: 37
+      path:
+      - A054
+      - A053
+      - A049
+      - LA-022
+      - LA-010
+      - LA-008
+      - LA-007
+      - mensa-entrance
+    set_number: 1
+    task_id: ce9ffd65-2166-4c89-92ce-4eee61901412
+  d2dcc4b0-ec2c-4864-8a56-d060f3a1939f:
+    delivery_location: B037
+    earliest_pickup_time: 1800
+    hard_constraints: true
+    latest_pickup_time: 1830
+    pickup_location: B012
+    plan:
+      estimated_duration: 59
+      path:
+      - B012
+      - B010
+      - B014-1
+      - B014-2
+      - INT-B001
+      - LB-019
+      - B016-1
+      - B016-2
+      - B002
+      - B018
+      - LB-025
+      - B022
+      - B024
+      - INT-B002
+      - B029
+      - B031
+      - B033
+      - B035
+      - B037
+    set_number: 2
+    task_id: d2dcc4b0-ec2c-4864-8a56-d060f3a1939f
+time_window_interval:
+  interval_type: random
+  lower_bound: 30
+  upper_bound: 120
