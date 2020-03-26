@@ -93,6 +93,9 @@ class Interval(AsDictionaryMixin):
         self.lower_bound = lower_bound
         self.upper_bound = upper_bound
 
+    def __str__(self):
+        return "{}: [{}, {}]".format(self.interval_type, self.lower_bound, self.upper_bound)
+
     def __call__(self, *args, **kwargs):
         if self.interval_type == 'tight':
             interval = self.lower_bound
@@ -137,7 +140,7 @@ class OverlappingTW:
 
         for i, tasks_set in tasks.items():
             tasks_set = add_constraints(tasks_set, self.dataset_meta.pickup_time_interval,
-                                        self.dataset_meta.pickup_time_interval, self.dataset_meta.start_time,
+                                        self.dataset_meta.time_window_interval, self.dataset_meta.start_time,
                                         self.pose_creator)
             for task in tasks_set:
                 dataset["tasks"][task.task_id] = task.to_dict()
@@ -161,6 +164,7 @@ class NonOverlappingTW:
 
         if tasks is None:
             tasks = get_tasks_set(self.task_creator, self.pose_creator, duration_range, n_tasks, self.dataset_meta.map_sections)
+            tasks = order_by_estimated_durations(tasks)
 
         tasks = add_constraints(tasks, self.dataset_meta.pickup_time_interval, self.dataset_meta.pickup_time_interval,
                                 self.dataset_meta.start_time, self.pose_creator)
@@ -207,24 +211,32 @@ def add_constraints(tasks, pickup_time_interval, time_window_interval, dataset_s
     """
 
     for i, task in enumerate(tasks):
+        logging.debug("Task: %s", task.task_id)
         if i > 0:
             last_task = tasks[i-1]
+            logging.debug("Last task: %s", last_task.task_id)
+
             # The finish (delivery) of last task is the latest pickup time plus the estimated time to go from
             # the pickup to the delivery location
             finish_last_task = last_task.latest_pickup_time + last_task.plan.estimated_duration
+            logging.debug("Finish last task: %s", finish_last_task)
 
             # The travel path is the path between the delivery location of last task and the pickup of this task
             travel_path = pose_creator.get_plan(last_task.delivery_location, task.pickup_location)
 
             # The travel time is the estimated time to go from the delivery of last task to the pickup of this task
             travel_time = travel_path.get('estimated_duration')
+            logging.debug("Travel time: %s", travel_time)
+
+            task.earliest_pickup_time = finish_last_task + travel_time + time_window_interval()
 
         else:
-            finish_last_task = dataset_start_time
-            travel_time = 0
+            task.earliest_pickup_time = dataset_start_time
 
-        task.earliest_pickup_time = finish_last_task + travel_time + time_window_interval()
         task.latest_pickup_time = task.earliest_pickup_time + pickup_time_interval()
+
+        logging.debug("Task %s earliest pickup time: %s", task.task_id, task.earliest_pickup_time)
+        logging.debug("Task %s latest pickup time: %s", task.task_id, task.latest_pickup_time)
 
     return tasks
 
