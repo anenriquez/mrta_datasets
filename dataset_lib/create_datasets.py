@@ -73,7 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('--time_window_lower_bound', type=int, help='Time window interval lower bound (seconds)'
                         'The time window interval is the time between tasks, i.e., the time between'
                         'the latest finish time of a task and the earliest start time of the next',
-                        default=10)
+                        default=30)
 
     parser.add_argument('--time_window_upper_bound', type=int, help='Time window interval upper bound (seconds)'
                         'The time window interval is the time between tasks, i.e., the time between'
