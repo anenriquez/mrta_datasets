@@ -60,7 +60,7 @@ if __name__ == '__main__':
                         'A dataset with non-overlapping-tw contains only one set, '
                         'A dataset with overlapping-tw contains at least two sets')
 
-    parser.add_argument('--dataset_start_time', type=int, help='Dataset start time (seconds after time 0)', default=1800)
+    parser.add_argument('--dataset_start_time', type=int, help='Dataset start time (seconds after time 0)', default=2700)
 
     parser.add_argument('--pickup_time_lower_bound', type=int, help='Pickup time interval lower bound (seconds) '
                         'The pickup time interval is the time between the earliest and the latest pickup time',
