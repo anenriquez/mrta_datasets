@@ -12,11 +12,9 @@ if __name__ == '__main__':
 
     experiments = {'exp_1': ['overlapping_tight_25_5_1', 'overlapping_loose_25_5_1', 'overlapping_random_25_5_1'],
                    'exp_3': ['overlapping_random_5_5_1', 'overlapping_random_10_5_1', 'overlapping_random_15_5_1',
-                             'overlapping_random_20_5_1', 'overlapping_random_25_5_1', 'overlapping_random_30_5_1',
-                             'overlapping_random_35_5_1', 'overlapping_random_40_5_1', 'overlapping_random_45_5_1',
-                             'overlapping_random_50_5_1'],
-                   'exp_4': ['nonoverlapping_random_50_1'],
-                   'exp_5': ['overlapping_random_50_10_1']}
+                             'overlapping_random_20_5_1', 'overlapping_random_25_5_1'],
+                   'exp_4': ['nonoverlapping_random_25_1']
+                   }
 
     for experiment_name, datasets in experiments.items():
         print("Experiment: ", experiment_name)
