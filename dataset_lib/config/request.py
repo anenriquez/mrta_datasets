@@ -9,11 +9,11 @@ class Plan(AsDictionaryMixin):
         self.estimated_duration = estimated_duration
 
 
-class Task(AsDictionaryMixin):
+class Transportation(AsDictionaryMixin):
 
     def __init__(self, pickup_location, delivery_location, hard_constraints=True, **kwargs):
 
-        self.task_id = kwargs.get('task_id', generate_uuid())
+        self.request_id = kwargs.get('task_id', generate_uuid())
         self.pickup_location = pickup_location
         self.delivery_location = delivery_location
         self.hard_constraints = hard_constraints

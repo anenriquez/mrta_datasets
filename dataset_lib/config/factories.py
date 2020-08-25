@@ -78,13 +78,14 @@ class DatasetMeta(AsDictionaryMixin):
 
     """
 
-    def __init__(self, dataset_name, dataset_type, start_time, pickup_time_interval, time_window_interval, map_sections):
-        self.dataset_name = dataset_name
-        self.dataset_type = dataset_type
-        self.start_time = start_time
-        self.pickup_time_interval = pickup_time_interval
-        self.time_window_interval = time_window_interval
-        self.map_sections = map_sections
+    def __init__(self, **kwargs):
+        self.dataset_name = kwargs.get("dataset_name")
+        self.dataset_type = kwargs.get("dataset_type")
+        self.start_time = kwargs.get("start_time")
+        self.pickup_time_interval = kwargs.get("pickup_time_interval")
+        self.time_window_interval = kwargs.get("time_window_interval")
+        self.map_sections = kwargs.get("map_sections")
+        self.task_type = kwargs.get("task_type")
 
 
 class Interval(AsDictionaryMixin):
@@ -143,7 +144,7 @@ class OverlappingTW:
                                         self.dataset_meta.time_window_interval, self.dataset_meta.start_time,
                                         self.pose_creator)
             for task in tasks_set:
-                dataset["tasks"][task.task_id] = task.to_dict()
+                dataset["tasks"][task.request_id] = task.to_dict()
 
         return dataset, tasks
 
@@ -170,7 +171,7 @@ class NonOverlappingTW:
                                 self.dataset_meta.start_time, self.pose_creator)
 
         for task in tasks:
-            dataset["tasks"][task.task_id] = task.to_dict()
+            dataset["tasks"][task.request_id] = task.to_dict()
 
         return dataset, tasks
 
@@ -193,8 +194,7 @@ def get_tasks_set(task_creator, pose_creator, duration_range, n_tasks_set, map_s
                       }
 
         task = task_creator.create(**_task_args)
-
-        logging.debug("Task: %s", task.task_id)
+        print("task: ", task)
 
         tasks.append(task)
 
@@ -209,24 +209,21 @@ def add_constraints(tasks, pickup_time_interval, time_window_interval, dataset_s
     """
     Adds temporal constraints to a set of consecutive tasks
     """
+    print("dataset start_time: ", dataset_start_time)
 
     for i, task in enumerate(tasks):
-        logging.debug("Task: %s", task.task_id)
         if i > 0:
             last_task = tasks[i-1]
-            logging.debug("Last task: %s", last_task.task_id)
 
             # The finish (delivery) of last task is the latest pickup time plus the estimated time to go from
             # the pickup to the delivery location
             finish_last_task = last_task.latest_pickup_time + last_task.plan.estimated_duration
-            logging.debug("Finish last task: %s", finish_last_task)
 
             # The travel path is the path between the delivery location of last task and the pickup of this task
             travel_path = pose_creator.get_plan(last_task.delivery_location, task.pickup_location)
 
             # The travel time is the estimated time to go from the delivery of last task to the pickup of this task
             travel_time = travel_path.get('estimated_duration')
-            logging.debug("Travel time: %s", travel_time)
 
             task.earliest_pickup_time = finish_last_task + travel_time + time_window_interval()
 
@@ -235,15 +232,15 @@ def add_constraints(tasks, pickup_time_interval, time_window_interval, dataset_s
 
         task.latest_pickup_time = task.earliest_pickup_time + pickup_time_interval()
 
-        logging.debug("Task %s earliest pickup time: %s", task.task_id, task.earliest_pickup_time)
-        logging.debug("Task %s latest pickup time: %s", task.task_id, task.latest_pickup_time)
+        logging.debug("Task %s earliest pickup time: %s", task.request_id, task.earliest_pickup_time)
+        logging.debug("Task %s latest pickup time: %s", task.request_id, task.latest_pickup_time)
 
     return tasks
 
 
 task_factory = TaskFactory()
-task_cls = getattr(import_module('dataset_lib.config.task'), 'Task')
-task_factory.register_task_cls('task', task_cls)
+task_cls = getattr(import_module('dataset_lib.config.request'), 'Transportation')
+task_factory.register_task_cls('transportation', task_cls)
 
 dataset_factory = DatasetFactory()
 dataset_factory.register_dataset_creator('overlapping', OverlappingTW)

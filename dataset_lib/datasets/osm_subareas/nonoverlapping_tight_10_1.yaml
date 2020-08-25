@@ -1,0 +1,310 @@
+dataset_name: nonoverlapping_tight_10_1
+dataset_type: nonoverlapping
+map_sections:
+- square
+- street
+pickup_time_interval:
+  interval_type: tight
+  lower_bound: 60
+  upper_bound: 300
+start_time: 120
+task_type: transportation
+tasks:
+  07a51dd6-f52e-4257-a6f2-68058b653f42:
+    delivery_location: BRSU_C_L0_C25_LA2
+    earliest_pickup_time: 2462
+    hard_constraints: true
+    latest_pickup_time: 2522
+    pickup_location: BRSU_A_L0_C10_LA2
+    plan:
+      estimated_duration: 123
+      path:
+      - 245
+      - 247
+      - 249
+      - 251
+      - 252
+      - 258
+      - 259
+      - 261
+      - 262
+      - 264
+      - 265
+      - 117
+      - 91
+      - 76
+      - 75
+      - 74
+      - 80
+      - 93
+      - 286
+      - 26
+      - 81
+      - 27
+      - 29
+      - 31
+    request_id: 07a51dd6-f52e-4257-a6f2-68058b653f42
+    set_number: 1
+  605d618f-add6-416a-ba2c-cc271bd06dbc:
+    delivery_location: BRSU_C_L0_C21_LA2
+    earliest_pickup_time: 813
+    hard_constraints: true
+    latest_pickup_time: 873
+    pickup_location: BRSU_A_L0_C4_LA2
+    plan:
+      estimated_duration: 94
+      path:
+      - 257
+      - 259
+      - 261
+      - 262
+      - 264
+      - 265
+      - 117
+      - 91
+      - 76
+      - 75
+      - 73
+      - 80
+      - 93
+      - 286
+      - 26
+      - 81
+      - 27
+      - 29
+      - 32
+      - 82
+      - 35
+      - 36
+    request_id: 605d618f-add6-416a-ba2c-cc271bd06dbc
+    set_number: 1
+  73b38f28-981d-4f94-9e4c-a88fee4407f9:
+    delivery_location: BRSU_C_L0_C20_LA2
+    earliest_pickup_time: 1119
+    hard_constraints: true
+    latest_pickup_time: 1179
+    pickup_location: BRSU_A_L0_C4_LA2
+    plan:
+      estimated_duration: 102
+      path:
+      - 257
+      - 259
+      - 261
+      - 262
+      - 264
+      - 265
+      - 117
+      - 91
+      - 76
+      - 75
+      - 73
+      - 80
+      - 93
+      - 286
+      - 26
+      - 81
+      - 27
+      - 29
+      - 32
+      - 82
+      - 35
+      - 36
+      - 39
+    request_id: 73b38f28-981d-4f94-9e4c-a88fee4407f9
+    set_number: 1
+  799ff732-ff89-465b-b73f-dea3993b44df:
+    delivery_location: BRSU_C_L0_A3_LA1
+    earliest_pickup_time: 3118
+    hard_constraints: true
+    latest_pickup_time: 3178
+    pickup_location: BRSU_C_L0_C20_LA2
+    plan:
+      estimated_duration: 164
+      path:
+      - 39
+      - 36
+      - 35
+      - 82
+      - 32
+      - 29
+      - 27
+      - 81
+      - 26
+      - 285
+      - 93
+      - 80
+      - 73
+      - 75
+      - 76
+      - 91
+      - 117
+      - 118
+    request_id: 799ff732-ff89-465b-b73f-dea3993b44df
+    set_number: 1
+  898b4c3e-e32b-42cd-832b-bb74d690ef2f:
+    delivery_location: BRSU_C_L0_C20_LA2
+    earliest_pickup_time: 2844
+    hard_constraints: true
+    latest_pickup_time: 2904
+    pickup_location: BRSU_C_L0_A3_LA1
+    plan:
+      estimated_duration: 154
+      path:
+      - 118
+      - 117
+      - 91
+      - 76
+      - 75
+      - 73
+      - 80
+      - 93
+      - 286
+      - 26
+      - 81
+      - 27
+      - 29
+      - 32
+      - 82
+      - 35
+      - 36
+      - 39
+    request_id: 898b4c3e-e32b-42cd-832b-bb74d690ef2f
+    set_number: 1
+  9113e5a8-217c-4b00-a3f4-cf3da35dae0d:
+    delivery_location: BRSU_A_L0_C7_LA2
+    earliest_pickup_time: 3406
+    hard_constraints: true
+    latest_pickup_time: 3466
+    pickup_location: BRSU_A_L0_C1_LA2
+    plan:
+      estimated_duration: 385
+      path:
+      - 260
+      - 259
+      - 257
+      - 252
+      - 250
+    request_id: 9113e5a8-217c-4b00-a3f4-cf3da35dae0d
+    set_number: 1
+  b68df86c-0043-4a9f-9292-057ce8b07a67:
+    delivery_location: BRSU_C_L0_C25_LA2
+    earliest_pickup_time: 403
+    hard_constraints: true
+    latest_pickup_time: 463
+    pickup_location: BRSU_A_L0_C1_LA2
+    plan:
+      estimated_duration: 56
+      path:
+      - 260
+      - 262
+      - 264
+      - 265
+      - 117
+      - 91
+      - 76
+      - 75
+      - 74
+      - 80
+      - 93
+      - 286
+      - 26
+      - 81
+      - 27
+      - 29
+      - 31
+    request_id: b68df86c-0043-4a9f-9292-057ce8b07a67
+    set_number: 1
+  bcfbb2ec-4446-4327-8229-3d4ee8b30531:
+    delivery_location: BRSU_C_L0_C25_LA2
+    earliest_pickup_time: 1792
+    hard_constraints: true
+    latest_pickup_time: 1852
+    pickup_location: BRSU_A_L0_C10_LA2
+    plan:
+      estimated_duration: 123
+      path:
+      - 245
+      - 247
+      - 249
+      - 251
+      - 252
+      - 258
+      - 259
+      - 261
+      - 262
+      - 264
+      - 265
+      - 117
+      - 91
+      - 76
+      - 75
+      - 74
+      - 80
+      - 93
+      - 286
+      - 26
+      - 81
+      - 27
+      - 29
+      - 31
+    request_id: bcfbb2ec-4446-4327-8229-3d4ee8b30531
+    set_number: 1
+  ebd2a255-9c31-4dc9-87f8-25351049ce04:
+    delivery_location: BRSU_C_L0_C18_LA1
+    earliest_pickup_time: 120
+    hard_constraints: true
+    latest_pickup_time: 180
+    pickup_location: BRSU_C_L0_C9_LA2
+    plan:
+      estimated_duration: 35
+      path:
+      - 60
+      - 64
+      - 57
+      - 86
+      - 54
+      - 52
+      - 85
+      - 50
+      - 49
+      - 47
+      - 46
+    request_id: ebd2a255-9c31-4dc9-87f8-25351049ce04
+    set_number: 1
+  f6511149-8982-4a8f-b44e-6c919672a534:
+    delivery_location: BRSU_A_L0_C4_LA2
+    earliest_pickup_time: 601
+    hard_constraints: true
+    latest_pickup_time: 661
+    pickup_location: BRSU_C_L0_C21_LA2
+    plan:
+      estimated_duration: 92
+      path:
+      - 36
+      - 35
+      - 82
+      - 32
+      - 29
+      - 28
+      - 81
+      - 26
+      - 285
+      - 93
+      - 80
+      - 74
+      - 75
+      - 77
+      - 91
+      - 117
+      - 265
+      - 264
+      - 262
+      - 260
+      - 259
+      - 257
+    request_id: f6511149-8982-4a8f-b44e-6c919672a534
+    set_number: 1
+time_window_interval:
+  interval_type: tight
+  lower_bound: 60
+  upper_bound: 300

@@ -1,10 +1,9 @@
 import argparse
 import logging
 
-import yaml
 from dataset_lib.config.creators import DatasetCreator
 from dataset_lib.config.factories import DatasetMeta, Interval
-from dataset_lib.utils.datasets import get_dataset_name
+from dataset_lib.utils.datasets import get_dataset_name, store_as_yaml
 
 if __name__ == '__main__':
 
@@ -39,12 +38,12 @@ if __name__ == '__main__':
 
     parser.add_argument('--dataset_start_time', type=int, help='Dataset start time', default=1800)
 
-    parser.add_argument('--task_type', type=str, help='task type', choices=['task'], default='task')
+    parser.add_argument('--task_type', type=str, help='task type', choices=['transportation'], default='transportation')
 
     parser.add_argument('--map_name', type=str, help='Name of the map to get poses from', default='brsu')
 
     parser.add_argument('--map_sections', type=list, help='Name of sections in the map to take goal poses from',
-                        default=['square', 'street', 'faraway'])
+                        default=['square', 'street'])
 
     parser.add_argument('--min_duration', type=int, help='Minimum duration (seconds) between pickup and delivery',
                         default=30)
@@ -54,7 +53,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    dataset_name = get_dataset_name(args.n_overlapping_sets, args.interval_type)
+    dataset_name = get_dataset_name(args.n_tasks, args.n_overlapping_sets, args.interval_type)
     dataset_type = dataset_name.split('_')[0]
     duration_range = list(range(args.min_duration, args.max_duration))
 
@@ -64,8 +63,16 @@ if __name__ == '__main__':
     pickup_time_interval = Interval(args.interval_type, args.pickup_time_lower_bound, args.pickup_time_upper_bound)
     time_window_interval = Interval(args.interval_type, args.time_window_lower_bound, args.time_window_upper_bound)
 
-    dataset_meta = DatasetMeta(dataset_name, dataset_type, args.dataset_start_time, pickup_time_interval,
-                               time_window_interval, args.map_sections)
+    meta_info = {'dataset_name': dataset_name,
+                 'dataset_type': dataset_type,
+                 'start_time': args.dataset_start_time,
+                 'pickup_time_interval': pickup_time_interval,
+                 'time_window_interval': time_window_interval,
+                 'map_sections': args.map_sections,
+                 'task_type': args.task_type
+                 }
+
+    dataset_meta = DatasetMeta(**meta_info)
 
     dataset_creator = DatasetCreator(args.task_type, args.map_name, dataset_meta)
 
@@ -74,7 +81,7 @@ if __name__ == '__main__':
     dataset, tasks = dataset_creator.create(n_tasks=args.n_tasks, n_overlapping_sets=args.n_overlapping_sets,
                                             duration_range=duration_range)
 
-    dataset_file = 'datasets/' + dataset_name + '.yaml'
+    file_path = 'datasets/' + args.map_name
 
-    with open(dataset_file, 'w') as outfile:
-        yaml.safe_dump(dataset, outfile, default_flow_style=False)
+    store_as_yaml(dataset, dataset_name, file_path)
+

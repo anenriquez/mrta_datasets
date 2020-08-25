@@ -17,9 +17,10 @@ class TaskCreator:
 class PoseCreator:
 
     def __init__(self, map_name):
+        self.map_name = map_name
         self.planner = Planner(map_name)
 
-    def get_poses(self, map_sections, duration_range=None):
+    def get_poses(self, map_sections, duration_range):
         """ Returns a pickup and a delivery pose within the given map_sections
         duration_range = [min, max] seconds between the pickup and delivery pose
         if None, the duration is unbounded
@@ -34,15 +35,16 @@ class PoseCreator:
         pickup_pose = random.choice(available_poses)
         available_poses.remove(pickup_pose)
 
-        if not duration_range:
-            # Unbounded duration
+        estimated_duration = None
+        while estimated_duration not in duration_range:
             delivery_pose = random.choice(available_poses)
+            estimated_duration = self.get_estimated_duration(pickup_pose, delivery_pose)
 
-        else:
-            estimated_duration = None
-            while estimated_duration not in duration_range:
-                delivery_pose = random.choice(available_poses)
-                estimated_duration = self.get_estimated_duration(pickup_pose, delivery_pose)
+        if self.map_name == "osm_subareas":
+            pickup_pose = [attr['name'] for node_id, attr in
+                           self.planner.map_graph.nodes(data=True) if node_id == pickup_pose].pop()
+            delivery_pose = [attr['name'] for node_id, attr in
+                             self.planner.map_graph.nodes(data=True) if node_id == delivery_pose].pop()
 
         return pickup_pose, delivery_pose
 
@@ -57,6 +59,12 @@ class PoseCreator:
         return estimated_duration
 
     def get_plan(self, pickup_pose, delivery_pose):
+        if self.map_name == "osm_subareas":
+            pickup_pose = [node_id for node_id, attr in
+                           self.planner.map_graph.nodes(data=True) if attr['name'] == pickup_pose].pop()
+            delivery_pose = [node_id for node_id, attr in
+                             self.planner.map_graph.nodes(data=True) if attr['name'] == delivery_pose].pop()
+
         path = self.get_path(pickup_pose, delivery_pose)
         estimated_duration = self.get_estimated_duration(pickup_pose, delivery_pose)
         return {'path': path, 'estimated_duration': estimated_duration}
